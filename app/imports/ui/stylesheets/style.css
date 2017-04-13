@@ -32,11 +32,19 @@
 
 }
 
+.content-container-poptags {
+  margin-top:40px;
+  margin-bottom:40px;
+  padding-left:15%;
+  padding-right:15%;
+
+}
+
 .content-container-lesswide-heading {
   margin-top:40px;
   margin-bottom:20px;
-  padding-left:20%;
-  padding-right:20%;
+  padding-left:15%;
+  padding-right:15%;
 
 }
 .filler {
@@ -73,4 +81,9 @@ body {
   bottom:0;
   width:100%;
   min-height:50px;
+}
+
+ui.raised.very.padded.container.segment.poptags {
+
+
 }
