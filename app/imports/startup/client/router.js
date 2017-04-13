@@ -68,6 +68,14 @@ userRoutes.route('/edit-profile', {
   },
 });
 
+export const viewRecipePageRouteName = 'View_Recipe_Page';
+userRoutes.route('/viewrecipe', {
+  name: viewRecipePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: viewRecipePageRouteName });
+  },
+});
+
 export const filterPageRouteName = 'Filter_Page';
 userRoutes.route('/filter', {
   name: filterPageRouteName,
