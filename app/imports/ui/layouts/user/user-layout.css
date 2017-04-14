@@ -2,3 +2,16 @@
   padding-top: 75px;
 }
 
+.ui.borderless.topmenu.menu.top {
+  background-color: teal;
+  border-radius: 0px;
+
+  font-size: 14px;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.topbar_search {
+  width:50%;
+
+
+}

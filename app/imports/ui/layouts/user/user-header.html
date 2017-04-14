@@ -1,12 +1,23 @@
 <template name="User_Header">
-  <div class="ui top fixed borderless inverted teal menu">
+  <div class="ui borderless inverted topmenu menu top fixed">
     <div class="ui container">
-      <div class="item"><h1>ManoaStudentKitchen</h1></div>
-      <a class="{{isActiveRoute "Home_Page"}} item" href="{{pathFor "Home_Page" username=routeUserName}}">Home</a>
-      <a class="{{isActiveRoute "Profile_Page"}} item" href="{{pathFor "Profile_Page" username=routeUserName}}">Profile</a>
+      <div class="item "><h1>ManoaStudentKitchen</h1></div>
+      <!-- <a class="{{isActiveRoute "Home_Page"}} item" href="{{pathFor "Home_Page" username=routeUserName}}">Home</a>
+       <a class="{{isActiveRoute "Profile_Page"}} item" href="{{pathFor "Profile_Page" username=routeUserName}}">Profile</a>
       <a class="{{isActiveRoute "Edit_Profile_Page"}} item" href="{{pathFor "Edit_Profile_Page" username=routeUserName}}">Edit Profile</a>
       <a class="{{isActiveRoute "View_Recipe_Page"}} item" href="{{pathFor "View_Recipe_Page" username=routeUserName}}">Recipe</a>
       <a class="{{isActiveRoute "Admin_Page"}} item" href="{{pathFor "Admin_Page" username=routeUserName}}">Admin Page</a>
+       -->
+
+        <div class="ui category search item topbar_search">
+        <div class="ui icon input">
+          <input class="prompt" type="text" placeholder="Search recipes by tag...">
+
+          <i class="search icon"></i>
+        </div>
+        <div class="results"></div>
+      </div>
+
       <div class="right aligned item">{{> Cas_Login }}</div>
     </div>
   </div>

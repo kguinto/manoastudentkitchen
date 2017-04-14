@@ -1,3 +1,6 @@
+html, body {
+  height:100%;
+}
 .ui.borderless.topmenu.menu.top {
   background-color: teal;
   border-radius: 0px;
@@ -5,7 +8,6 @@
   font-size: 14px;
   font-family: 'Josefin Sans', sans-serif;
 }
-
 
 .home-image {
 
@@ -47,17 +49,6 @@
   padding-right:15%;
 
 }
-.filler {
-  margin-bottom: 100px;
-}
-
-body {
-  background: #f8ffe8; /* Old browsers */
-  background: -moz-linear-gradient(top, #f8ffe8 0%, #e3f5ab 33%, #b7df2d 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #f8ffe8 0%,#e3f5ab 33%,#b7df2d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8ffe8', endColorstr='#b7df2d',GradientType=0 ); /* IE6-9 */
-}
 
 .maintitle {
   font-size: 38px;
@@ -72,15 +63,6 @@ body {
 .ui.middle.aligned.centered.text.container.mainstuff {
   margin-top: 25%;
 
-}
-
-.thefooter {
-  background-color: teal;
-  color:white;
-  position:fixed;
-  bottom:0;
-  width:100%;
-  min-height:50px;
 }
 
 ui.raised.very.padded.container.segment.poptags {
