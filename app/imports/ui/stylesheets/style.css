@@ -69,3 +69,9 @@ ui.raised.very.padded.container.segment.poptags {
 
 
 }
+
+.grad-background {
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('http://www.biggerbolderbaking.com/wp-content/uploads/2016/04/BBB121-NEW-Microwave-Mug-Meals-Thumbnail-FINAL.jpg');
+  height: 500px;
+  color: white;
+}
