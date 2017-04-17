@@ -60,6 +60,22 @@ userRoutes.route('/profile', {
   },
 });
 
+export const adminPageRouteName = 'Admin_Page';
+userRoutes.route('/admin', {
+  name: adminPageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: adminPageRouteName });
+  },
+});
+
+export const editProfilePageRouteName = 'Edit_Profile_Page';
+userRoutes.route('/edit-profile', {
+  name: editProfilePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: editProfilePageRouteName });
+  },
+});
+
 export const viewRecipePageRouteName = 'View_Recipe_Page';
 userRoutes.route('/viewrecipe', {
   name: viewRecipePageRouteName,
@@ -73,6 +89,14 @@ userRoutes.route('/filter', {
   name: filterPageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: filterPageRouteName });
+  },
+});
+
+export const homePageRouteName = 'Home_Page';
+userRoutes.route('/home', {
+  name: homePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: homePageRouteName });
   },
 });
 

@@ -1,8 +1,9 @@
 {
-  "name": "bowfolios",
+  "name": "manoastudentkitchen",
   "private": true,
   "scripts": {
-    "start": "meteor --no-release-check --settings ../config/settings.development.json",
+    "start": "meteor --no-release-check --settings ../config/settings.json",
+    "startlocal": "meteor --no-release-check --settings ../config/settings.development.json",
     "lint": "eslint ./imports",
     "jsdoc": "./node_modules/.bin/jsdoc -c ./jsdoc.json -r .",
     "test-watch": "meteor test --driver-package practicalmeteor:mocha --port 3100"

@@ -1,0 +1,37 @@
+<template name="Edit_Profile_Page">
+
+{{#if Template.subscriptionsReady}}
+
+  <div class="ui text container segment">
+    <div class="ui dividing header">
+      Update Profile
+    </div>
+    <form class="ui equal width form profile-data-form {{ successClass }} {{ errorClass }}">
+
+      <div class="fields">
+        {{> Text_Form_Control label="First" value=profile.firstName errorMessage=(fieldError "firstName")}}
+        {{> Text_Form_Control label="Last" value=profile.lastName errorMessage=(fieldError "lastName")}}
+      </div>
+
+      <div class="field">
+        {{> Text_Form_Control label="Profile Picture" placeholder="http://foo.com/shot.jpg" value=profile.picture errorMessage=(fieldError "picture")}}
+      </div>
+
+      <div class="field">
+        {{> Select_Form_Control label="Favorite Foods" options=interests errorMessage=(fieldError "interests") multiple=true }}
+      </div>
+
+      {{> TextArea_Form_Control label="Bio" value=profile.bio placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
+
+      <button class="ui primary button" type="submit">Update</button>
+      {{#if displaySuccessMessage}}
+        <div class="ui success message">
+          <p>Profile data successfully updated.</p>
+        </div>
+      {{/if}}
+    </form>
+  </div>
+
+  {{/if}}
+
+</template>

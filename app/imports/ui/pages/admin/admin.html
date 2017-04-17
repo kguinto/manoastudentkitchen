@@ -1,0 +1,78 @@
+<template name="Admin_Page">
+  <div class="ui text container segment">
+    <div class="ui dividing header">
+      Admin Functions
+    </div>
+    <div style="padding-top: 20px" class="ui container">
+      <form class="ui form">
+        <h4 class="ui dividing header">Search/Edit Recipe</h4>
+        <div class="field">
+          <label>Search for a recipe</label>
+          <div class="field">
+            <select class="ui fluid search dropdown" multiple="">
+              <option value="">Search Recipe</option>
+              <option value="A1">Long</option>
+              <option value="A2">List</option>
+              <option value="A3">Of</option>
+              <option value="A4">Genres</option>
+            </select>
+          </div>
+        </div>
+        <button class="ui button">Search</button>
+      </form>
+
+      <div style="padding-top: 20px" class="ui segment">
+        <h4 class="ui dividing header">Recipe</h4>
+
+        <div class="active content">
+          <label>Options</label>
+          <ul class="ui list">
+            <li>View Recipe</li>
+            <li>Edit Recipe</li>
+            <li>Delete Recipe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="padding-top: 20px" class="ui container">
+      <form class="ui form">
+        <h4 class="ui dividing header">Search/Edit User</h4>
+        <div class="field">
+          <label>Search for a recipe</label>
+          <div class="field">
+            <select class="ui fluid search dropdown" multiple="">
+              <option value="">Search User</option>
+              <option value="A1">Long</option>
+              <option value="A2">List</option>
+              <option value="A3">Of</option>
+              <option value="A4">Genres</option>
+            </select>
+          </div>
+        </div>
+        <button class="ui button">Submit</button>
+      </form>
+      <div style="padding-top: 20px" class="ui segment">
+        <h4 class="ui dividing header">UserName</h4>
+
+
+        <div class="active content">
+          <label>Options</label>
+          <ul class="ui list">
+            <li>View Profile</li>
+            <li>Edit Profile</li>
+            <li>Message User</li>
+            <li>Ban User</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('select.dropdown')
+          .dropdown()
+      ;
+    </script>
+  </div>
+
+</template>
