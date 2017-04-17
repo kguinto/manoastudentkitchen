@@ -2,7 +2,7 @@ html, body {
   height:100%;
 }
 .ui.borderless.topmenu.menu.top {
-  background-color: teal;
+  background-color: #005837;
   border-radius: 0px;
 
   font-size: 14px;
@@ -68,4 +68,11 @@ html, body {
 ui.raised.very.padded.container.segment.poptags {
 
 
+}
+
+.grad-background {
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('http://www.biggerbolderbaking.com/wp-content/uploads/2016/04/BBB121-NEW-Microwave-Mug-Meals-Thumbnail-FINAL.jpg');
+  background-size: cover;
+  height: 500px;
+  color: white;
 }
