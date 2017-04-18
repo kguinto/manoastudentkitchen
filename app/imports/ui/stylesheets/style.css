@@ -1,5 +1,6 @@
 html, body {
   height:100%;
+  background-color: #f3f3f3;
 }
 .ui.borderless.topmenu.menu.top {
   background-color: #005837;
@@ -15,7 +16,6 @@ html, body {
 .card-image {
   max-width:50%;
   margin-left:25%;
-
 }
 
 .content {
