@@ -1,129 +1,162 @@
 <template name="Home_Page">
 
-  <div class="content-container-lesswide-heading"><h2>Search</h2></div>
-  <div class="content-container-lesswide">
-    <div class="ui middle aligned centered container">
-
-      <div class="ui category search">
-        <div class="ui huge icon fluid input">
-          <input class="prompt" type="text" placeholder="Search recipes by tag...">
-
-          <i class="search icon"></i>
+  <div class="home-content">
+    <div class="ui fluid grad-background">
+      <div class="ui one column center aligned page grid" style="height:500px;">
+        <div class="one column row">
+          <div class="middle aligned column twelve wide two high">
+            <h1>Recipes by Manoa students, for Manoa students.</h1>
+            <br>
+            <div class="ui search">
+              <div class="ui fluid icon input">
+                <input class="prompt" type="text" placeholder="Search recipes, tags, locations, authors...">
+                <i class="search icon"></i>
+              </div>
+              <div class="results"></div>
+            </div>
+          </div>
         </div>
-        <div class="results"></div>
       </div>
     </div>
+    <br>
+    <br>
 
-  </div>
-
-  <div class="content-container-lesswide-heading"><h2>Popular Recipes</h2></div>
-  <div class="ui container">
-
-    <div class="ui link centered cards">
-      <div class="card">
-        <div class="ui centered card-image">
-          <img class="ui centered image" src="/images/recipe.png">
-        </div>
-        <div class="content">
-          <div class="header">Recipe</div>
-          <div class="meta">
-            <div class="ui label"> Tag1</div>
-            <div class="ui label"> Tag2</div>
+    <div class="ui container">
+      <div class="ui three link centered cards">
+        <div class="card">
+          <div class="ui centered card-image">
+            <img class="ui centered image" src="/images/recipe.png">
           </div>
-          <div class="description">
-            <p>Recipe abstract goes here.</p>
-            <a href="">View Full Recipe</a>
+          <div class="content">
+            <div class="header"></div>
+            <div class="meta">
+              <div class="ui label"></div>
+              <div class="ui label"></div>
+            </div>
+            <div class="description">
+              <p></p>
+              <a href=""></a>
+            </div>
           </div>
-        </div>
-        <div class="extra content">
+          <div class="extra content">
           <span>
             <div class="ui label">
-              Likes
-              <div class="detail">[###]</div>
+              <div class="detail"></div>
             </div>
           </span>
-          <span class="right floated">
-            Added in 2017
+            <span class="right floated">
           </span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="ui centered card-image">
-          <img class="ui centered image" src="/images/recipe.png">
-        </div>
-        <div class="content">
-          <div class="header">Recipe</div>
-          <div class="meta">
-            <div class="ui label"> Tag1</div>
-            <div class="ui label"> Tag2</div>
-          </div>
-          <div class="description">
-            <p>Recipe abstract goes here.</p>
-            <a href="">View Full Recipe</a>
           </div>
         </div>
-        <div class="extra content">
+        <div class="card">
+          <div class="ui centered card-image">
+            <img class="ui centered image" src="/images/recipe.png">
+          </div>
+          <div class="content">
+            <div class="header"></div>
+            <div class="meta">
+              <div class="ui label"></div>
+              <div class="ui label"></div>
+            </div>
+            <div class="description">
+              <p></p>
+              <a href=""></a>
+            </div>
+          </div>
+          <div class="extra content">
           <span>
             <div class="ui label">
-              Likes
-              <div class="detail">[###]</div>
+              <div class="detail"></div>
             </div>
           </span>
-          <span class="right floated">
-            Added in 2017
+            <span class="right floated">
           </span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="ui centered card-image">
-          <img class="ui centered image" src="/images/recipe.png">
-        </div>
-        <div class="content">
-          <div class="header">Recipe</div>
-          <div class="meta">
-            <div class="ui label"> Tag1</div>
-            <div class="ui label"> Tag2</div>
-          </div>
-          <div class="description">
-            <p>Recipe abstract goes here.</p>
-            <a href="">View Full Recipe</a>
           </div>
         </div>
-        <div class="extra content">
+        <div class="card">
+          <div class="ui centered card-image">
+            <img class="ui centered image" src="/images/recipe.png">
+          </div>
+          <div class="content">
+            <div class="header"></div>
+            <div class="meta">
+              <div class="ui label"></div>
+              <div class="ui label"></div>
+            </div>
+            <div class="description">
+              <p></p>
+              <a href=""></a>
+            </div>
+          </div>
+          <div class="extra content">
           <span>
             <div class="ui label">
-              Likes
-              <div class="detail">[###]</div>
+              <div class="detail"></div>
             </div>
           </span>
-          <span class="right floated">
-            Added in 2017
+            <span class="right floated">
           </span>
+          </div>
         </div>
       </div>
-
     </div>
+    <br>
+    <br>
 
-
-
-  </div>
-
-  <div class="content-container-poptags">
-  <div class="ui container segment">
-
-    <h2>Popular Tags</h2>
-
-      <ul>
-      <li class="ui label"> Tag1 </li>
-      <li class="ui label"> Tag2 </li>
-      <li class="ui label"> Tag3 </li>
-      <li class="ui label"> Tag4 </li>
-      <li class="ui label"> Tag5 </li>
-      <li class="ui label"> Tag6 </li>
-      </ul>
-  </div>
+    <div style="background-color: #F6F6F6;">
+      <div class="ui container">
+        <div class="ui four link doubling cards">
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/samplefood.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/samplefood.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/samplesquare.png">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/ramsey.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/samplefood.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/samplefood.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container">
+              <img class="tag-image" src="/images/samplefood.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+          <div class="card tag-card">
+            <div class="image tag-image-container" style="background-image: ">
+              <img class="tag-image" src="/images/samplefood.jpg">
+              <div class="tag-image-text">TEST</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
