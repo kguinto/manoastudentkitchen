@@ -1,6 +1,6 @@
+
 html, body {
-  height:100%;
-  background-color: #f3f3f3;
+  height:100%; /** Don't define background color here, it breaks the landing page. **/
 }
 .ui.borderless.topmenu.menu.top {
   background-color: #005837;

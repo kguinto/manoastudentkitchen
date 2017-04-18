@@ -1,20 +1,27 @@
 
 .thefooter {
-  background-color: teal;
+  background-color: #005837;
   color:white;
   position:fixed;
   bottom:0;
   width:100%;
   min-height:50px;
+  z-index:100000000;
 }
 
 .theheader {
-  background-color: teal;
+  background-color: #005837;
   color:white;
   position:fixed;
   top:0;
   width:100%;
   min-height:50px;
+  z-index:100000000;
+
+}
+
+.landing-content {
+  z-index:100000000;
 }
 
 .filler {
@@ -40,6 +47,6 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
-  z-index: -1;
+  z-index: -1000;
   position: absolute;
 }

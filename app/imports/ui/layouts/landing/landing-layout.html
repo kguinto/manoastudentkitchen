@@ -1,9 +1,11 @@
 <template name="Landing_Layout">
   <div class="landing-image-background-container">
     <img class="ui landing-image-background" src="http://www.betterrecipes.com/blogs/daily-dish/files/2014/01/salmon.jpg">
-
-    {{> Landing_Header}}
-  {{>Template.dynamic template=main}}
-  {{> Landing_Footer}}
   </div>
+    <div class="landing-content">
+    {{> Landing_Header}}
+    {{>Template.dynamic template=main}}
+    {{> Landing_Footer}}
+    </div>
+
 </template>
