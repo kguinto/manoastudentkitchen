@@ -25,8 +25,21 @@
   overflow:hidden;
 }
 
-.subsection {
-margin-top: 4vw;
-  margin-bottom: 4vw;
+.subsection-recipes {
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  background-color: lightgray;
 
+}
+
+
+.subsection-tags {
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  background-color: #F6F6F6;
+}
+
+.home-section {
+margin-top: 2vh;
+margin-bottom: 2vh;
 }
