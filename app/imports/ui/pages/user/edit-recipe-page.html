@@ -1,0 +1,104 @@
+<template name="Edit_Recipe_Page">
+
+  {{#if Template.subscriptionsReady}}
+
+  <div class="ui form container">
+    <div class="ui header">
+        <div class="ui fluid text input">
+        </div>
+      </h1>
+    </div>
+    <br>
+
+
+    <div class="ui one column center aligned page grid" style="height:400px; z-index: 2;">
+      <div class="ui container image-background-container">
+        <img class="ui image-background">
+      </div>
+
+      <img class="ui image recipe-image" src="http://www.betterrecipes.com/blogs/daily-dish/files/2014/01/salmon.jpg">
+    </div>
+
+    <br>
+    <br>
+
+    <button class="ui button">
+      Change image
+    </button>
+
+
+    <br>
+    <div class="ui text segment">
+      <h2>About this recipe</h2>
+
+      <p>2 Servings, $15 total ($4/Serving)</p>
+
+      <h3>Popular User-Defined Tags: </h3>
+
+      <div class="ui left labeled button" tabindex="0">
+        <a class="ui basic right pointing label">
+          cheap
+          <div class="detail">21</div>
+        </a>
+        <div class="ui button">
+          <i class="x icon"></i>
+        </div>
+      </div>
+      <div class="ui left labeled button" tabindex="0">
+        <a class="ui basic right pointing label">
+          easy
+          <div class="detail">16</div>
+        </a>
+        <div class="ui button">
+          <i class="x icon"></i>
+        </div>
+      </div>
+
+      <div class="ui left labeled button" tabindex="0">
+        <a class="ui basic right pointing label">
+          pescetarian
+          <div class="detail">12</div>
+        </a>
+        <div class="ui button">
+          <i class="x icon"></i>
+        </div>
+      </div>
+
+      <div class="ui left labeled button" tabindex="0">
+        <a class="ui basic right pointing label">
+          <div class="ui transparent input">
+            <input type="text" placeholder="Submit a tag...">
+          </div>
+        </a>
+        <div class="ui button">
+          <i class="plus icon"></i>
+        </div>
+      </div>
+
+
+    </div>
+
+    <h2>Instructions</h2>
+    <div class="ui text segment">
+
+      <div class="field">
+        slices of red potato. Top with a piece of salmon, followed by herbs and vegetables.</p>
+      <hr>
+      Step 2
+      <p>Before closing the bag, sprinkle with a bit of white wine. Not only will this help create a moist environment
+        for steaming, it also adds flavor and dimension to the dish.</p>
+      <hr>
+      Step 3
+      <p>The parchment bag is folded tight and microwaved for about 3 1/2 minutes. When it is done, simply cut open
+        the bag with scissors or a paring knife and serve.</p>"></textarea>
+
+      </div>
+
+    </div>
+
+    <button class="ui blue button" type="submit">Save changes</button>
+  </div>
+
+  {{/if}}
+
+</template>
