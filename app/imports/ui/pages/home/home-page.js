@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/profile/ProfileCollection';
-import { Tags } from '/imports/api/profile/ProfileCollection';
+import { Tags } from '/imports/api/tag/TagCollection';
+import { _ } from 'meteor/underscore';
 
 Template.Home_Page.helpers({
 
@@ -17,10 +18,11 @@ Template.Home_Page.helpers({
    *
    */
   top_tags() {
-    const allTags = Tags.find({}, { fields: { tagName: 1 } });
+    const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
     const namesOnly = _.values(allTags);
     const frequency = _.countBy(namesOnly, function (each) { return each; });
-    return _.first(_.sortBy(_.uniq(namesOnly), function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
+    const result = _.first(_.sortBy(_.uniq(namesOnly), function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
+    return result;
   },
 
   /**
@@ -28,9 +30,9 @@ Template.Home_Page.helpers({
    *
    */
   load_tag_image(theTagName) {
-    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { recipeID: 1 } } );
+    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { recipeID: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    return Recipes.find({ recipeID: randomRecipe.recipeID }, {}).image;
+    return Recipes.find({ recipeID: randomRecipe.recipeID }, {}).fetch();
   },
 
   /**
@@ -38,7 +40,7 @@ Template.Home_Page.helpers({
    *
    */
   recipe_tag(theRecipeID) {
-    return Tags.find({ recipeID: theRecipeID }, {});
+    return Tags.find({ recipeID: theRecipeID }, {}).fetch();
   },
 
 });
