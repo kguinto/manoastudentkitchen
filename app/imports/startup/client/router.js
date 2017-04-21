@@ -84,6 +84,14 @@ userRoutes.route('/viewrecipe', {
   },
 });
 
+export const editRecipePageRouteName = 'Edit_Recipe_Page';
+userRoutes.route('/editrecipe', {
+  name: editRecipePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: editRecipePageRouteName });
+  },
+});
+
 export const filterPageRouteName = 'Filter_Page';
 userRoutes.route('/filter', {
   name: filterPageRouteName,
