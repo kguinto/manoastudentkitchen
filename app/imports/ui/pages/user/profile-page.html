@@ -1,13 +1,20 @@
 <template name="Profile_Page">
   <div style="margin-top: 10px" class="ui container">
-    <div class="ui two column relaxed grid">
-      <div class="column">
-        <img class="ui fluid centered image" style="border-radius: 10px" src="/images/ramsey.jpg">
+    <div class="ui grid">
+      <div class="two wide column"></div>
+      <div class="five wide column">
+        <div style="width: 100%">
+          <img class="ui image" style="border-radius: 10px" src="/images/ramsey.jpg">
+        </div>
       </div>
-      <div class="column">
+      <div class="one wide column"></div>
+      <div class="eight wide column">
         <div style="height: 5%"></div>
-        <h1 style="text-align: center">Chef Ramsey</h1>
-        <h4>Bio statement goes here</h4>
+        <h1 style="text-align: center">Gordon Ramsay</h1>
+        <div style="height: 3%"></div>
+        <p>Scottish celebrity chef Gordon Ramsay has opened restaurants around the world and hosted such popular TV
+          programs as Hell’s Kitchen and MasterChef.</p>
+        <div class="ui button">Follow</div>
       </div>
     </div>
 
@@ -28,9 +35,42 @@
       </a>
     </div>
 
-    <div class="ui hidden divider"></div>
+    <div class="ui grid">
+      <div class="five wide column">
+        <div class="ui vertical pointing menu">
+          <a class="active item">
+            April
+          </a>
+          <a class="item">
+            March
+          </a>
+          <a class="item">
+            February
+          </a>
+        </div>
+      </div>
+      <div class="eleven wide column">
+        <div class="ui segment">
+
+          <a class="ui bottom right attached label">April 18, 2017</a>
+        </div>
+        <div class="ui segment">
+
+        </div>
+        <div class="ui segment">
+
+        </div>
+      </div>
+    </div>
 
     <div class="ui three stackable link cards">
+      <div class="card">
+        <div class="ui large top attached label" style="text-align: center">
+          Create Recipe
+        </div>
+        <div class="ui massive plus icon"></div>
+      </div>
+
       <div class="card">
         <div class="ui centered card-image">
           <img class="ui image" src="/images/recipe.png">
@@ -49,6 +89,68 @@
           <span class="right floated">
             Author
           </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="ui container">
+    <div class="ui segment">
+      <div class="ui large top attached label">Following</div>
+      <div class="ui stackable link cards">
+        <div class="card">
+          <div class="content">
+            <div class="ui grid">
+              <div class="five wide column">
+                <div class="ui circular image">
+                  <img style="width: 100%" src="/images/ramsey.jpg">
+                </div>
+              </div>
+              <div class="seven wide column">
+                <a><h4>Curtis</h4></a>
+                <div class="description">
+                  5 Recipes<br>
+                  10 Followers
+                </div>
+              </div>
+              <div class="four wide column">
+                <div class="ui icon button">
+                  <i class="add user icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui segment">
+      <div class="ui large top attached label">Followers</div>
+      <div class="ui stackable link cards">
+        <div class="card">
+          <div class="content">
+            <div class="ui grid">
+              <div class="five wide column">
+                <div class="ui circular image">
+                  <img style="width: 100%" src="/images/drakefieri.png">
+                </div>
+              </div>
+              <div class="seven wide column">
+                <a><h4>Drake Fieri</h4></a>
+                <div class="description">
+                  <span>50 Recipes</span><br>
+                  <span>100 Followers</span>
+                </div>
+              </div>
+              <div class="four wide column">
+                <div class="ui icon button">
+                  <i class="add user icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
