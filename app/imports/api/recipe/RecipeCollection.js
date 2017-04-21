@@ -18,7 +18,7 @@ class RecipeCollection extends BaseCollection {
   constructor() {
     super('Recipe', new SimpleSchema({
       userID: { type: Number },
-      recipeID { type: Number }
+      recipeID: { type: Number },
       recipeName: { type: String, optional: true },
       firstPublishDate: { type: Date, optional: true },
       lastEditDate: { type: Date, optional: true },
@@ -61,9 +61,9 @@ class RecipeCollection extends BaseCollection {
     }
 
     // Throw an error if any of the passed Interest names are not defined.
-/*    Interests.assertNames(interests);
-    return this._collection.insert({ firstName, lastName, username, bio, interests, picture, title, github,
-      facebook, instagram });*/
+    /*    Interests.assertNames(interests);
+     return this._collection.insert({ firstName, lastName, username, bio, interests, picture, title, github,
+     facebook, instagram });*/
   }
 
   /**
