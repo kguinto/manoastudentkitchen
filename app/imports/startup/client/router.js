@@ -84,6 +84,14 @@ userRoutes.route('/viewrecipe', {
   },
 });
 
+export const editRecipePageRouteName = 'Edit_Recipe_Page';
+userRoutes.route('/editrecipe', {
+  name: editRecipePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: editRecipePageRouteName });
+  },
+});
+
 export const filterPageRouteName = 'Filter_Page';
 userRoutes.route('/filter', {
   name: filterPageRouteName,
@@ -96,7 +104,7 @@ export const homePageRouteName = 'Home_Page';
 userRoutes.route('/home', {
   name: homePageRouteName,
   action() {
-    BlazeLayout.render('User_Layout', { main: homePageRouteName });
+    BlazeLayout.render('Home_Layout', { main: homePageRouteName });
   },
 });
 

@@ -5,3 +5,6 @@ import './user-header.html';
 import './user-header.js';
 import './user-layout.css';
 import './user-layout.html';
+import './home-header.html';
+import './home-layout.html';
+import './home-header.js';

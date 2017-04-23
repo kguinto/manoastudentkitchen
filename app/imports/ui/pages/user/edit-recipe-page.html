@@ -1,11 +1,17 @@
-<template name="View_Recipe_Page">
+<template name="Edit_Recipe_Page">
 
   {{#if Template.subscriptionsReady}}
 
-  <div class="ui container">
+  <div class="ui form container">
     <div class="ui header">
-      <h1>Microwave Salmon en Papillote</h1>
+      <h1>
+        <div class="ui fluid text input">
+          <input type="text" value="Microwave Salmon en Papillote" placeholder="Enter title...">
+        </div>
+      </h1>
     </div>
+    <br>
+
 
     <div class="ui one column center aligned page grid" style="height:400px; z-index: 2;">
       <div class="ui container image-background-container">
@@ -14,6 +20,14 @@
 
       <img class="ui image recipe-image" src="http://www.betterrecipes.com/blogs/daily-dish/files/2014/01/salmon.jpg">
     </div>
+
+    <br>
+    <br>
+
+    <button class="ui button">
+      Change image
+    </button>
+
 
     <br>
     <div class="ui text segment">
@@ -29,7 +43,7 @@
           <div class="detail">21</div>
         </a>
         <div class="ui button">
-          <i class="thumbs up icon"></i>
+          <i class="x icon"></i>
         </div>
       </div>
       <div class="ui left labeled button" tabindex="0">
@@ -38,7 +52,7 @@
           <div class="detail">16</div>
         </a>
         <div class="ui button">
-          <i class="thumbs up icon"></i>
+          <i class="x icon"></i>
         </div>
       </div>
 
@@ -48,7 +62,7 @@
           <div class="detail">12</div>
         </a>
         <div class="ui button">
-          <i class="thumbs up icon"></i>
+          <i class="x icon"></i>
         </div>
       </div>
 
@@ -68,7 +82,9 @@
 
     <h2>Instructions</h2>
     <div class="ui text segment">
-      <p><b>Step 1</b> For this recipe, you begin with 4 squares of parchment paper. Upon each piece, place thin
+
+      <div class="field">
+        <textarea value="<p><b>Step 1</b> For this recipe, you begin with 4 squares of parchment paper. Upon each piece, place thin
         slices of red potato. Top with a piece of salmon, followed by herbs and vegetables.</p>
       <hr>
       Step 2
@@ -77,10 +93,13 @@
       <hr>
       Step 3
       <p>The parchment bag is folded tight and microwaved for about 3 1/2 minutes. When it is done, simply cut open
-        the bag with scissors or a paring knife and serve.</p>
+        the bag with scissors or a paring knife and serve.</p>"></textarea>
+
+      </div>
+
     </div>
 
-
+    <button class="ui blue button" type="submit">Save changes</button>
   </div>
 
   {{/if}}

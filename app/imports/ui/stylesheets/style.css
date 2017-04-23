@@ -1,5 +1,6 @@
+
 html, body {
-  height:100%;
+  height:100%; /** Don't define background color here, it breaks the landing page. **/
 }
 .ui.borderless.topmenu.menu.top {
   background-color: #005837;
@@ -15,7 +16,6 @@ html, body {
 .card-image {
   max-width:50%;
   margin-left:25%;
-
 }
 
 .content {
