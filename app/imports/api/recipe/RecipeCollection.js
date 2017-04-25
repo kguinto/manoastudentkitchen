@@ -1,6 +1,6 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import BaseCollection from '/imports/api/base/BaseCollection';
-import { Interests } from '/imports/api/interest/InterestCollection';
+//import { Interests } from '/imports/api/interest/InterestCollection';
 import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
@@ -50,11 +50,11 @@ class RecipeCollection extends BaseCollection {
    * if one or more interests are not defined, or if github, facebook, and instagram are not URLs.
    * @returns The newly created docID.
    */
-  define({ recipeID, userID, firstPublishDate = new Date(), lastEditDate = new Date(), instructions = '', noServings = 0, totalCost = 0, costPerServing = 0}) {
+  define({ recipeID, userID, recipeName = "", firstPublishDate = new Date(), lastEditDate = new Date(), instructions = '', noServings = 0, totalCost = 0, costPerServing = 0}) {
     // make sure required fields are OK.
-    const checkPattern = { recipeID: Number, userID: Number, firstPublishDate: Date, lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number};
+    const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Date, lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number};
 
-    check({ recipeID, userID, firstPublishDate, lastEditDate, instructions, noServings, totalCost }, checkPattern);
+    check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }, checkPattern);
 
     if (this.find({ recipeID }).count() > 0) {
       throw new Meteor.Error(`${recipeID} is previously defined in another Recipe`);
@@ -74,13 +74,14 @@ class RecipeCollection extends BaseCollection {
   dumpOne(docID) {
     const doc = this.findDoc(docID);
     const recipeID = doc.recipeID;
+    const recipeName = doc.recipeName;
     const userID = doc.userID;
     const firstPublishDate = doc.firstPublishDate;
     const lastEditDate = doc.lastEditDate;
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    return{ recipeID, userID, firstPublishDate, lastEditDate, instructions, noServings, totalCost },;
+    return{ recipeID, userID, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
   }
 }
 
