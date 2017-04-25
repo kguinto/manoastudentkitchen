@@ -1,85 +1,70 @@
 {
-  "comment": "Initial contents for the BowFolios database. For development purposes only.",
+  "comment": "Test collection for manoastudentkitchen.",
   "collections": [
     {
-      "name": "InterestCollection",
+      "name": "TagCollection",
       "contents": [
         {
-          "name": "Pizza",
-          "description": ""
+          "tagID": 77383911,
+          "recipeID": 7729292,
+          "tagName": "Pasta",
+          "score": 13
         },
         {
-          "name": "Algorithms",
-          "description": "A set of rules to be followed in computation"
+          "tagID": 49377384,
+          "recipeID": 6481931,
+          "tagName": "Pizza",
+          "score": 6
         },
         {
-          "name": "Mobile Networks",
-          "description": "Networks created using mobile devices."
+          "tagID": 77382232,
+          "recipeID": 7729292,
+          "tagName": "Easy",
+          "score": 223
         },
         {
-          "name": "Sailing",
-          "description": ""
+          "tagID": 77333331,
+          "recipeID": 7723292,
+          "tagName": "Cheap",
+          "score": 131
         },
         {
-          "name": "Mars",
-          "description": ""
+          "tagID": 77333231,
+          "recipeID": 7723292,
+          "tagName": "Cheap",
+          "score": 18
         },
         {
-          "name": "Imu Cooking",
-          "description": "Hawaiian practice of cooking in a pit."
+          "tagID": 77313331,
+          "recipeID": 7723292,
+          "tagName": "Microwave",
+          "score": 12
         },
         {
-          "name": "Scuba",
-          "description": ""
+          "tagID": 39377384,
+          "recipeID": 6481931,
+          "tagName": "Quick",
+          "score": 20
         },
         {
-          "name": "Photography",
-          "description": ""
+          "tagID": 393355384,
+          "recipeID": 6581931,
+          "tagName": "Simple",
+          "score": 20
         },
         {
-          "name": "Wind surfing",
-          "description": ""
+          "tagID": 393355584,
+          "recipeID": 6521931,
+          "tagName": "Seafood",
+          "score": 44
         },
         {
-          "name": "Psychology",
-          "description": ""
-        },
-        {
-          "name": "Motorcycling",
-          "description": ""
-        },
-        {
-          "name": "Accreditation",
-          "description": ""
-        },
-        {
-          "name": "Paddling",
-          "description": ""
-        },
-        {
-          "name": "Crossfit",
-          "description": ""
-        },
-        {
-          "name": "Cybersecurity",
-          "description": ""
-        },
-        {
-          "name": "Surfing",
-          "description": ""
-        },
-        {
-          "name": "Computer Vision",
-          "description": ""
-        },
-        {
-          "name": "Martial Arts",
-          "description": ""
-        },
-        {
-          "name": "Evolutionary Computation",
-          "description": ""
+          "tagID": 393335484,
+          "recipeID": 6521931,
+          "tagName": "Cold",
+          "score": 33
         }
+
       ]
     },
     {
