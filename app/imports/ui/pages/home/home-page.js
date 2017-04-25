@@ -23,7 +23,6 @@ Template.Home_Page.helpers({
    *
    */
   top_tags() {
-    console.log(Tags.find({}, {}));
     const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
     const namesOnly = _.values(allTags);
     const frequency = _.countBy(namesOnly, function (each) { return each; });

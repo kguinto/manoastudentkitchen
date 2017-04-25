@@ -62,15 +62,14 @@
     <div class="subsection-tags">
       <div class="ui container home-section">
         <div class="ui four link doubling cards">
+          {{#each top_tag in top_tags }}
           <div class="card tag-card">
-
-            {{#each top_tag in top_tags }}
               <div class="image tag-image-container">
                <img class="tag-image" src="{{ load_tag_image(top_tag.tagID) }}">
              </div>
               <div class="tag-image-text">{{ top_tag.tagName }}</div>
-            {{/each}}
             </div>
+          {{/each}}
         </div>
       </div>
     </div>
