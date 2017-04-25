@@ -3,6 +3,11 @@ import { Recipes } from '/imports/api/profile/ProfileCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { _ } from 'meteor/underscore';
 
+
+Template.Home_Page.onCreated(function onCreated() {
+  this.subscribe(Tags.getPublicationName());
+});
+
 Template.Home_Page.helpers({
 
   /**
@@ -19,9 +24,10 @@ Template.Home_Page.helpers({
    */
   top_tags() {
     const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
-    const namesOnly = _.values(allTags);
+    const namesOnly = _.pluck(_.values(allTags), 'tagName');
     const frequency = _.countBy(namesOnly, function (each) { return each; });
-    const result = _.first(_.sortBy(_.uniq(namesOnly), function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
+    const result = _.first(_.sortBy(_.uniq(namesOnly),
+        function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
     return result;
   },
 

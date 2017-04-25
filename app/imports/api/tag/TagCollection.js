@@ -17,8 +17,8 @@ class TagCollection extends BaseCollection {
    */
   constructor() {
     super('Tag', new SimpleSchema({
-      tagID: { type: String },
-      recipeID: { type: String },
+      tagID: { type: Number },
+      recipeID: { type: Number },
       tagName: { type: String },
       score: { type: Number },
     }));
@@ -36,8 +36,8 @@ class TagCollection extends BaseCollection {
    * @returns The newly created docID.
    */
   define({ tagID, recipeID, tagName, score }) {
-    check(tagID, String);
-    check(recipeID, String);
+    check(tagID, Number);
+    check(recipeID, Number);
     check(tagName, String);
     check(score, Number);
     if (this.find({ tagID }).count() > 0) {
@@ -111,9 +111,11 @@ class TagCollection extends BaseCollection {
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
+    const tagID = doc.tagID;
+    const recipeID = doc.recipeID;
     const tagName = doc.tagName;
-    const description = doc.description;
-    return { tagName, description };
+    const score = doc.score;
+    return { tagID, recipeID, tagName, score };
   }
 }
 
