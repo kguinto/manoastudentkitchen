@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-//import { Profiles } from '/imports/api/profile/ProfileCollection';
-//import { Interests } from '/imports/api/interest/InterestCollection';
+// import { Profiles } from '/imports/api/profile/ProfileCollection';
+// import { Interests } from '/imports/api/interest/InterestCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { _ } from 'meteor/underscore';
 
