@@ -3,9 +3,12 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
+import { Tags } from '/imports/api/tag/TagCollection';
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
+
+console.log('view recipe page js loaded');
 
 Template.View_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
@@ -32,6 +35,8 @@ Template.View_Recipe_Page.helpers({
   },
   recipe() {
     console.log( Recipes.find().fetch());
+
+    console.log( Tags.find().fetch());
     return Recipes.findDoc(FlowRouter.getParam('recipeID'));
   },
  /* interests() {
