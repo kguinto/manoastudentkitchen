@@ -1,0 +1,25 @@
+.image-background {
+  background: linear-gradient( rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) ), url('http://www.betterrecipes.com/blogs/daily-dish/files/2014/01/salmon.jpg');
+  background-size: 100%;
+  filter: blur(20px);
+  height: 400px;
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+  margin: -5px -5px -5px -5px;
+}
+
+.image-background-container{
+  background-color: #AAAAAA;
+  overflow: hidden;
+  height: 400px;
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+}
+
+.ui.image.recipe-image {
+  height: 400px;
+  width: auto;
+  z-index: 2;
+}
