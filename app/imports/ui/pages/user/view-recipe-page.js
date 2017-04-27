@@ -12,6 +12,7 @@ console.log('view recipe page js loaded');
 
 Template.View_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
+  this.subscribe(Tags.getPublicationName());
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
@@ -37,6 +38,7 @@ Template.View_Recipe_Page.helpers({
     console.log( Recipes.find().fetch());
 
     console.log( Tags.find().fetch());
+
     return Recipes.findDoc(FlowRouter.getParam('recipeID'));
   },
  /* interests() {
