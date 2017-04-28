@@ -1,84 +1,111 @@
 {
-  "comment": "Initial contents for the BowFolios database. For development purposes only.",
+  "comment": "Test collection for manoastudentkitchen.",
   "collections": [
     {
-      "name": "InterestCollection",
+      "name": "TagCollection",
       "contents": [
         {
-          "name": "Pizza",
-          "description": ""
+          "tagID": 77383911,
+          "recipeID": 1231231231,
+          "tagName": "Pasta",
+          "score": 13
         },
         {
-          "name": "Algorithms",
-          "description": "A set of rules to be followed in computation"
+          "tagID": 49377384,
+          "recipeID": 1231231232,
+          "tagName": "Pizza",
+          "score": 6
         },
         {
-          "name": "Mobile Networks",
-          "description": "Networks created using mobile devices."
+          "tagID": 77382232,
+          "recipeID": 1231231232,
+          "tagName": "Easy",
+          "score": 223
         },
         {
-          "name": "Sailing",
-          "description": ""
+          "tagID": 77333331,
+          "recipeID": 1231231232,
+          "tagName": "Cheap",
+          "score": 131
         },
         {
-          "name": "Mars",
-          "description": ""
+          "tagID": 77333231,
+          "recipeID": 1231231233,
+          "tagName": "Cheap",
+          "score": 18
         },
         {
-          "name": "Imu Cooking",
-          "description": "Hawaiian practice of cooking in a pit."
+          "tagID": 77313331,
+          "recipeID": 1231231233,
+          "tagName": "Microwave",
+          "score": 12
         },
         {
-          "name": "Scuba",
-          "description": ""
+          "tagID": 39377384,
+          "recipeID": 1231231232,
+          "tagName": "Quick",
+          "score": 20
         },
         {
-          "name": "Photography",
-          "description": ""
+          "tagID": 393355384,
+          "recipeID": 1231231231,
+          "tagName": "Simple",
+          "score": 20
         },
         {
-          "name": "Wind surfing",
-          "description": ""
+          "tagID": 393355584,
+          "recipeID": 1231231231,
+          "tagName": "Seafood",
+          "score": 44
         },
         {
-          "name": "Psychology",
-          "description": ""
+          "tagID": 393335484,
+          "recipeID": 1231231233,
+          "tagName": "Cold",
+          "score": 33
         },
         {
-          "name": "Motorcycling",
-          "description": ""
+          "tagID": 393336484,
+          "recipeID": 1231231231,
+          "tagName": "Cold",
+          "score": 31
+
+        }
+
+      ]
+    },
+    {
+      "name": "RecipeCollection",
+      "contents": [
+        {
+          "userID": 22653866,
+          "recipeID": 1231231231,
+          "recipeName": "Mom's Spaghetti",
+          "firstPublishDate": 1493152975,
+          "lastEditDate": 1493152975,
+          "instructions": "Test test test",
+          "noServings": 2,
+          "totalCost": 2
         },
         {
-          "name": "Accreditation",
-          "description": ""
+          "userID": 22653866,
+          "recipeID": 1231231232,
+          "recipeName": "Mom's Spaghetti 2",
+          "firstPublishDate": 1493152975,
+          "lastEditDate": 1493152975,
+          "instructions": "Test test test 2",
+          "noServings": 2,
+          "totalCost": 2
         },
         {
-          "name": "Paddling",
-          "description": ""
-        },
-        {
-          "name": "Crossfit",
-          "description": ""
-        },
-        {
-          "name": "Cybersecurity",
-          "description": ""
-        },
-        {
-          "name": "Surfing",
-          "description": ""
-        },
-        {
-          "name": "Computer Vision",
-          "description": ""
-        },
-        {
-          "name": "Martial Arts",
-          "description": ""
-        },
-        {
-          "name": "Evolutionary Computation",
-          "description": ""
+          "userID": 22653866,
+          "recipeID": 1231231233,
+          "recipeName": "Mom's Spaghetti 3",
+          "firstPublishDate": 1493152975,
+          "lastEditDate": 1493152975,
+          "instructions": "Test test test 3",
+          "noServings": 2,
+          "totalCost": 2
         }
       ]
     },

@@ -34,6 +34,41 @@ FlowRouter.route('/directory', {
 });
 
 
+/*                        RECIPE ROUTES                      */
+//sample
+/*export const defRecipePageRouteName = 'View_Recipe_Page';
+FlowRouter.route('/recipe', {
+  name: defRecipePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: defRecipePageRouteName });
+  },
+});*/
+
+function addRecipeBodyClass() {
+  $('body').addClass('recipe-layout-body');
+}
+
+function removeRecipeBodyClass() {
+  $('body').removeClass('recipe-layout-body');
+}
+
+const recipeRoutes = FlowRouter.group({
+  prefix: '/recipe/:recipeID',
+  name: 'recipeRoutes',
+  triggersEnter: [addRecipeBodyClass],
+  triggersExit: [removeRecipeBodyClass],
+});
+
+export const recipePageRouteName = 'View_Recipe_Page';
+recipeRoutes.route('/view', {
+  name: recipePageRouteName,
+  action() {
+    BlazeLayout.render('Recipe_Layout', { main: recipePageRouteName });
+  },
+});
+
+
+
 /*                        USER ROUTES                      */
 
 
@@ -73,14 +108,6 @@ userRoutes.route('/edit-profile', {
   name: editProfilePageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: editProfilePageRouteName });
-  },
-});
-
-export const viewRecipePageRouteName = 'View_Recipe_Page';
-userRoutes.route('/viewrecipe', {
-  name: viewRecipePageRouteName,
-  action() {
-    BlazeLayout.render('User_Layout', { main: viewRecipePageRouteName });
   },
 });
 
