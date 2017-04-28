@@ -122,6 +122,14 @@ class RecipeCollection extends BaseCollection {
     return (recipeNames) ? recipeNames.map((instance) => this.findID(instance)) : [];
   }
 
+  findDocWithRecipeID(recipeID) {
+    const doc = this._collection.findOne({ recipeID: recipeID });
+    if (!doc) {
+      throw new Meteor.Error(`${recipeID} is not a defined ${this._type}`);
+    }
+    return doc;
+  }
+
 
   /**
    * Returns an object representing the Recipe docID in a format acceptable to define().
