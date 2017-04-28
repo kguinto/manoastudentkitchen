@@ -1,6 +1,6 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import BaseCollection from '/imports/api/base/BaseCollection';
-//import { Interests } from '/imports/api/interest/InterestCollection';
+// import { Interests } from '/imports/api/interest/InterestCollection';
 import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
@@ -49,20 +49,46 @@ class RecipeCollection extends BaseCollection {
    * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs.
    * @returns The newly created docID.
    */
-  define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost}) {
-    console.log("Define called");
+  define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }) {
+    console.log('Define called');
     // make sure required fields are OK.
-    const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number, lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number};
+    const checkPattern = {
+      recipeID: Number,
+      userID: Number,
+      recipeName: String,
+      firstPublishDate: Number,
+      lastEditDate: Number,
+      instructions: String,
+      noServings: Number,
+      totalCost: Number,
+    };
 
-    check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost}, checkPattern);
+    check({
+      recipeID,
+      userID,
+      recipeName,
+      firstPublishDate,
+      lastEditDate,
+      instructions,
+      noServings,
+      totalCost,
+    }, checkPattern);
 
     if (this.find({ recipeID }).count() > 0) {
       throw new Meteor.Error(`${recipeID} is previously defined in another Recipe`);
     }
 
-    return this._collection.insert({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost});
+    return this._collection.insert({
+      recipeID,
+      userID,
+      recipeName,
+      firstPublishDate,
+      lastEditDate,
+      instructions,
+      noServings,
+      totalCost,
+    });
   }
-
 
   /**
    * Returns the Recipe recipeName corresponding to the passed Recipe docID.
@@ -112,7 +138,8 @@ class RecipeCollection extends BaseCollection {
   }
 
   /**
-   * Returns the docIDs associated with the array of Recipe recipeNames, or throws an error if any recipeName cannot be found.
+   * Returns the docIDs associated with the array of Recipe recipeNames, or throws an error if any recipeName cannot be
+   *   found.
    * If nothing is passed, then an empty array is returned.
    * @param { String[] } recipeNames An array of Recipe recipeNames.
    * @returns { String[] } The docIDs associated with the recipeNames.
@@ -130,7 +157,6 @@ class RecipeCollection extends BaseCollection {
     return doc;
   }
 
-
   /**
    * Returns an object representing the Recipe docID in a format acceptable to define().
    * @param docID The docID of a Recipe.
@@ -146,7 +172,7 @@ class RecipeCollection extends BaseCollection {
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    return{ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost};
+    return { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
   }
 }
 
@@ -154,4 +180,4 @@ class RecipeCollection extends BaseCollection {
  * Provides the singleton instance of this class to all other entities.
  */
 export const Recipes = new RecipeCollection();
-  console.log("RecipeCollection ");
+console.log('RecipeCollection');
