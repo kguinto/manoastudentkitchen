@@ -37,18 +37,9 @@ Template.View_Recipe_Page.helpers({
   recipe() {
     console.log( Recipes.find().fetch());
 
-    console.log( Tags.find().fetch());
-
     return Recipes.findDoc(FlowRouter.getParam('recipeID'));
   },
- /* interests() {
-    const recipe = Recipes.findDoc(FlowRouter.getParam('recipeID'));
-    const selectedInterests = profile.interests;
-    return profile && _.map(Interests.findAll(),
-            function makeInterestObject(interest) {
-              return { label: interest.name, selected: _.contains(selectedInterests, interest.name) };
-            });
-  },*/
+
 });
 /*
 
