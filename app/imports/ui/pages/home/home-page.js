@@ -51,9 +51,13 @@ Template.Home_Page.helpers({
   },
 
   convert_publish_date(publishDate) {
-    let date = new Date(0);
+    const date = new Date(0);
     date.setUTCSeconds(publishDate);
     return date.toLocaleDateString();
+  },
+
+  get_recipe_url(recipeID) {
+    return `/recipe/${recipeID}/view`;
   },
 
 });
