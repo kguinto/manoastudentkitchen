@@ -30,7 +30,7 @@
               <img class="ui centered image" src="{{ top_recipe.image }}">
             </div>
             <div class="content">
-              <div class="header">{{ top_recipe.title }}</div>
+              <div class="header">{{ top_recipe.recipeName }}</div>
               <div class="meta">
 
                 {{#each tag in recipe_tag }}
@@ -39,7 +39,7 @@
 
               </div>
               <div class="description">
-                <p>{{ top_recipe.description }}</p>
+                <p>{{ top_recipe.instructions }}</p>
                 <a href="">View</a>
               </div>
             </div>

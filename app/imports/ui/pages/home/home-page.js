@@ -1,11 +1,12 @@
 import { Template } from 'meteor/templating';
-import { Recipes } from '/imports/api/profile/ProfileCollection';
+import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { _ } from 'meteor/underscore';
 
 
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
+  this.subscribe(Recipes.getPublicationName());
 });
 
 Template.Home_Page.helpers({
