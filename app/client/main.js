@@ -14,11 +14,10 @@ import '/imports/ui/pages/landing';
 import '/imports/ui/pages/user';
 import '/imports/ui/pages/home';
 import '/imports/ui/pages/admin';
+import '/imports/ui/pages/search';
 import '/imports/ui/stylesheets/style.css';
 import '/imports/api/base';
 import '/imports/api/profile';
 import '/imports/api/interest';
 import '/imports/api/recipe';
 import '/imports/api/tag';
-
-

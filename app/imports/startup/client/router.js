@@ -35,14 +35,6 @@ FlowRouter.route('/directory', {
 
 
 /*                        RECIPE ROUTES                      */
-//sample
-/*export const defRecipePageRouteName = 'View_Recipe_Page';
-FlowRouter.route('/recipe', {
-  name: defRecipePageRouteName,
-  action() {
-    BlazeLayout.render('User_Layout', { main: defRecipePageRouteName });
-  },
-});*/
 
 function addRecipeBodyClass() {
   $('body').addClass('recipe-layout-body');
@@ -66,7 +58,6 @@ recipeRoutes.route('/view', {
     BlazeLayout.render('Recipe_Layout', { main: recipePageRouteName });
   },
 });
-
 
 
 /*                        USER ROUTES                      */
@@ -132,6 +123,17 @@ userRoutes.route('/home', {
   name: homePageRouteName,
   action() {
     BlazeLayout.render('Home_Layout', { main: homePageRouteName });
+  },
+});
+
+/*                      SEARCH ROUTES                     */
+
+
+export const searchPageRouteName = 'View_Search_Page';
+userRoutes.route('/search/:searchParam/view', {
+  name: searchPageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: searchPageRouteName });
   },
 });
 

@@ -3,6 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { expect } from 'chai';
 import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 
+
+/* eslint prefer-arrow-callback: "off", no-unused-expressions: "off", no-undef: "off" */
+
 if (Meteor.isServer) {
   describe('RecipeCollection', function testSuite() {
     const recipeID = 1231231231;
@@ -13,7 +16,8 @@ if (Meteor.isServer) {
     const instructions = 'Put your junk in the box';
     const noServings = 12;
     const totalCost = 12;
-    const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost};
+    const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
+      noServings, totalCost };
 
     before(function setup() {
       removeAllEntities();
