@@ -1,0 +1,19 @@
+.recipe-layout-body {
+  padding-top: 75px;
+  background-color: #f3f3f3;
+
+}
+
+.ui.borderless.topmenu.menu.top {
+  background-color: teal;
+  border-radius: 0px;
+
+  font-size: 14px;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.topbar_search {
+  width:50%;
+
+
+}

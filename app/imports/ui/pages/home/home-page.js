@@ -1,7 +1,13 @@
 import { Template } from 'meteor/templating';
-import { Recipes } from '/imports/api/profile/ProfileCollection';
+import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { _ } from 'meteor/underscore';
+
+
+Template.Home_Page.onCreated(function onCreated() {
+  this.subscribe(Tags.getPublicationName());
+  this.subscribe(Recipes.getPublicationName());
+});
 
 Template.Home_Page.helpers({
 
@@ -19,9 +25,10 @@ Template.Home_Page.helpers({
    */
   top_tags() {
     const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
-    const namesOnly = _.values(allTags);
+    const namesOnly = _.pluck(_.values(allTags), 'tagName');
     const frequency = _.countBy(namesOnly, function (each) { return each; });
-    const result = _.first(_.sortBy(_.uniq(namesOnly), function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
+    const result = _.first(_.sortBy(_.uniq(namesOnly),
+        function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
     return result;
   },
 
@@ -41,6 +48,12 @@ Template.Home_Page.helpers({
    */
   recipe_tag(theRecipeID) {
     return Tags.find({ recipeID: theRecipeID }, {}).fetch();
+  },
+
+  convert_publish_date(publishDate) {
+    let date = new Date(0);
+    date.setUTCSeconds(publishDate);
+    return date.toLocaleDateString();
   },
 
 });
