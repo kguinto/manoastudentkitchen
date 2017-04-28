@@ -5,6 +5,9 @@ import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
+
+/* eslint object-shorthand: "off" */
+
 /** @module Recipe */
 
 /**
