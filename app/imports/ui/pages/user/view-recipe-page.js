@@ -35,7 +35,7 @@ Template.View_Recipe_Page.helpers({
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
   recipe() {
-    console.log( Recipes.find().fetch());
+    console.log(Recipes.find().fetch());
 
     return Recipes.findDoc(FlowRouter.getParam('recipeID'));
   },
