@@ -27,13 +27,13 @@
 
           <div class="card">
             <div class="ui centered card-image">
-              <img class="ui centered image" src="{{ top_recipe.image }}">
+              <img class="ui centered image" src="/images/samplefood.jpg">
             </div>
             <div class="content">
               <div class="header">{{ top_recipe.recipeName }}</div>
               <div class="meta">
 
-                {{#each tag in recipe_tag }}
+                {{#each tag in recipe_tag top_recipe.recipeID }}
                 <div class="ui label">{{ tag.tagName }}</div>
                 {{/each}}
 
@@ -46,7 +46,7 @@
             <div class="extra content">
           <span>
             <div class="ui label">
-              <div class="detail"></div>
+              <div class="detail" style="margin-left:-5px;">Added: {{ convert_publish_date top_recipe.firstPublishDate }}</div>
             </div>
           </span>
               <span class="right floated">
@@ -65,7 +65,7 @@
           {{#each top_tag in top_tags }}
           <div class="card tag-card">
               <div class="image tag-image-container">
-               <img class="tag-image" src="{{ load_tag_image(top_tag.tagID) }}">
+               <img class="tag-image" src="/images/samplefood.jpg">
              </div>
               <div class="tag-image-text">{{ top_tag }}</div>
             </div>

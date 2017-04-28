@@ -50,4 +50,10 @@ Template.Home_Page.helpers({
     return Tags.find({ recipeID: theRecipeID }, {}).fetch();
   },
 
+  convert_publish_date(publishDate) {
+    let date = new Date(0);
+    date.setUTCSeconds(publishDate);
+    return date.toLocaleDateString();
+  },
+
 });
