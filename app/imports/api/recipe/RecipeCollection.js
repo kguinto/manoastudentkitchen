@@ -20,12 +20,11 @@ class RecipeCollection extends BaseCollection {
       userID: { type: Number },
       recipeID: { type: Number },
       recipeName: { type: String, optional: true },
-      firstPublishDate: { type: Date, optional: true },
-      lastEditDate: { type: Date, optional: true },
+      firstPublishDate: { type: Number, optional: true },
+      lastEditDate: { type: Number, optional: true },
       instructions: { type: String, optional: true },
       noServings: { type: Number, optional: true },
       totalCost: { type: Number, optional: true },
-      costPerServing: { type: Number, optional: true },
     }));
   }
 
@@ -41,30 +40,88 @@ class RecipeCollection extends BaseCollection {
    *                   picture: 'http://philipmjohnson.org/headshot.jpg',
    *                   github: 'https://github.com/philipmjohnson',
    *                   facebook: 'https://facebook.com/philipmjohnson',
-   *                   instagram: 'https://instagram.com/philipmjohnson' });
+   *                   insreciperam: 'https://insreciperam.com/philipmjohnson' });
    * @param { Object } description Object with required key username.
    * Remaining keys are optional.
    * Username must be unique for all users. It should be the UH email account.
    * Interests is an array of defined interest names.
    * @throws { Meteor.Error } If a user with the supplied username already exists, or
-   * if one or more interests are not defined, or if github, facebook, and instagram are not URLs.
+   * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs.
    * @returns The newly created docID.
    */
-  define({ recipeID, userID, recipeName = "", firstPublishDate = new Date(), lastEditDate = new Date(), instructions = '', noServings = 0, totalCost = 0, costPerServing = 0}) {
+  define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost}) {
+    console.log("Define called");
     // make sure required fields are OK.
-    const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Date, lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number};
+    const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number, lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number};
 
-    check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }, checkPattern);
+    check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost}, checkPattern);
 
     if (this.find({ recipeID }).count() > 0) {
       throw new Meteor.Error(`${recipeID} is previously defined in another Recipe`);
     }
 
-    // Throw an error if any of the passed Interest names are not defined.
-    /*    Interests.assertNames(interests);
-     return this._collection.insert({ firstName, lastName, username, bio, interests, picture, title, github,
-     facebook, instagram });*/
+    return this._collection.insert({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost});
   }
+
+
+  /**
+   * Returns the Recipe recipeName corresponding to the passed Recipe docID.
+   * @param RecipeID An Recipe docID.
+   * @returns { String } An Recipe recipeName.
+   * @throws { Meteor.Error} If the Recipe docID cannot be found.
+   */
+  findName(RecipeID) {
+    this.assertDefined(RecipeID);
+    return this.findDoc(RecipeID).recipeName;
+  }
+
+  /**
+   * Returns a list of Recipe recipeNames corresponding to the passed list of Recipe docIDs.
+   * @param RecipeIDs A list of Recipe docIDs.
+   * @returns { Array }
+   * @throws { Meteor.Error} If any of the instanceIDs cannot be found.
+   */
+  findNames(RecipeIDs) {
+    return RecipeIDs.map(RecipeID => this.findName(RecipeID));
+  }
+
+  /**
+   * Throws an error if the passed recipeName is not a defined Recipe recipeName.
+   * @param recipeName The recipeName of an Recipe.
+   */
+  assertName(recipeName) {
+    this.findDoc(recipeName);
+  }
+
+  /**
+   * Throws an error if the passed list of recipeNames are not all Recipe recipeNames.
+   * @param recipeNames An array of (hopefully) Recipe recipeNames.
+   */
+  assertNames(recipeNames) {
+    _.each(recipeNames, recipeName => this.assertName(recipeName));
+  }
+
+  /**
+   * Returns the docID associated with the passed Recipe recipeName, or throws an error if it cannot be found.
+   * @param { String } recipeName An Recipe recipeName.
+   * @returns { String } The docID associated with the recipeName.
+   * @throws { Meteor.Error } If recipeName is not associated with an Recipe.
+   */
+  findID(recipeName) {
+    return (this.findDoc(recipeName)._id);
+  }
+
+  /**
+   * Returns the docIDs associated with the array of Recipe recipeNames, or throws an error if any recipeName cannot be found.
+   * If nothing is passed, then an empty array is returned.
+   * @param { String[] } recipeNames An array of Recipe recipeNames.
+   * @returns { String[] } The docIDs associated with the recipeNames.
+   * @throws { Meteor.Error } If any instance is not an Recipe recipeName.
+   */
+  findIDs(recipeNames) {
+    return (recipeNames) ? recipeNames.map((instance) => this.findID(instance)) : [];
+  }
+
 
   /**
    * Returns an object representing the Recipe docID in a format acceptable to define().
@@ -81,7 +138,7 @@ class RecipeCollection extends BaseCollection {
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    return{ recipeID, userID, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
+    return{ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost};
   }
 }
 
@@ -89,3 +146,4 @@ class RecipeCollection extends BaseCollection {
  * Provides the singleton instance of this class to all other entities.
  */
 export const Recipes = new RecipeCollection();
+  console.log("RecipeCollection ");
