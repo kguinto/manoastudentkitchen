@@ -1,0 +1,43 @@
+<template name="View_Search_Page">
+
+      <div class="ui container home-section" style="min-height:800px;">
+        <h2>Your Results are...</h2>
+        <div class="ui three link centered cards">
+
+          {{#each search_result in search_results }}
+
+          <div class="card">
+            <div class="ui centered card-image">
+              <img class="ui centered image" src="/images/samplefood.jpg">
+            </div>
+            <div class="content">
+              <div class="header">{{ search_result.recipeName }}</div>
+              <div class="meta">
+
+                {{#each tag in recipe_tag search_result.recipeID }}
+                <div class="ui label">{{ tag.tagName }}</div>
+                {{/each}}
+
+              </div>
+              <div class="description">
+                <p>{{ search_result.instructions }}</p>
+                <a href='{{ get_recipe_url search_result.recipeID }}'>View</a>
+              </div>
+            </div>
+            <div class="extra content">
+          <span>
+            <div class="ui label">
+              <div class="detail" style="margin-left:-5px;">Added: {{ convert_publish_date search_result.firstPublishDate }}</div>
+            </div>
+          </span>
+              <span class="right floated">
+              </span>
+            </div>
+          </div>
+
+          {{/each}}
+        </div>
+      </div>
+
+
+</template>

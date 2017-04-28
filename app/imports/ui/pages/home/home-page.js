@@ -3,7 +3,6 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { _ } from 'meteor/underscore';
 
-
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
@@ -60,4 +59,19 @@ Template.Home_Page.helpers({
     return `/recipe/${recipeID}/view`;
   },
 
+});
+
+
+Template.Home_Page.events({
+  'submit .search-recipe'(event) {
+    // Prevent default browser form submit
+    event.preventDefault();
+
+    // Get value from form element
+    const target = event.target;
+    const text = target.text.value;
+    window.location.replace(`search/${text}/view`);
+    // Clear form
+    target.text.value = '';
+  },
 });
