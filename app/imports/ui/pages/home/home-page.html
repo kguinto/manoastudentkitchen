@@ -27,7 +27,7 @@
 
           <div class="card">
             <div class="ui centered card-image">
-              <img class="ui centered image" src="/images/samplefood.jpg">
+              <img class="ui centered image" src="{{ top_recipe.image }}">
             </div>
             <div class="content">
               <div class="header">{{ top_recipe.recipeName }}</div>
@@ -65,7 +65,7 @@
           {{#each top_tag in top_tags }}
           <div class="card tag-card">
               <div class="image tag-image-container">
-               <img class="tag-image" src="/images/samplefood.jpg">
+               <img class="tag-image" src="{{ load_tag_image.imageURL top_tag.tagName }}">
              </div>
               <div class="tag-image-text">{{ top_tag }}</div>
             </div>

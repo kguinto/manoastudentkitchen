@@ -8,8 +8,6 @@ import { Tags } from '/imports/api/tag/TagCollection';
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
-console.log('view recipe page js loaded');
-
 Template.View_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Tags.getPublicationName());
