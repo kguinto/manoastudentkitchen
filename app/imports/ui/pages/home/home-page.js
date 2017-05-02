@@ -2,10 +2,13 @@ import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { _ } from 'meteor/underscore';
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+  this.dataUrl = new ReactiveVar();
 });
 
 Template.Home_Page.helpers({
@@ -58,7 +61,6 @@ Template.Home_Page.helpers({
   get_recipe_url(recipeID) {
     return `/recipe/${recipeID}/view`;
   },
-
 });
 
 
@@ -73,5 +75,33 @@ Template.Home_Page.events({
     window.location.replace(`search/${text}/view`);
     // Clear form
     target.text.value = '';
+  },
+  "change input[type='file']":function(event,template){
+    var files=event.target.files;
+    if(files.length===0){
+      return;
+    }
+    var file=files[0];
+    //
+    var fileReader=new FileReader();
+    fileReader.onload=function(event){
+      var dataUrl=event.target.result;
+      template.dataUrl.set(dataUrl);
+    };
+    fileReader.readAsDataURL(file);
+  },
+  'submit .test-imgur'(event, template) {
+    event.preventDefault();
+    const image = template.dataUrl.get();
+    Imgur.upload({
+      image: image,
+      apiKey: Meteor.settings.public.ClientID,
+    }, function (error, data) {
+      if (error) {
+        throw error;
+      } else {
+        console.log(data.link);
+      }
+    });
   },
 });

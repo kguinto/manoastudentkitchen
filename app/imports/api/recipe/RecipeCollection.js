@@ -58,7 +58,7 @@ class RecipeCollection extends BaseCollection {
       imageID }) {
     // make sure required fields are OK.
     const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number,
-      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageID: Number };
+      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageID: String };
 
     check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost, imageID }, checkPattern);
