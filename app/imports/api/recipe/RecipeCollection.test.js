@@ -3,17 +3,21 @@ import { Meteor } from 'meteor/meteor';
 import { expect } from 'chai';
 import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 
+
+/* eslint prefer-arrow-callback: "off", no-unused-expressions: "off", no-undef: "off" */
+
 if (Meteor.isServer) {
   describe('RecipeCollection', function testSuite() {
     const recipeID = 1231231231;
     const userID = 22653866;
-    const recipeName = "Mom's Spaghetti"
+    const recipeName = 'Mom\'s Spaghetti';
     const firstPublishDate = 	1493152975;
     const lastEditDate = 	1493152975;
-    const instructions = "Put your junk in the box";
+    const instructions = 'Put your junk in the box';
     const noServings = 12;
     const totalCost = 12;
-    const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost};
+    const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
+      noServings, totalCost };
 
     before(function setup() {
       removeAllEntities();

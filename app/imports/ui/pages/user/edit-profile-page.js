@@ -82,4 +82,3 @@ Template.Edit_Profile_Page.events({
     }
   },
 });
-

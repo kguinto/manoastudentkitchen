@@ -8,10 +8,10 @@
             <h1>Recipes by Manoa students, for Manoa students.</h1>
             <br>
             <div class="ui search">
-              <div class="ui fluid icon input">
-                <input class="prompt" type="text" placeholder="Search recipes, tags, locations, authors...">
+              <form class="search-recipe ui fluid icon input">
+                <input class="prompt" type="text" name="text" placeholder="Search recipes, tags, locations, authors...">
                 <i class="search icon"></i>
-              </div>
+              </form>
               <div class="results"></div>
             </div>
           </div>
@@ -27,26 +27,26 @@
 
           <div class="card">
             <div class="ui centered card-image">
-              <img class="ui centered image" src="{{ top_recipe.image }}">
+              <img class="ui centered image" src="/images/samplefood.jpg">
             </div>
             <div class="content">
-              <div class="header">{{ top_recipe.title }}</div>
+              <div class="header">{{ top_recipe.recipeName }}</div>
               <div class="meta">
 
-                {{#each tag in recipe_tag }}
+                {{#each tag in recipe_tag top_recipe.recipeID }}
                 <div class="ui label">{{ tag.tagName }}</div>
                 {{/each}}
 
               </div>
               <div class="description">
-                <p>{{ top_recipe.description }}</p>
-                <a href="">View</a>
+                <p>{{ top_recipe.instructions }}</p>
+                <a href='{{ get_recipe_url top_recipe.recipeID }}'>View</a>
               </div>
             </div>
             <div class="extra content">
           <span>
             <div class="ui label">
-              <div class="detail"></div>
+              <div class="detail" style="margin-left:-5px;">Added: {{ convert_publish_date top_recipe.firstPublishDate }}</div>
             </div>
           </span>
               <span class="right floated">
@@ -65,7 +65,7 @@
           {{#each top_tag in top_tags }}
           <div class="card tag-card">
               <div class="image tag-image-container">
-               <img class="tag-image" src="{{ load_tag_image(top_tag.tagID) }}">
+               <img class="tag-image" src="/images/samplefood.jpg">
              </div>
               <div class="tag-image-text">{{ top_tag }}</div>
             </div>
@@ -74,42 +74,4 @@
       </div>
     </div>
   </div>
-
-  <script>
-    var content = [
-      { title: 'Andorra'},
-      { title: 'United Arab Emirates' },
-      { title: 'Afghanistan' },
-      { title: 'Antigua' },
-      { title: 'Anguilla' },
-      { title: 'Albania' },
-      { title: 'Armenia' },
-      { title: 'Netherlands Antilles' },
-      { title: 'Angola' },
-      { title: 'Argentina' },
-      { title: 'American Samoa' },
-      { title: 'Austria' },
-      { title: 'Australia' },
-      { title: 'Aruba' },
-      { title: 'Aland Islands' },
-      { title: 'Azerbaijan' },
-      { title: 'Bosnia' },
-      { title: 'Barbados' },
-      { title: 'Bangladesh' },
-      { title: 'Belgium' },
-      { title: 'Burkina Faso' },
-      { title: 'Bulgaria' },
-      { title: 'Bahrain' },
-      { title: 'Burundi' }
-      // etc
-    ];
-    $('.ui.search')
-        .search({
-          source: content
-        })
-    ;
-
-  </script>
-
-
 </template>

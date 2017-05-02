@@ -35,13 +35,13 @@ Template.View_Recipe_Page.helpers({
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
   recipe() {
-    return Recipes.findDocWithRecipeID( Number(FlowRouter.getParam('recipeID')) );
+    return Recipes.findDocWithRecipeID(Number(FlowRouter.getParam('recipeID')));
   },
 
-  costPerServing(){
-    let recipe = Recipes.findDocWithRecipeID( Number(FlowRouter.getParam('recipeID')));
-    return (recipe.totalCost / recipe.noServings );
-  }
+  costPerServing() {
+    const recipe = Recipes.findDocWithRecipeID(Number(FlowRouter.getParam('recipeID')));
+    return (recipe.totalCost / recipe.noServings);
+  },
 
 });
 /*
