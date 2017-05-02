@@ -29,7 +29,7 @@ class RecipeCollection extends BaseCollection {
       instructions: { type: String, optional: true },
       noServings: { type: Number, optional: true },
       totalCost: { type: Number, optional: true },
-      imageURL: { type: String, optional: true },
+      imageID: { type: String, optional: true },
     }));
   }
 
@@ -51,24 +51,24 @@ class RecipeCollection extends BaseCollection {
    * Username must be unique for all users. It should be the UH email account.
    * Interests is an array of defined interest names.
    * @throws { Meteor.Error } If a user with the supplied username already exists, or
-   * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs.
+   * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs
    * @returns The newly created docID.
    */
   define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
-      imageURL }) {
+      imageID }) {
     // make sure required fields are OK.
     const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number,
-      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageURL: String };
+      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageID: String };
 
     check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
-      noServings, totalCost, imageURL }, checkPattern);
+      noServings, totalCost, imageID }, checkPattern);
 
     if (this.find({ recipeID }).count() > 0) {
       throw new Meteor.Error(`${recipeID} is previously defined in another Recipe`);
     }
 
     return this._collection.insert({ recipeID, userID, recipeName, firstPublishDate,
-      lastEditDate, instructions, noServings, totalCost, imageURL });
+      lastEditDate, instructions, noServings, totalCost, imageID });
   }
 
 
@@ -155,9 +155,9 @@ class RecipeCollection extends BaseCollection {
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    const imageURL = doc.imageURL;
+    const imageID = doc.imageID;
     return { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
-      imageURL };
+      imageID };
   }
 }
 
