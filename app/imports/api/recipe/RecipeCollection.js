@@ -29,7 +29,7 @@ class RecipeCollection extends BaseCollection {
       instructions: { type: String, optional: true },
       noServings: { type: Number, optional: true },
       totalCost: { type: Number, optional: true },
-      imageID: { type: String, optional: true },
+      imageID: { type: Number, optional: true },
     }));
   }
 
@@ -58,7 +58,7 @@ class RecipeCollection extends BaseCollection {
       imageID }) {
     // make sure required fields are OK.
     const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number,
-      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageID: String };
+      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageID: Number };
 
     check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost, imageID }, checkPattern);

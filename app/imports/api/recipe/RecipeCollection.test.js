@@ -16,7 +16,7 @@ if (Meteor.isServer) {
     const instructions = 'Put your junk in the box';
     const noServings = 12;
     const totalCost = 12;
-    const imageID = 'http://www.test.com';
+    const imageID = 111111111;
     const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost, imageID };
 
