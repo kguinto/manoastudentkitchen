@@ -29,7 +29,6 @@ class RecipeCollection extends BaseCollection {
       instructions: { type: String, optional: true },
       noServings: { type: Number, optional: true },
       totalCost: { type: Number, optional: true },
-      imageID: { type: Number, optional: true },
     }));
   }
 
@@ -54,21 +53,20 @@ class RecipeCollection extends BaseCollection {
    * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs
    * @returns The newly created docID.
    */
-  define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
-      imageID }) {
+  define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost}) {
     // make sure required fields are OK.
     const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number,
-      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, imageID: String };
+      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number };
 
     check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
-      noServings, totalCost, imageID }, checkPattern);
+      noServings, totalCost }, checkPattern);
 
     if (this.find({ recipeID }).count() > 0) {
       throw new Meteor.Error(`${recipeID} is previously defined in another Recipe`);
     }
 
     return this._collection.insert({ recipeID, userID, recipeName, firstPublishDate,
-      lastEditDate, instructions, noServings, totalCost, imageID });
+      lastEditDate, instructions, noServings, totalCost });
   }
 
 
@@ -155,9 +153,7 @@ class RecipeCollection extends BaseCollection {
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    const imageID = doc.imageID;
-    return { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
-      imageID };
+    return { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
   }
 }
 

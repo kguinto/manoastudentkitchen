@@ -16,9 +16,8 @@ if (Meteor.isServer) {
     const instructions = 'Put your junk in the box';
     const noServings = 12;
     const totalCost = 12;
-    const imageID = 111111111;
     const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
-      noServings, totalCost, imageID };
+      noServings, totalCost };
 
     before(function setup() {
       removeAllEntities();
@@ -43,7 +42,6 @@ if (Meteor.isServer) {
       expect(doc.instructions).to.equal(instructions);
       expect(doc.noServings).to.equal(noServings);
       expect(doc.totalCost).to.equal(totalCost);
-      expect(doc.imageID).to.equal(imageID);
       // Check that multiple definitions with the same name fail
       expect(function foo() { Recipes.define(defineObject); }).to.throw(Error);
 
