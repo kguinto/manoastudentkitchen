@@ -5,9 +5,12 @@ import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+/* eslint-disable no-undef, object-shorthand, no-shadow*/
+
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+  /* IMGUR UPLOAD REACTIVE VARIABLE */
   this.dataUrl = new ReactiveVar();
 });
 
@@ -28,9 +31,9 @@ Template.Home_Page.helpers({
   top_tags() {
     const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
     const namesOnly = _.pluck(_.values(allTags), 'tagName');
-    const frequency = _.countBy(namesOnly, function (each) { return each; });
+    const frequency = _.countBy(namesOnly, function each(each) { return each; });
     const result = _.first(_.sortBy(_.uniq(namesOnly),
-        function (frequencyKey) { return -frequency[frequencyKey]; }), 8);
+        function frequencyKey(frequencyKey) { return -frequency[frequencyKey]; }), 8);
     return result;
   },
 
@@ -76,32 +79,34 @@ Template.Home_Page.events({
     // Clear form
     target.text.value = '';
   },
-  "change input[type='file']":function(event,template){
-    var files=event.target.files;
-    if(files.length===0){
+  /* IMGUR UPLOAD EVENTS */
+  "change input[type='file']": function upload(event, instance) {
+    const files = event.target.files;
+    if (files.length === 0) {
       return;
     }
-    var file=files[0];
+    const file = files[0];
     //
-    var fileReader=new FileReader();
-    fileReader.onload=function(event){
-      var dataUrl=event.target.result;
-      template.dataUrl.set(dataUrl);
+    const fileReader = new FileReader();
+    fileReader.onload = function onload(event) {
+      const dataUrl = event.target.result;
+      instance.dataUrl.set(dataUrl);
     };
     fileReader.readAsDataURL(file);
   },
-  'submit .test-imgur'(event, template) {
+  'submit .test-imgur'(event, instance) {
     event.preventDefault();
-    const image = template.dataUrl.get();
+    const image = instance.dataUrl.get();
     Imgur.upload({
       image: image,
       apiKey: Meteor.settings.public.ClientID,
-    }, function (error, data) {
+    }, function error(error, data) {
       if (error) {
         throw error;
       } else {
-        console.log(data.link);
+        console.log(data.link); /* Do things with the link here (replace console.log) */
       }
     });
   },
+  /* END IMGUR UPLOAD EVENTS */
 });
