@@ -8,8 +8,6 @@ import { Tags } from '/imports/api/tag/TagCollection';
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
-console.log('view recipe page js loaded');
-
 Template.View_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Tags.getPublicationName());
@@ -17,6 +15,7 @@ Template.View_Recipe_Page.onCreated(function onCreated() {
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('View_Recipe_Page');
+
 });
 
 Template.View_Recipe_Page.helpers({
@@ -35,50 +34,49 @@ Template.View_Recipe_Page.helpers({
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
   recipe() {
-    return Recipes.findDocWithRecipeID(Number(FlowRouter.getParam('recipeID')));
+    return Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
   },
 
   costPerServing() {
-    const recipe = Recipes.findDocWithRecipeID(Number(FlowRouter.getParam('recipeID')));
+    console.log(Tags.find().fetch());
+    console.log(Recipes.find().fetch());
+    console.log("Calling Recipes.findDocWithRecipeID with parameter " +FlowRouter.getParam('_id'))
+
+    const recipe = Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
     return (recipe.totalCost / recipe.noServings);
   },
 
 });
-/*
 
-Template.Profile_Page.events({
-  'submit .profile-data-form'(event, instance) {
+Template.View_Recipe_Page.events({
+  'submit .new-tag-form' (event, instance) {
     event.preventDefault();
-    const recip = event.target.First.value;
-   /* const lastName = event.target.Last.value;
-    const title = event.target.Title.value;
-    const username = FlowRouter.getParam('username'); // schema requires username.
-    const picture = event.target.Picture.value;
-    const github = event.target.Github.value;
-    const facebook = event.target.Facebook.value;
-    const instagram = event.target.Instagram.value;
-    const bio = event.target.Bio.value;
-    const selectedInterests = _.filter(event.target.Interests.selectedOptions, (option) => option.selected);
-    const interests = _.map(selectedInterests, (option) => option.value);
+    console.log(event.target.text.value);
+    // Get tag name (text field)
+   // const tagName = event.target.text.value;
+    // Get recipe ID
+    // const recipeID;
+    // Create tag ID?
+    //const tagID;
 
-    const updatedProfileData = { firstName, lastName, title, picture, github, facebook, instagram, bio, interests,
-      username };
-
+    //const score = 1;
+/*
+    const newContactData = { tagName,  };
     // Clear out any old validation errors.
     instance.context.resetValidation();
-    // Invoke clean so that updatedProfileData reflects what will be inserted.
-    Profiles.getSchema().clean(updatedProfileData);
+    // Invoke clean so that newContactData reflects what will be inserted.
+    ContactSchema.clean(newContactData);
     // Determine validity.
-    instance.context.validate(updatedProfileData);
-
+    instance.context.validate(newContactData);
     if (instance.context.isValid()) {
-      const docID = Profiles.findDoc(FlowRouter.getParam('username'))._id;
-      const id = Profiles.update(docID, { $set: updatedProfileData });
-      instance.messageFlags.set(displaySuccessMessage, id);
+      const id = Contacts.insert(newContactData);
       instance.messageFlags.set(displayErrorMessages, false);
+      instance.find('form').reset();
+      instance.$('.dropdown').dropdown('restore defaults');
+      FlowRouter.go('Home_Page');
     } else {
-      instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
-    }
+    } */
   },
-});*/
+
+});
