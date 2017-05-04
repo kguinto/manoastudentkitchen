@@ -15,7 +15,6 @@ Template.View_Recipe_Page.onCreated(function onCreated() {
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('View_Recipe_Page');
-
 });
 
 Template.View_Recipe_Page.helpers({
@@ -37,11 +36,11 @@ Template.View_Recipe_Page.helpers({
     return Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
   },
 
-  costPerServing() {
-    console.log(Tags.find().fetch());
-    console.log(Recipes.find().fetch());
-    console.log("Calling Recipes.findDocWithRecipeID with parameter " +FlowRouter.getParam('_id'))
+  recipeTags(){
+    return _.where(Tags.find().fetch(), {recipeID: FlowRouter.getParam('_id')});
+  },
 
+  costPerServing() {
     const recipe = Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
     return (recipe.totalCost / recipe.noServings);
   },
@@ -51,32 +50,29 @@ Template.View_Recipe_Page.helpers({
 Template.View_Recipe_Page.events({
   'submit .new-tag-form' (event, instance) {
     event.preventDefault();
-    console.log(event.target.text.value);
     // Get tag name (text field)
-   // const tagName = event.target.text.value;
+    const tagName = event.target.text.value;
     // Get recipe ID
-    // const recipeID;
-    // Create tag ID?
-    //const tagID;
+    const recipeID = FlowRouter.getParam('_id');
+    const score = 1;
 
-    //const score = 1;
-/*
-    const newContactData = { tagName,  };
+    const newTagData = {recipeID, tagName, score};
+
     // Clear out any old validation errors.
-    instance.context.resetValidation();
+   // instance.context.resetValidation();
     // Invoke clean so that newContactData reflects what will be inserted.
-    ContactSchema.clean(newContactData);
+    Tags.getSchema().clean(newTagData);
     // Determine validity.
-    instance.context.validate(newContactData);
+    //instance.context.validate(newTagData);
+
     if (instance.context.isValid()) {
-      const id = Contacts.insert(newContactData);
+      const id = Tags.define(newTagData);
+
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();
-      instance.$('.dropdown').dropdown('restore defaults');
-      FlowRouter.go('Home_Page');
     } else {
       instance.messageFlags.set(displayErrorMessages, true);
-    } */
+    }
   },
 
 });

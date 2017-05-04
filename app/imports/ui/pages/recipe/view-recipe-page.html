@@ -23,34 +23,19 @@
 
       <h3>Popular User-Defined Tags: </h3>
 
+      {{ #each recipeTag in recipeTags }}
+
       <div class="ui left labeled button" tabindex="0">
         <a class="ui basic right pointing label">
-          cheap
-          <div class="detail">21</div>
+          {{ recipeTag.tagName }}
+          <div class="detail">{{ recipeTag.score }}</div>
         </a>
         <div class="ui icon button">
           <i class="thumbs up icon"></i>
         </div>
       </div>
-      <div class="ui left labeled button" tabindex="0">
-        <a class="ui basic right pointing label">
-          easy
-          <div class="detail">16</div>
-        </a>
-        <div class="ui icon button" style="font-size: inherit">
-          <i class="thumbs up icon"></i>
-        </div>
-      </div>
 
-      <div class="ui left labeled button" tabindex="0">
-        <a class="ui basic right pointing label">
-          pescetarian
-          <div class="detail">12</div>
-        </a>
-        <div class="ui icon button" style="font-size: inherit">
-          <i class="thumbs up icon" style="font-size: inherit"></i>
-        </div>
-      </div>
+      {{ /each }}
 
       <form class="ui left labeled new-tag-form button" tabindex="0">
           <a class="ui basic right pointing label">
