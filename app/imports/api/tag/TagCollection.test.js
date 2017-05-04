@@ -8,11 +8,10 @@ import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 
 if (Meteor.isServer) {
   describe('TagCollection', function testSuite() {
-    const tagID = 75893751;
-    const recipeID = 7583939;
+    const recipeID = '7583939';
     const tagName = 'Pasta';
     const score = 13;
-    const defineObject = { tagID, recipeID, tagName, score };
+    const defineObject = { recipeID, tagName, score };
 
     before(function setup() {
       removeAllEntities();
@@ -28,7 +27,6 @@ if (Meteor.isServer) {
 
       // Check that fields are available
       const doc = Tags.findDoc(docID);
-      expect(doc.tagID).to.equal(tagID);
       expect(doc.recipeID).to.equal(recipeID);
       expect(doc.tagName).to.equal(tagName);
       expect(doc.score).to.equal(score);

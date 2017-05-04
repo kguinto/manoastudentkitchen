@@ -5,68 +5,57 @@
       "name": "TagCollection",
       "contents": [
         {
-          "tagID": 77383911,
-          "recipeID": 1231231231,
+          "recipeID": "1231231231",
           "tagName": "Pasta",
           "score": 13
         },
         {
-          "tagID": 49377384,
-          "recipeID": 1231231232,
+          "recipeID": "1231231232",
           "tagName": "Pizza",
           "score": 6
         },
         {
-          "tagID": 77382232,
-          "recipeID": 1231231232,
+          "recipeID": "1231231232",
           "tagName": "Easy",
           "score": 223
         },
         {
-          "tagID": 77333331,
-          "recipeID": 1231231232,
+          "recipeID": "1231231232",
           "tagName": "Cheap",
           "score": 131
         },
         {
-          "tagID": 77333231,
-          "recipeID": 1231231233,
+          "recipeID": "1231231233",
           "tagName": "Cheap",
           "score": 18
         },
         {
-          "tagID": 77313331,
-          "recipeID": 1231231233,
+          "recipeID": "1231231233",
           "tagName": "Microwave",
           "score": 12
         },
         {
-          "tagID": 39377384,
-          "recipeID": 1231231232,
+          "recipeID": "1231231232",
           "tagName": "Quick",
           "score": 20
         },
         {
-          "tagID": 393355384,
-          "recipeID": 1231231231,
+          "recipeID": "1231231231",
           "tagName": "Simple",
           "score": 20
         },
         {
-          "tagID": 393355584,
-          "recipeID": 1231231231,
+          "recipeID": "1231231231",
           "tagName": "Seafood",
           "score": 44
         },
         {
-          "tagID": 393335484,
-          "recipeID": 1231231233,
+          "recipeID": "1231231233",
           "tagName": "Cold",
           "score": 33
         },
         {
-          "tagID": 393336484,
-          "recipeID": 1231231231,
+          "recipeID": "1231231231",
           "tagName": "Cold",
           "score": 31
 
@@ -79,7 +68,6 @@
       "contents": [
         {
           "userID": 22653866,
-          "recipeID": 1231231231,
           "recipeName": "Mom's Spaghetti",
           "firstPublishDate": 1493152975,
           "lastEditDate": 1493152975,
@@ -89,7 +77,6 @@
         },
         {
           "userID": 22653866,
-          "recipeID": 1231231232,
           "recipeName": "Mom's Spaghetti 2",
           "firstPublishDate": 1493152975,
           "lastEditDate": 1493152975,
@@ -99,7 +86,6 @@
         },
         {
           "userID": 22653866,
-          "recipeID": 1231231233,
           "recipeName": "Mom's Spaghetti 3",
           "firstPublishDate": 1493152975,
           "lastEditDate": 1493152975,

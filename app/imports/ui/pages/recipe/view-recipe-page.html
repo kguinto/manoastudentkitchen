@@ -1,0 +1,63 @@
+<template name="View_Recipe_Page">
+
+  {{#if Template.subscriptionsReady}}
+
+  <div class="ui container">
+    <div class="ui header">
+      <h1> {{recipe.recipeName}}</h1>
+    </div>
+
+    <div class="ui one column center aligned page grid" style="height:400px; z-index: 2;">
+      <div class="ui container image-background-container">
+        <img class="ui image-background">
+      </div>
+
+      <img class="ui image recipe-image" src="http://www.betterrecipes.com/blogs/daily-dish/files/2014/01/salmon.jpg">
+    </div>
+
+    <br>
+    <div class="ui text segment">
+      <h2>About this recipe</h2>
+
+      <p>{{recipe.noServings}}, ${{recipe.totalCost}} total (${{costPerServing}} /Serving)</p>
+
+      <h3>Popular User-Defined Tags: </h3>
+
+      {{ #each recipeTag in recipeTags }}
+
+      <div class="ui left labeled button" tabindex="0">
+        <a class="ui basic right pointing label">
+          {{ recipeTag.tagName }}
+          <div class="detail">{{ recipeTag.score }}</div>
+        </a>
+        <div class="ui icon button">
+          <i class="thumbs up icon"></i>
+        </div>
+      </div>
+
+      {{ /each }}
+
+      <form class="ui left labeled new-tag-form button" tabindex="0">
+          <a class="ui basic right pointing label">
+            <div class="ui transparent input" >
+              <input type="text" name="text" placeholder="Submit a tag...">
+            </div>
+          </a>
+          <button class="ui icon new-tag-button button" type="submit">
+            <i class="plus icon"></i>
+          </button>
+      </form>
+
+    </div>
+
+    <h2>Instructions</h2>
+    <div class="ui text segment">
+      {{recipe.instructions}}
+    </div>
+
+
+  </div>
+
+  {{/if}}
+
+</template>
