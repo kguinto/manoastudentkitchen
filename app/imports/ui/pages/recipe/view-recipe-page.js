@@ -37,15 +37,10 @@ Template.View_Recipe_Page.helpers({
   },
 
   recipeTags(){
-    console.log( _.where(Tags.find().fetch(), {recipeID: FlowRouter.getParam('_id')}))
     return _.where(Tags.find().fetch(), {recipeID: FlowRouter.getParam('_id')});
   },
 
   costPerServing() {
-    console.log(Tags.find().fetch());
-    console.log(Recipes.find().fetch());
-    console.log('Calling Recipes.findDocWithRecipeID with parameter ' + FlowRouter.getParam('_id'))
-
     const recipe = Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
     return (recipe.totalCost / recipe.noServings);
   },
@@ -55,7 +50,6 @@ Template.View_Recipe_Page.helpers({
 Template.View_Recipe_Page.events({
   'submit .new-tag-form' (event, instance) {
     event.preventDefault();
-    console.log(event.target.text.value);
     // Get tag name (text field)
     const tagName = event.target.text.value;
     // Get recipe ID
@@ -73,12 +67,10 @@ Template.View_Recipe_Page.events({
 
     if (instance.context.isValid()) {
       const id = Tags.define(newTagData);
-      console.log(Tags.find().fetch());
 
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();
     } else {
-      console.log('Something went wrong...')
       instance.messageFlags.set(displayErrorMessages, true);
     }
   },
