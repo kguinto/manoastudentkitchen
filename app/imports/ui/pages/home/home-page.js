@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
+import { Images } from '/imports/api/image/ImageCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
