@@ -79,7 +79,6 @@
       "contents": [
         {
           "userID": 22653866,
-          "recipeID": 1231231231,
           "recipeName": "Mom's Spaghetti",
           "firstPublishDate": 1493152975,
           "lastEditDate": 1493152975,
@@ -89,7 +88,6 @@
         },
         {
           "userID": 22653866,
-          "recipeID": 1231231232,
           "recipeName": "Mom's Spaghetti 2",
           "firstPublishDate": 1493152975,
           "lastEditDate": 1493152975,
@@ -99,7 +97,6 @@
         },
         {
           "userID": 22653866,
-          "recipeID": 1231231233,
           "recipeName": "Mom's Spaghetti 3",
           "firstPublishDate": 1493152975,
           "lastEditDate": 1493152975,

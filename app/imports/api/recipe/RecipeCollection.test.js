@@ -8,7 +8,7 @@ import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 
 if (Meteor.isServer) {
   describe('RecipeCollection', function testSuite() {
-    const recipeID = 1231231231;
+    const recipeID = '1231231231';
     const userID = 22653866;
     const recipeName = 'Mom\'s Spaghetti';
     const firstPublishDate = 	1493152975;
