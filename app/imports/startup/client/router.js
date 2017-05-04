@@ -13,6 +13,27 @@ FlowRouter.route('/', {
   },
 });
 
+/*                        HOME ROUTE                       */
+
+function addHomeBodyClass() {
+  $('body').addClass('home-page-body');
+}
+
+function removeHomeBodyClass() {
+  $('body').removeClass('home-page-body');
+}
+
+export const homePageRouteName = 'Home_Page';
+FlowRouter.route('/home', {
+  name: homePageRouteName,
+  action() {
+    BlazeLayout.render('Home_Layout', { main: homePageRouteName });
+  },
+
+  triggersEnter: [addHomeBodyClass],
+  triggersExit: [removeHomeBodyClass],
+});
+
 /*                        DIRECTORY ROUTE                       */
 
 function addDirectoryBodyClass() {
@@ -61,7 +82,6 @@ recipeRoutes.route('/view', {
 
 
 /*                        USER ROUTES                      */
-
 
 function addUserBodyClass() {
   $('body').addClass('user-layout-body');
@@ -118,13 +138,6 @@ userRoutes.route('/filter', {
   },
 });
 
-export const homePageRouteName = 'Home_Page';
-userRoutes.route('/home', {
-  name: homePageRouteName,
-  action() {
-    BlazeLayout.render('Home_Layout', { main: homePageRouteName });
-  },
-});
 
 /*                      SEARCH ROUTES                     */
 
