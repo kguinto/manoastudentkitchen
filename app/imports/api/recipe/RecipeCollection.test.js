@@ -8,7 +8,6 @@ import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 
 if (Meteor.isServer) {
   describe('RecipeCollection', function testSuite() {
-    const recipeID = 1231231231;
     const userID = 22653866;
     const recipeName = 'Mom\'s Spaghetti';
     const firstPublishDate = 	1493152975;
@@ -16,7 +15,7 @@ if (Meteor.isServer) {
     const instructions = 'Put your junk in the box';
     const noServings = 12;
     const totalCost = 12;
-    const defineObject = { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
+    const defineObject = { userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost };
 
     before(function setup() {
@@ -34,7 +33,6 @@ if (Meteor.isServer) {
 
       // Check that fields are available
       const doc = Recipes.findDoc(docID);
-      expect(doc.recipeID).to.equal(recipeID);
       expect(doc.userID).to.equal(userID);
       expect(doc.recipeName).to.equal(recipeName);
       expect(doc.firstPublishDate).to.equal(firstPublishDate);

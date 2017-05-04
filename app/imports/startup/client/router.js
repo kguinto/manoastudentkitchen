@@ -45,7 +45,7 @@ function removeRecipeBodyClass() {
 }
 
 const recipeRoutes = FlowRouter.group({
-  prefix: '/recipe/:recipeID',
+  prefix: '/recipe/:_id',
   name: 'recipeRoutes',
   triggersEnter: [addRecipeBodyClass],
   triggersExit: [removeRecipeBodyClass],
