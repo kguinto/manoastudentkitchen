@@ -38,13 +38,21 @@ Template.Home_Page.helpers({
   },
 
   /**
+   * Produces image for a recipe
+   *
+   */
+  load_recipe_image(theRecipeID) {
+    return Images.find({ recipeID: theRecipeID }, {}).fetch();
+  },
+
+  /**
    * Produces image for a tag
    *
    */
   load_tag_image(theTagName) {
     const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { _id: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    return Recipes.find({ _id: randomRecipe._id }, {}).fetch();
+    return Images.find({ recipeID: randomRecipe._id }, {}).fetch();
   },
 
   /**
