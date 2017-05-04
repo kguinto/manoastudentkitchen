@@ -38,7 +38,7 @@
               <div class="header">{{ top_recipe.recipeName }}</div>
               <div class="meta">
 
-                {{#each tag in recipe_tag top_recipe.recipeID }}
+                {{#each tag in recipe_tag top_recipe._id }}
                 <div class="ui label">{{ tag.tagName }}</div>
                 {{/each}}
 
