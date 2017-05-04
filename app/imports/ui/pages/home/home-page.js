@@ -42,9 +42,9 @@ Template.Home_Page.helpers({
    *
    */
   load_tag_image(theTagName) {
-    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { recipeID: 1 } }).fetch();
+    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { _id: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    return Recipes.find({ recipeID: randomRecipe.recipeID }, {}).fetch();
+    return Recipes.find({ _id: randomRecipe._id }, {}).fetch();
   },
 
   /**
