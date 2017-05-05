@@ -15,6 +15,7 @@ Template.View_Recipe_Page.onCreated(function onCreated() {
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('View_Recipe_Page');
+
 });
 
 Template.View_Recipe_Page.helpers({
@@ -37,7 +38,7 @@ Template.View_Recipe_Page.helpers({
   },
 
   recipeTags(){
-    return _.where(Tags.find().fetch(), {recipeID: FlowRouter.getParam('_id')});
+    return _.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
   },
 
   costPerServing() {
@@ -46,6 +47,24 @@ Template.View_Recipe_Page.helpers({
   },
 
 });
+
+Template.tagInput.onRendered(function () {
+  console.log(_.map(
+      _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
+            return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
+          }
+      ), function (tagName) {
+
+        return { title: tagName };
+      }
+  ));
+  this.$('.ui.search').search({
+    source: _.map(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
+      return { title: tagName };
+    })
+  })
+  ;
+})
 
 Template.View_Recipe_Page.events({
   'submit .new-tag-form' (event, instance) {
@@ -56,10 +75,10 @@ Template.View_Recipe_Page.events({
     const recipeID = FlowRouter.getParam('_id');
     const score = 1;
 
-    const newTagData = {recipeID, tagName, score};
+    const newTagData = { recipeID, tagName, score };
 
     // Clear out any old validation errors.
-   // instance.context.resetValidation();
+    // instance.context.resetValidation();
     // Invoke clean so that newContactData reflects what will be inserted.
     Tags.getSchema().clean(newTagData);
     // Determine validity.
