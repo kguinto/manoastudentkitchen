@@ -5,7 +5,7 @@
   <div class="ui container">
 
     <div class="ui text segment">
-      <form class="ui form">
+      <form class="ui form recipe-form">
         <div class="ui two column grid">
           <div class="ui column">
             <div class="field">
@@ -23,6 +23,10 @@
 
             <div class="field">
               {{> Text_Form_Control label="Estimated Time Required" errorMessage=(fieldError "timeRequired")}}
+            </div>
+
+            <div class="field">
+              {{> Text_Form_Control label="Number of Servings" errorMessage=(fieldError "servings")}}
             </div>
 
 

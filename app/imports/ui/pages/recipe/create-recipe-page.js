@@ -11,8 +11,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataUrl = new ReactiveVar('/images/blank.png');
   this.dataIngs = new ReactiveVar([{ ingredient: '', amount: '' }]);
+  this.context = Recipes.getSchema().namedContext('Create_Recipe_Page');
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+
   /* IMGUR UPLOAD REACTIVE VARIABLE */
 });
 
@@ -52,9 +54,39 @@ Template.Create_Recipe_Page.events({
     };
     fileReader.readAsDataURL(file);
   },
-  'submit .test-imgur'(event, instance) {
+  'submit .recipe-form'(event, instance) {
     event.preventDefault();
     const image = instance.dataUrl.get();
+    const ingList = instance.dataIngs.get();
+    const recipeName = event.target['Name of Recipe'].value;
+    const difficulty = event.target['Level of Difficulty'].value;
+    const timeRequired = event.target['Estimated Time Required'].value;
+    const noServings = event.target['Number of Servings'].value;
+    const instructions = event.target.Directions.value;
+    const firstPublishDate = Math.floor(Date.now() / 1000);
+    const lastEditDate = firstPublishDate;
+    const userID = Meteor.user()._id;
+    const totalCost = 0;
+    const newRecipeData = { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
+
+    // Clear out any old validation errors.
+    instance.context.resetValidation();
+    // Invoke clean so that newContact reflects what will be inserted.
+    Recipes.getSchema().clean(newRecipeData);
+    // Determine validity.
+    instance.context.validate(newRecipeData);
+    if (instance.context.isValid()) {
+      const id = Recipes.define(newRecipeData);
+      //instance.messageFlags.set(displaySuccessMessage, id);
+      //instance.messageFlags.set(displayErrorMessages, false);
+      //instance.find('form').reset();
+      //instance.$('.dropdown').dropdown('restore defaults');
+      //FlowRouter.go('Home_Page');
+    } else {
+      instance.messageFlags.set(displaySuccessMessage, false);
+      instance.messageFlags.set(displayErrorMessages, true);
+    }
+    /*
     Imgur.upload({
       image: image,
       apiKey: Meteor.settings.public.ClientID,
@@ -62,9 +94,10 @@ Template.Create_Recipe_Page.events({
       if (error) {
         throw error;
       } else {
-        console.log(data.link); /* Do things with the link here (replace console.log) */
+        console.log(data.link);
       }
     });
+    */
   },
   /* END IMGUR UPLOAD EVENTS */
   'click .minus-button'(event, instance) {
