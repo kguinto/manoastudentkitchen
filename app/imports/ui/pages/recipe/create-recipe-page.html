@@ -1,0 +1,72 @@
+<template name="Create_Recipe_Page">
+
+  {{#if Template.subscriptionsReady}}
+
+  <div class="ui container">
+
+    <div class="ui text segment">
+      <form class="ui form">
+        <div class="ui two column grid">
+          <div class="ui column">
+            <div class="field">
+              {{> Text_Form_Control label="Name of Recipe" required=true errorMessage=(fieldError "recipeName")}}
+            </div>
+
+            <div class="field">
+              <label><b>Image:</b></label>
+              <input class="prompt" type="file" name="image">
+            </div>
+
+            <div class="field">
+              {{> Text_Form_Control label="Level of Difficulty" errorMessage=(fieldError "difficulty")}}
+            </div>
+
+            <div class="field">
+              {{> Text_Form_Control label="Estimated Time Required" errorMessage=(fieldError "timeRequired")}}
+            </div>
+
+
+          </div>
+          <div class="ui column">
+            <img class="ui medium centered responsive image" src="{{ image_preview }}"/>
+          </div>
+        </div>
+
+        <h4>Enter ingredients for your recipe</h4>
+        {{#each ing_field_list}}
+        <div class="four fields">
+          <div class="field">
+            {{> Text_Form_Control label="Ingredient" errorMessage=(fieldError "ingredientName")}}
+          </div>
+          <div class="field">
+            {{> Text_Form_Control label="Quantity" errorMessage=(fieldError "quantity")}}
+          </div>
+          <div class="field">
+            {{> Text_Form_Control label="Price" errorMessage=(fieldError "price")}}
+          </div>
+          <div class="field">
+            {{> Text_Form_Control label="Location" errorMessage=(fieldError "location")}}
+          </div>
+        </div>
+        {{/each}}
+        <div class="field">
+          <div class="ui small buttons">
+            <button class="ui button"><i class="minus icon"></i></button>
+            <div class=""></div>
+            <button class="ui button"><i class="plus icon"></i></button>
+          </div>
+        </div>
+        <div class="field">
+          {{> TextArea_Form_Control label="Directions" required=true errorMessage=(fieldError "directions")}}
+        </div>
+
+        <button class="ui green button" type="submit">Submit</button>
+      </form>
+
+    </div>
+
+  </div>
+  <script>$('.ui.dropdown').dropdown();</script>
+  {{/if}}
+
+</template>

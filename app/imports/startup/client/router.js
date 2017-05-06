@@ -106,6 +106,14 @@ userRoutes.route('/profile', {
   },
 });
 
+export const createRecipeRouteName = 'Create_Recipe_Page';
+userRoutes.route('/create', {
+  name: createRecipeRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: createRecipeRouteName });
+  },
+});
+
 export const adminPageRouteName = 'Admin_Page';
 userRoutes.route('/admin', {
   name: adminPageRouteName,

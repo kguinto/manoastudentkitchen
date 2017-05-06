@@ -1,0 +1,70 @@
+import { Template } from 'meteor/templating';
+import { Recipes } from '/imports/api/recipe/RecipeCollection';
+import { Tags } from '/imports/api/tag/TagCollection';
+import { Images } from '/imports/api/image/ImageCollection';
+import { _ } from 'meteor/underscore';
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+
+/* eslint-disable no-undef, object-shorthand, no-shadow*/
+
+Template.Create_Recipe_Page.onCreated(function onCreated() {
+  this.dataUrl = new ReactiveVar('/images/blank.png');
+  this.dataIngs = new ReactiveVar([{ ingredient: '', amount: '' },{ ingredient: '', amount: '' }]);
+  this.subscribe(Tags.getPublicationName());
+  this.subscribe(Recipes.getPublicationName());
+  /* IMGUR UPLOAD REACTIVE VARIABLE */
+});
+
+Template.Create_Recipe_Page.helpers({
+  /**
+   * Produces the preview of the image
+   *
+   */
+  image_preview() {
+    if (!_.isUndefined(Template.instance().dataUrl)) {
+      return Template.instance().dataUrl.get();
+    }
+    return '';
+  },
+  /**
+   * Produces addable ingredient input fields
+   *
+   */
+  ing_field_list() {
+    return Template.instance().dataIngs.get();
+  },
+});
+
+Template.Create_Recipe_Page.events({
+  /* IMGUR UPLOAD EVENTS */
+  "change input[type='file']": function upload(event, instance) {
+    const files = event.target.files;
+    if (files.length === 0) {
+      return;
+    }
+    const file = files[0];
+    //
+    const fileReader = new FileReader();
+    fileReader.onload = function onload(event) {
+      const dataUrl = event.target.result;
+      instance.dataUrl.set(dataUrl);
+    };
+    fileReader.readAsDataURL(file);
+  },
+  'submit .test-imgur'(event, instance) {
+    event.preventDefault();
+    const image = instance.dataUrl.get();
+    Imgur.upload({
+      image: image,
+      apiKey: Meteor.settings.public.ClientID,
+    }, function error(error, data) {
+      if (error) {
+        throw error;
+      } else {
+        console.log(data.link); /* Do things with the link here (replace console.log) */
+      }
+    });
+  },
+  /* END IMGUR UPLOAD EVENTS */
+});
