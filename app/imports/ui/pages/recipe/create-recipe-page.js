@@ -10,7 +10,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataUrl = new ReactiveVar('/images/blank.png');
-  this.dataIngs = new ReactiveVar([{ ingredient: '', amount: '' },{ ingredient: '', amount: '' }]);
+  this.dataIngs = new ReactiveVar([{ ingredient: '', amount: '' }]);
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   /* IMGUR UPLOAD REACTIVE VARIABLE */
@@ -67,4 +67,18 @@ Template.Create_Recipe_Page.events({
     });
   },
   /* END IMGUR UPLOAD EVENTS */
+  'click .minus-button'(event, instance) {
+    event.preventDefault();
+    if (instance.dataIngs.get().length > 1) {
+      const currentIngs = instance.dataIngs.get();
+      currentIngs.pop();
+      instance.dataIngs.set(currentIngs);
+    }
+  },
+  'click .plus-button'(event, instance) {
+    event.preventDefault();
+    const currentIngs = instance.dataIngs.get();
+    currentIngs.push({ ingredient: '', amount: '' });
+    instance.dataIngs.set(currentIngs);
+  },
 });
