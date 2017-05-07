@@ -4,7 +4,10 @@ import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
+/* eslint no-unused-vars: "off" */
+
 /** @module Tag */
+
 
 /**
  * Represents a specific Tag, such as "Software Engineering".
