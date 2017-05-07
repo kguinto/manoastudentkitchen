@@ -45,7 +45,15 @@ Template.View_Recipe_Page.helpers({
     const recipe = Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
     return (recipe.totalCost / recipe.noServings);
   },
+  tagsNotInRecipe() {
+    return _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
+          return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
+        }
+    ), function (tagName) {
 
+      return { title: tagName };
+    }
+  }
 });
 
 Template.tagInput.onRendered(function () {
@@ -59,11 +67,20 @@ Template.tagInput.onRendered(function () {
       }
   ));
   this.$('.ui.search').search({
-    source: _.map(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
-      return { title: tagName };
-    })
+    source: _.map(
+        _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
+              return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
+            }
+        ), function (tagName) {
+
+          return { title: tagName };
+        }
+    ),
+    error: false
   })
   ;
+
+  this.$('.ui.search').search.settings.showNoResults = false;
 })
 
 Template.View_Recipe_Page.events({
