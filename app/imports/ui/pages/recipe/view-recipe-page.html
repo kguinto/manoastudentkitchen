@@ -37,18 +37,7 @@
 
       {{ /each }}
 
-      <form class="ui left labeled new-tag-form button" tabindex="0">
-        <a class="ui basic right pointing label">
-          <div class="ui transparent input">
-            <input type="text" name="text" placeholder="Submit a tag...">
-          </div>
-        </a>
-        <button class="ui icon new-tag-button button" type="submit">
-          <i class="plus icon"></i>
-        </button>
-      </form>
-
-      {{> tagInput }}
+     {{> tagInput}}
 
     </div>
 
@@ -65,11 +54,18 @@
 </template>
 
 <template name="tagInput">
-  <div class="ui search">
-    <div class="ui icon input">
-      <input class="prompt" type="text" placeholder="Search Tags...">
-      <i class="search icon"></i>
-    </div>
-    <div class="results"></div>
-  </div>
+  <form class="ui left labeled new-tag-form button" tabindex="0">
+    <a class="ui basic right pointing label">
+      <div class="ui borderless transparent search">
+        <div class="ui input">
+          <input class="prompt" type="text" name="text" placeholder="Submit a tag" style="padding: 0; margin: 0; border: 0; border-radius: 0">
+        </div>
+        <div class="results"></div>
+      </div>
+    </a>
+    <button class="ui icon new-tag-button button" type="submit">
+      <i class="plus icon"></i>
+    </button>
+
+  </form>
 </template>
