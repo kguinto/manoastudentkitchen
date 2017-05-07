@@ -12,6 +12,11 @@
                 <input class="prompt" type="text" name="text" placeholder="Search recipes, tags, locations, authors...">
                 <i class="search icon"></i>
               </form>
+              <!--
+              <form class="test-imgur ui fluid icon input" >
+                <input class="prompt" type="file" name="image" placeholder="A test upload for images">
+                <input type="submit" value="submit">
+              </form> -->
               <div class="results"></div>
             </div>
           </div>
@@ -20,6 +25,7 @@
     </div>
 
     <div class="subsection-recipes">
+
       <div class="ui container home-section">
         <div class="ui three link centered cards">
 
@@ -27,20 +33,20 @@
 
           <div class="card">
             <div class="ui centered card-image">
-              <img class="ui centered image" src="/images/samplefood.jpg">
+              <img class="ui centered image" src="{{ load_recipe_image top_recipe._id }}">
             </div>
             <div class="content">
               <div class="header">{{ top_recipe.recipeName }}</div>
               <div class="meta">
 
-                {{#each tag in recipe_tag top_recipe.recipeID }}
+                {{#each tag in recipe_tag top_recipe._id }}
                 <div class="ui label">{{ tag.tagName }}</div>
                 {{/each}}
 
               </div>
               <div class="description">
                 <p>{{ top_recipe.instructions }}</p>
-                <a href='{{ get_recipe_url top_recipe.recipeID }}'>View</a>
+                <a href='{{ get_recipe_url top_recipe._id }}'>View</a>
               </div>
             </div>
             <div class="extra content">
@@ -59,13 +65,14 @@
       </div>
     </div>
 
+
     <div class="subsection-tags">
       <div class="ui container home-section">
         <div class="ui four link doubling cards">
           {{#each top_tag in top_tags }}
           <div class="card tag-card">
               <div class="image tag-image-container">
-               <img class="tag-image" src="/images/samplefood.jpg">
+               <img class="tag-image" src="{{ load_tag_image.imageURL top_tag.tagName }}">
              </div>
               <div class="tag-image-text">{{ top_tag }}</div>
             </div>

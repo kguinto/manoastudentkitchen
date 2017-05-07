@@ -4,7 +4,10 @@ import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
+/* eslint no-unused-vars: "off" */
+
 /** @module Tag */
+
 
 /**
  * Represents a specific Tag, such as "Software Engineering".
@@ -17,8 +20,7 @@ class TagCollection extends BaseCollection {
    */
   constructor() {
     super('Tag', new SimpleSchema({
-      tagID: { type: Number },
-      recipeID: { type: Number },
+      recipeID: { type: String },
       tagName: { type: String },
       score: { type: Number },
     }));
@@ -35,15 +37,14 @@ class TagCollection extends BaseCollection {
    * @throws {Meteor.Error} If the Tag definition includes a defined tagName.
    * @returns The newly created docID.
    */
-  define({ tagID, recipeID, tagName, score }) {
-    check(tagID, Number);
-    check(recipeID, Number);
+  define({ recipeID, tagName, score }) {
+    check(recipeID, String);
     check(tagName, String);
     check(score, Number);
-    if (this.find({ tagID }).count() > 0) {
+  /*  if (this.find({ tagID }).count() > 0) {
       throw new Meteor.Error(`${tagID} is previously defined in another Tag`);
-    }
-    return this._collection.insert({ tagID, recipeID, tagName, score });
+    } */
+    return this._collection.insert({ recipeID, tagName, score });
   }
 
   /**
@@ -111,11 +112,10 @@ class TagCollection extends BaseCollection {
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const tagID = doc.tagID;
     const recipeID = doc.recipeID;
     const tagName = doc.tagName;
     const score = doc.score;
-    return { tagID, recipeID, tagName, score };
+    return { recipeID, tagName, score };
   }
 }
 

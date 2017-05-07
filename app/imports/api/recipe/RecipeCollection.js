@@ -1,6 +1,5 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import BaseCollection from '/imports/api/base/BaseCollection';
-// import { Interests } from '/imports/api/interest/InterestCollection';
 import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
@@ -22,7 +21,6 @@ class RecipeCollection extends BaseCollection {
   constructor() {
     super('Recipe', new SimpleSchema({
       userID: { type: Number },
-      recipeID: { type: Number },
       recipeName: { type: String, optional: true },
       firstPublishDate: { type: Number, optional: true },
       lastEditDate: { type: Number, optional: true },
@@ -53,19 +51,18 @@ class RecipeCollection extends BaseCollection {
    * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs.
    * @returns The newly created docID.
    */
-  define({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }) {
 
+  define({ userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }) {
     // make sure required fields are OK.
-    const checkPattern = { recipeID: Number, userID: Number, recipeName: String, firstPublishDate: Number,
+
+    const checkPattern = { userID: Number, recipeName: String, firstPublishDate: Number,
       lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number };
 
-    check({ recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions,
+    check({ userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost }, checkPattern);
 
-    if (this.find({ recipeID }).count() > 0) {
-      throw new Meteor.Error(`${recipeID} is previously defined in another Recipe`);
-    }
-    return this._collection.insert({ recipeID, userID, recipeName, firstPublishDate,
+
+    return this._collection.insert({ userID, recipeName, firstPublishDate,
       lastEditDate, instructions, noServings, totalCost });
   }
 
@@ -113,7 +110,7 @@ class RecipeCollection extends BaseCollection {
    * @throws { Meteor.Error } If recipeName is not associated with an Recipe.
    */
   findID(recipeName) {
-    return (this.findDoc(recipeName)._id);
+    return (this.findDoc(docID));
   }
 
   /**
@@ -129,7 +126,7 @@ class RecipeCollection extends BaseCollection {
   }
 
   findDocWithRecipeID(recipeID) {
-    const doc = this._collection.findOne({ recipeID: recipeID });
+    const doc = this._collection.findOne({ _id: recipeID });
     if (!doc) {
       throw new Meteor.Error(`${recipeID} is not a defined ${this._type}`);
     }
@@ -143,7 +140,6 @@ class RecipeCollection extends BaseCollection {
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const recipeID = doc.recipeID;
     const recipeName = doc.recipeName;
     const userID = doc.userID;
     const firstPublishDate = doc.firstPublishDate;
@@ -151,7 +147,7 @@ class RecipeCollection extends BaseCollection {
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    return { recipeID, userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
+    return { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
   }
 }
 

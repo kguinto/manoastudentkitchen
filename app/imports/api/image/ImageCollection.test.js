@@ -9,9 +9,9 @@ import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 if (Meteor.isServer) {
   describe('TagCollection', function testSuite() {
     const recipeID = '7583939';
-    const tagName = 'Pasta';
-    const score = 13;
-    const defineObject = { recipeID, tagName, score };
+    const imageURL = 'http://test.com';
+    const deleteHash = 'aaaaaaaaaaa';
+    const defineObject = { recipeID, imageURL, deleteHash };
 
     before(function setup() {
       removeAllEntities();
@@ -28,8 +28,8 @@ if (Meteor.isServer) {
       // Check that fields are available
       const doc = Tags.findDoc(docID);
       expect(doc.recipeID).to.equal(recipeID);
-      expect(doc.tagName).to.equal(tagName);
-      expect(doc.score).to.equal(score);
+      expect(doc.imageURL).to.equal(imageURL);
+      expect(doc.deleteHash).to.equal(deleteHash);
       // Check that multiple definitions with the same name fail
       expect(function foo() { Tags.define(defineObject); }).to.throw(Error);
 
