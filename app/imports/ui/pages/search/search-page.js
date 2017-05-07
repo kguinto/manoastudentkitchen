@@ -9,6 +9,9 @@ Template.View_Search_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
 });
 
+Template.search.onRendered(function () {
+  this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
+})
 Template.View_Search_Page.helpers({
 
   /**
@@ -48,6 +51,5 @@ Template.View_Search_Page.helpers({
 
   get_recipe_url(recipeID) {
     return `/recipe/${recipeID}/view`;
-  },
-
+  }
 });
