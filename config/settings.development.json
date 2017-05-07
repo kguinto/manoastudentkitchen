@@ -10,6 +10,7 @@
       "popupWidth": 810,
       "popupHeight": 610
     },
-    "initialDatabaseFileName": "database/initial-collection-data.json"
+    "initialDatabaseFileName": "database/initial-collection-data.json",
+    "ClientID": "494cc31b85ca0d2"
   }
 }
