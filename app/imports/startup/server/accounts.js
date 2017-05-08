@@ -11,6 +11,6 @@ Accounts.validateNewUser(function validate(user) {
       Profiles.define({ username });
     }
   }
-  // All UH users are valid for BowFolios.
+  // All UH users are valid for Manoa Student Kitchen.
   return true;
 });

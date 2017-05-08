@@ -1,4 +1,9 @@
 <template name="Profile_Page">
+  {{#if Template.subscriptionsReady}}
+    <div class="ui container">
+      <h1>{{profile.firstName}}</h1>
+    </div>
+  {{else}}
   <div style="margin-top: 10px" class="ui container">
     <div class="ui grid">
       <div class="two wide column"></div>
@@ -175,4 +180,7 @@
         .tab()
     ;
   </script>
+
+  {{/if}}
+
 </template>
