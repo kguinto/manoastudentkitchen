@@ -18,17 +18,16 @@
             </div>
 
             <div class="field">
-              {{> Text_Form_Control label="Level of Difficulty" errorMessage=(fieldError "difficulty")}}
+              <b>Difficulty:</b> <div class="ui rating" data-rating="1" data-max-rating="5"></div>
             </div>
 
             <div class="field">
-              {{> Text_Form_Control label="Estimated Time Required" errorMessage=(fieldError "timeRequired")}}
+              {{> Number_Form_Control label="Estimated Time Required" min="0" errorMessage=(fieldError "timeRequired")}}
             </div>
 
             <div class="field">
-              {{> Text_Form_Control label="Number of Servings" errorMessage=(fieldError "servings")}}
+              {{> Number_Form_Control label="Number of Servings" min="0" errorMessage=(fieldError "servings")}}
             </div>
-
 
           </div>
           <div class="ui column">
@@ -70,7 +69,12 @@
     </div>
 
   </div>
-  <script>$('.ui.dropdown').dropdown();</script>
+  <script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.rating')
+        .rating()
+    ;
+  </script>
   {{/if}}
 
 </template>
