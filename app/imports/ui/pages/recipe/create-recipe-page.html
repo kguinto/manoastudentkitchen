@@ -18,7 +18,7 @@
             </div>
 
             <div class="field">
-              <b>Difficulty:</b> <div class="ui rating" data-rating="1" data-max-rating="5"></div>
+              <b>Difficulty:</b> <div class="ui rating" name="Difficulty" data-rating="1" data-max-rating="5"></div>
             </div>
 
             <div class="field">
@@ -50,14 +50,12 @@
           <div class="field">
             {{> Text_Form_Control label="Location" errorMessage=(fieldError "location")}}
           </div>
+          <button class="ui button minus-button"><i class="minus icon"></i></button>
         </div>
         {{/each}}
         <div class="field">
-          <div class="ui small buttons">
-            <button class="ui button minus-button"><i class="minus icon"></i></button>
-            <div class=""></div>
             <button class="ui button plus-button"><i class="plus icon"></i></button>
-          </div>
+
         </div>
         <div class="field">
           {{> TextArea_Form_Control label="Directions" required=true errorMessage=(fieldError "directions")}}

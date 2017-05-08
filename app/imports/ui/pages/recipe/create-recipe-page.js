@@ -56,10 +56,11 @@ Template.Create_Recipe_Page.events({
   },
   'submit .recipe-form'(event, instance) {
     event.preventDefault();
+    console.log();
     const image = instance.dataUrl.get();
     const ingList = instance.dataIngs.get();
     const recipeName = event.target['Name of Recipe'].value;
-    const difficulty = event.target['Level of Difficulty'].value;
+    const difficulty = event.target['Difficulty'].value;
     const timeRequired = event.target['Estimated Time Required'].value;
     const noServings = event.target['Number of Servings'].value;
     const instructions = event.target.Directions.value;
