@@ -1,7 +1,11 @@
 <template name="View_Search_Page">
-  <div class="ui container home-section" style="min-height:800px; padding-top: 75px;">
+  {{#if Template.subscriptionsReady}}
+  <div class="ui container home-section" style="min-height:700px; padding-top: 75px;">
     {{> search}}
+
+    <h1>{{ search_title }}</h1>
     <div class="ui three link centered cards">
+
 
       {{#each search_result in search_results }}
 
@@ -20,7 +24,7 @@
           </div>
           <div class="description">
             <p>{{ search_result.instructions }}</p>
-            <a href='{{ get_recipe_url search_result.recipeID }}'>View</a>
+            <a href='{{ get_recipe_url search_result._id }}'>View</a>
           </div>
         </div>
         <div class="extra content">
@@ -35,9 +39,10 @@
       </div>
 
       {{/each}}
+
     </div>
   </div>
-
+  {{/if}}
 
 </template>
 
