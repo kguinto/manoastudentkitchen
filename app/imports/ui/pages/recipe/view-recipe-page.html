@@ -37,27 +37,35 @@
 
       {{ /each }}
 
-      <form class="ui left labeled new-tag-form button" tabindex="0">
-          <a class="ui basic right pointing label">
-            <div class="ui transparent input" >
-              <input type="text" name="text" placeholder="Submit a tag...">
-            </div>
-          </a>
-          <button class="ui icon new-tag-button button" type="submit">
-            <i class="plus icon"></i>
-          </button>
-      </form>
+     {{> tagInput}}
 
     </div>
+
 
     <h2>Instructions</h2>
     <div class="ui text segment">
       {{recipe.instructions}}
     </div>
 
-
   </div>
 
   {{/if}}
 
+</template>
+
+<template name="tagInput">
+  <form class="ui left labeled new-tag-form button" tabindex="0">
+    <a class="ui basic right pointing label" style="color: black">
+      <div class="ui borderless transparent search">
+        <div class="ui input">
+          <input class="prompt" type="text" name="text" placeholder="Submit a tag" style="padding: 0; margin: 0; border: 0; border-radius: 0">
+        </div>
+        <div class="results"></div>
+      </div>
+    </a>
+    <button class="ui icon new-tag-button button" type="submit">
+      <i class="plus icon"></i>
+    </button>
+
+  </form>
 </template>

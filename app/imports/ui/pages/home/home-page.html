@@ -75,14 +75,14 @@
 
     <div class="subsection-tags">
       <div class="ui container home-section">
-        <div class="ui four link doubling cards">
+        <div class="ui four link doubling cards" >
           {{#each top_tag in top_tags }}
-          <div class="card tag-card">
-            <div class="image tag-image-container">
-              <img class="tag-image" src="{{ load_tag_image.imageURL top_tag.tagName }}">
-            </div>
-            <div class="tag-image-text">{{ top_tag }}</div>
-          </div>
+          <a class="card tag-card" href='{{ get_search_url top_tag }}'>
+              <div class="image tag-image-container">
+               <img class="tag-image" src="{{ load_tag_image.imageURL top_tag.tagName }}">
+             </div>
+              <div class="tag-image-text">{{ top_tag }}</div>
+            </a>
           {{/each}}
         </div>
       </div>

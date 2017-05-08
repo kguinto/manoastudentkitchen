@@ -72,6 +72,10 @@ Template.Home_Page.helpers({
   get_recipe_url(recipeID) {
     return `/recipe/${recipeID}/view`;
   },
+
+  get_search_url(text){
+      return `/search/${text}/view`;
+  }
 });
 
 
