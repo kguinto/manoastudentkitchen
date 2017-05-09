@@ -5,12 +5,19 @@ import { Images } from '/imports/api/image/ImageCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 /* eslint-disable no-undef, object-shorthand, no-shadow*/
+const displaySuccessMessage = 'displaySuccessMessage';
+const displayErrorMessages = 'displayErrorMessages';
 
 Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataUrl = new ReactiveVar('/images/blank.png');
   this.dataIngs = new ReactiveVar([{ ingredient: '', amount: '' }]);
+  this.dataDiffRating = new ReactiveVar(1);
+  this.messageFlags = new ReactiveDict();
+  this.messageFlags.set(displaySuccessMessage, false);
+  this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('Create_Recipe_Page');
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
@@ -19,6 +26,24 @@ Template.Create_Recipe_Page.onCreated(function onCreated() {
 });
 
 Template.Create_Recipe_Page.helpers({
+  /**
+   * Error and success classes.
+   *
+   */
+  successClass() {
+    return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
+  },
+  displaySuccessMessage() {
+    return Template.instance().messageFlags.get(displaySuccessMessage);
+  },
+  errorClass() {
+    return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
+  },
+  fieldError(fieldName) {
+    const invalidKeys = Template.instance().context.invalidKeys();
+    const errorObject = _.find(invalidKeys, (keyObj) => keyObj.name === fieldName);
+    return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
+  },
   /**
    * Produces the preview of the image
    *
@@ -56,11 +81,10 @@ Template.Create_Recipe_Page.events({
   },
   'submit .recipe-form'(event, instance) {
     event.preventDefault();
-    console.log();
     const image = instance.dataUrl.get();
     const ingList = instance.dataIngs.get();
     const recipeName = event.target['Name of Recipe'].value;
-    const difficulty = event.target.Difficulty.value;
+    const difficulty = instance.dataDiffRating.get();
     const timeRequired = event.target['Estimated Time Required'].value;
     const noServings = event.target['Number of Servings'].value;
     const instructions = event.target.Directions.value;
@@ -68,7 +92,8 @@ Template.Create_Recipe_Page.events({
     const lastEditDate = firstPublishDate;
     const userID = Meteor.user()._id;
     const totalCost = 0;
-    const newRecipeData = { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost, difficulty, timeRequired };
+    const newRecipeData = { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
+      difficulty, timeRequired };
 
     // Clear out any old validation errors.
     instance.context.resetValidation();
@@ -78,11 +103,11 @@ Template.Create_Recipe_Page.events({
     instance.context.validate(newRecipeData);
     if (instance.context.isValid()) {
       const id = Recipes.define(newRecipeData);
-      //instance.messageFlags.set(displaySuccessMessage, id);
-      //instance.messageFlags.set(displayErrorMessages, false);
-      //instance.find('form').reset();
-      //instance.$('.dropdown').dropdown('restore defaults');
-      //FlowRouter.go('Home_Page');
+      instance.messageFlags.set(displaySuccessMessage, id);
+      instance.messageFlags.set(displayErrorMessages, false);
+      instance.find('form').reset();
+      instance.$('.dropdown').dropdown('restore defaults');
+      FlowRouter.go('Home_Page');
     } else {
       instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
@@ -114,5 +139,9 @@ Template.Create_Recipe_Page.events({
     const currentIngs = instance.dataIngs.get();
     currentIngs.push({ ingredient: '', amount: '' });
     instance.dataIngs.set(currentIngs);
+  },
+  'click .rating'(event, instance) {
+    event.preventDefault();
+    instance.dataDiffRating.set($(event.target).parent().children('.active').length);
   },
 });

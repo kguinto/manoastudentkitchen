@@ -21,14 +21,14 @@ class RecipeCollection extends BaseCollection {
   constructor() {
     super('Recipe', new SimpleSchema({
       userID: { type: String },
-      recipeName: { type: String, optional: true },
+      recipeName: { type: String },
       firstPublishDate: { type: Number, optional: true },
       lastEditDate: { type: Number, optional: true },
-      instructions: { type: String, optional: true },
+      instructions: { type: String },
       noServings: { type: Number, optional: true },
       totalCost: { type: Number, optional: true },
-      difficulty: { type: Number, optional: true },
-      timeRequired: { type: String, optional: true},
+      difficulty: { type: Number },
+      timeRequired: { type: String },
     }));
   }
 
@@ -64,7 +64,7 @@ class RecipeCollection extends BaseCollection {
     check({userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost, difficulty, timeRequired }, checkPattern);
 
-    return this._collection.insert({userID, recipeName, firstPublishDate,
+    return this._collection.insert({ userID, recipeName, firstPublishDate,
       lastEditDate, instructions, noServings, totalCost, difficulty, timeRequired });
   }
 
