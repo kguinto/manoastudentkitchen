@@ -65,8 +65,11 @@
         <div class="field">
           {{> TextArea_Form_Control label="Instructions" required=true errorMessage=(fieldError "instructions")}}
         </div>
-
+        {{#if is_not_submitting_recipe}}
         <button class="ui green button" type="submit">Submit</button>
+        {{else}}
+        <button class="ui green loading button">Please wait...</button>
+        {{/if}}
       </form>
 
     </div>

@@ -11,6 +11,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+  this.subscribe(Images.getPublicationName());
 
 });
 
@@ -21,7 +22,7 @@ Template.Home_Page.helpers({
    *
    */
   top_recipes() {
-    return _.sample(Recipes.find({}, { sort: { viewcount: -1, limit: 16 } }).fetch(), 6);
+    return _.sample(Recipes.find({}, { sort: { viewcount: -1, limit: 16 } }).fetch(), 16);
   },
 
   /**
@@ -42,7 +43,10 @@ Template.Home_Page.helpers({
    *
    */
   load_recipe_image(theRecipeID) {
-    return Images.find({ recipeID: theRecipeID }, {}).fetch();
+  //recipeID: theRecipeID
+    const recipeImage = Images.find({}, {}).fetch();
+    console.log(recipeImage);
+    return recipeImage.imageURL;
   },
 
   /**
