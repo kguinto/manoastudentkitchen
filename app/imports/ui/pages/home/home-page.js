@@ -70,11 +70,11 @@ Template.Home_Page.helpers({
   },
 
   get_recipe_url(recipeID) {
-    return `/recipe/${recipeID}/view`;
+    return `/recipe/${recipeID}`;
   },
 
-  get_search_url(text){
-      return `/search/${text}/view`;
+  get_search_url(text) {
+      return `/search/${text}`;
   }
 });
 
@@ -87,7 +87,11 @@ Template.Home_Page.events({
     // Get value from form element
     const target = event.target;
     const text = target.text.value;
-    window.location.replace(`search/${text}/view`);
+    if (text !== null && text !== '') {
+      FlowRouter.go('View_Search_Page', { searchParam: text });
+    } else {
+      FlowRouter.go('Home_Page');
+    }
     // Clear form
     target.text.value = '';
   },
