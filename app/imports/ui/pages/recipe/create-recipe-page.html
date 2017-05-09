@@ -48,7 +48,7 @@
             {{> Text_Form_Control label="Price" errorMessage=(fieldError "price")}}
           </div>
           <div class="field">
-            {{> Select_Form_Control label="Location" options="{{ location_select_options }}" errorMessage=(fieldError "location")}}
+            {{> Select_Form_Control label="Location" options=(location_select_options) errorMessage=(fieldError "location")}}
           </div>
           <button class="ui button minus-button"><i class="minus icon"></i></button>
         </div>

@@ -16,19 +16,14 @@ Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataIngs = new ReactiveVar([{ recipeID: '',
     ingredientName: '', locationID: '', price: '', size: '', unit: '' }]);
   this.dataDiffRating = new ReactiveVar(1);
-  this.dataLocationList = new ReactiveVar([{ label: '', value: '', selected: true }]
-      .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
-          function renameLocation(loc) {
-            return { label: loc.locationName, value: loc._id, selected: false };
-          })));
-  console.log(this.dataLocationList.get());
+  this.dataLocationList = new ReactiveVar();
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('Create_Recipe_Page');
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
-
+  this.subscribe(Locations.getPublicationName());
   /* IMGUR UPLOAD REACTIVE VARIABLE */
 });
 
@@ -66,6 +61,11 @@ Template.Create_Recipe_Page.helpers({
    *
    */
   ing_field_list() {
+    Template.instance().dataLocationList.set([{ label: '', value: '', selected: true }]
+        .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
+            function renameLocation(loc) {
+              return { label: loc.locationName, value: loc._id, selected: false };
+            })));
     return Template.instance().dataIngs.get();
   },
   /**
