@@ -73,7 +73,7 @@ const recipeRoutes = FlowRouter.group({
 });
 
 export const recipePageRouteName = 'View_Recipe_Page';
-recipeRoutes.route('/view', {
+recipeRoutes.route('/', {
   name: recipePageRouteName,
   action() {
     BlazeLayout.render('Recipe_Layout', { main: recipePageRouteName });
