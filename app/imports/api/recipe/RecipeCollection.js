@@ -61,7 +61,7 @@ class RecipeCollection extends BaseCollection {
       lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, difficulty: Number,
       timeRequired: String };
 
-    check({userID, recipeName, firstPublishDate, lastEditDate, instructions,
+    check({ userID, recipeName, firstPublishDate, lastEditDate, instructions,
       noServings, totalCost, difficulty, timeRequired }, checkPattern);
 
     return this._collection.insert({ userID, recipeName, firstPublishDate,

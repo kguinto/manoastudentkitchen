@@ -24,8 +24,7 @@ class IngredientCollection extends BaseCollection {
       ingredientName: { type: String },
       locationID: { type: String },
       price: { type: Number },
-      size: { type: Number },
-      unit: { type: String },
+      quantity: { type: String },
     }));
   }
 
@@ -40,17 +39,16 @@ class IngredientCollection extends BaseCollection {
    * @throws {Meteor.Error} If the Ingredient definition includes a defined ingredientName.
    * @returns The newly created docID.
    */
-  define({ recipeID, ingredientName, locationID, price, size, unit }) {
+  define({ recipeID, ingredientName, locationID, price, quantity }) {
     check(recipeID, String);
     check(ingredientName, String);
     check(locationID, String);
     check(price, Number);
-    check(size, Number);
-    check(unit, String);
+    check(quantity, String);
     /*  if (this.find({ ingredientID }).count() > 0) {
      throw new Meteor.Error(`${ingredientID} is previously defined in another Ingredient`);
      } */
-    return this._collection.insert({ recipeID, ingredientName, locationID, price, size, unit });
+    return this._collection.insert({ recipeID, ingredientName, locationID, price, quantity });
   }
 
   /**
@@ -123,9 +121,8 @@ class IngredientCollection extends BaseCollection {
     const ingredientName = doc.ingredientName;
     const locationID = doc.locationID;
     const price = doc.price;
-    const size = doc.size;
-    const unit = doc.unit;
-    return { recipeID, ingredientName, locationID, price, size, unit };
+    const quantity = doc.quantity;
+    return { recipeID, ingredientName, locationID, price, quantity };
   }
 }
 
