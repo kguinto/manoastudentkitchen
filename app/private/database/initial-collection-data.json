@@ -73,7 +73,9 @@
           "lastEditDate": 1493152975,
           "instructions": "Test test test",
           "noServings": 2,
-          "totalCost": 2
+          "totalCost": 2,
+          "difficulty": 3,
+          "timeRequired": "30 mins",
         },
         {
           "userID": 22653866,
@@ -82,7 +84,9 @@
           "lastEditDate": 1493152975,
           "instructions": "Test test test 2",
           "noServings": 2,
-          "totalCost": 2
+          "totalCost": 2,
+          "difficulty": 3,
+          "timeRequired": "30 mins",
         },
         {
           "userID": 22653866,
@@ -91,7 +95,9 @@
           "lastEditDate": 1493152975,
           "instructions": "Test test test 3",
           "noServings": 2,
-          "totalCost": 2
+          "totalCost": 2,
+          "difficulty": 3,
+          "timeRequired": "30 mins",
         }
       ]
     },

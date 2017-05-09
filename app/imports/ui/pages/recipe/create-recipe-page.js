@@ -60,7 +60,7 @@ Template.Create_Recipe_Page.events({
     const image = instance.dataUrl.get();
     const ingList = instance.dataIngs.get();
     const recipeName = event.target['Name of Recipe'].value;
-    const difficulty = event.target['Difficulty'].value;
+    const difficulty = event.target.Difficulty.value;
     const timeRequired = event.target['Estimated Time Required'].value;
     const noServings = event.target['Number of Servings'].value;
     const instructions = event.target.Directions.value;
@@ -68,7 +68,7 @@ Template.Create_Recipe_Page.events({
     const lastEditDate = firstPublishDate;
     const userID = Meteor.user()._id;
     const totalCost = 0;
-    const newRecipeData = { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
+    const newRecipeData = { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost, difficulty, timeRequired };
 
     // Clear out any old validation errors.
     instance.context.resetValidation();
