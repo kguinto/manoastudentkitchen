@@ -20,9 +20,8 @@ class LocationCollection extends BaseCollection {
    */
   constructor() {
     super('Location', new SimpleSchema({
-      recipeID: { type: String },
       locationName: { type: String },
-      score: { type: Number },
+      address: { type: String },
     }));
   }
 
@@ -37,14 +36,13 @@ class LocationCollection extends BaseCollection {
    * @throws {Meteor.Error} If the Location definition includes a defined locationName.
    * @returns The newly created docID.
    */
-  define({ recipeID, locationName, score }) {
-    check(recipeID, String);
+  define({ locationName, address }) {
     check(locationName, String);
-    check(score, Number);
+    check(address, String);
     /*  if (this.find({ locationID }).count() > 0) {
      throw new Meteor.Error(`${locationID} is previously defined in another Location`);
      } */
-    return this._collection.insert({ recipeID, locationName, score });
+    return this._collection.insert({ locationName, address });
   }
 
   /**
@@ -112,10 +110,9 @@ class LocationCollection extends BaseCollection {
    */
   dumpOne(docID) {
     const doc = this.findDoc(docID);
-    const recipeID = doc.recipeID;
     const locationName = doc.locationName;
-    const score = doc.score;
-    return { recipeID, locationName, score };
+    const address = doc.address;
+    return { locationName, address };
   }
 }
 

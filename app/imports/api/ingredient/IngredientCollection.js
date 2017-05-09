@@ -22,12 +22,10 @@ class IngredientCollection extends BaseCollection {
     super('Ingredient', new SimpleSchema({
       recipeID: { type: String },
       ingredientName: { type: String },
-      locationID: {type: String},
-      price: {type: Number},
-      size:
-          {type: Number
-
-      }
+      locationID: { type: String },
+      price: { type: Number },
+      size: { type: Number },
+      unit: { type: String },
     }));
   }
 
@@ -42,14 +40,17 @@ class IngredientCollection extends BaseCollection {
    * @throws {Meteor.Error} If the Ingredient definition includes a defined ingredientName.
    * @returns The newly created docID.
    */
-  define({ recipeID, ingredientName, score }) {
+  define({ recipeID, ingredientName, locationID, price, size, unit }) {
     check(recipeID, String);
     check(ingredientName, String);
-    check(score, Number);
+    check(locationID, String);
+    check(price, Number);
+    check(size, Number);
+    check(unit, String);
     /*  if (this.find({ ingredientID }).count() > 0) {
      throw new Meteor.Error(`${ingredientID} is previously defined in another Ingredient`);
      } */
-    return this._collection.insert({ recipeID, ingredientName, score });
+    return this._collection.insert({ recipeID, ingredientName, locationID, price, size, unit });
   }
 
   /**
@@ -100,7 +101,8 @@ class IngredientCollection extends BaseCollection {
   }
 
   /**
-   * Returns the docIDs associated with the array of Ingredient ingredientNames, or throws an error if any ingredientName cannot be found.
+   * Returns the docIDs associated with the array of Ingredient ingredientNames, or throws an error if any
+   * ingredientName cannot be found.
    * If nothing is passed, then an empty array is returned.
    * @param { String[] } ingredientNames An array of Ingredient ingredientNames.
    * @returns { String[] } The docIDs associated with the ingredientNames.
@@ -119,8 +121,11 @@ class IngredientCollection extends BaseCollection {
     const doc = this.findDoc(docID);
     const recipeID = doc.recipeID;
     const ingredientName = doc.ingredientName;
-    const score = doc.score;
-    return { recipeID, ingredientName, score };
+    const locationID = doc.locationID;
+    const price = doc.price;
+    const size = doc.size;
+    const unit = doc.unit;
+    return { recipeID, ingredientName, locationID, price, size, unit };
   }
 }
 

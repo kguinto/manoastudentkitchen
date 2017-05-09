@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
+import { Locations } from '/imports/api/location/LocationCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -10,11 +11,17 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 /* eslint-disable no-undef, object-shorthand, no-shadow*/
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
-
 Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataUrl = new ReactiveVar('/images/blank.png');
-  this.dataIngs = new ReactiveVar([{ ingredient: '', amount: '' }]);
+  this.dataIngs = new ReactiveVar([{ recipeID: '',
+    ingredientName: '', locationID: '', price: '', size: '', unit: '' }]);
   this.dataDiffRating = new ReactiveVar(1);
+  this.dataLocationList = new ReactiveVar([{ label: '', value: '', selected: true }]
+      .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
+          function renameLocation(loc) {
+            return { label: loc.locationName, value: loc._id, selected: false };
+          })));
+  console.log(this.dataLocationList.get());
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
@@ -60,6 +67,13 @@ Template.Create_Recipe_Page.helpers({
    */
   ing_field_list() {
     return Template.instance().dataIngs.get();
+  },
+  /**
+   * Produces location selection
+   *
+   */
+  location_select_options() {
+    return Template.instance().dataLocationList.get();
   },
 });
 
@@ -137,7 +151,8 @@ Template.Create_Recipe_Page.events({
   'click .plus-button'(event, instance) {
     event.preventDefault();
     const currentIngs = instance.dataIngs.get();
-    currentIngs.push({ ingredient: '', amount: '' });
+    currentIngs.push({ recipeID: '',
+      ingredientName: '', locationID: '', price: '', size: '', unit: '' });
     instance.dataIngs.set(currentIngs);
   },
   'click .rating'(event, instance) {

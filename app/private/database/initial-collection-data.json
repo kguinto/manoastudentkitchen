@@ -102,6 +102,31 @@
       ]
     },
     {
+      "name": "LocationCollection",
+      "contents": [
+        {
+          "locationName": "Safeway",
+          "address": "Manoa Marketplace 2855 E Manoa Rd",
+        },
+        {
+          "locationName": "Times",
+          "address": "1772 S King St",
+        },
+        {
+          "locationName": "Nijiya Market",
+          "address": "Pucks Alley, 1009 University Ave #101",
+        },
+        {
+          "locationName": "Down to Earth",
+          "address": "2525 S King St, Honolulu, HI 96826",
+        },
+        {
+          "locationName": "The Market",
+          "address": "Hale Noelani Apartments, 1st floor",
+        },
+      ]
+    },
+    {
       "name": "ProfileCollection",
       "contents": [
         {
