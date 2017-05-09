@@ -14,7 +14,7 @@ Template.View_Search_Page.onCreated(function onCreated() {
 
 Template.search.onRendered(function () {
   this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
-})
+});
 Template.View_Search_Page.helpers({
 
   /**
