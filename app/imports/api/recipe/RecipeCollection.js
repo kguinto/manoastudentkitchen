@@ -21,12 +21,14 @@ class RecipeCollection extends BaseCollection {
   constructor() {
     super('Recipe', new SimpleSchema({
       userID: { type: String },
-      recipeName: { type: String, optional: true },
+      recipeName: { type: String },
       firstPublishDate: { type: Number, optional: true },
       lastEditDate: { type: Number, optional: true },
-      instructions: { type: String, optional: true },
+      instructions: { type: String },
       noServings: { type: Number, optional: true },
       totalCost: { type: Number, optional: true },
+      difficulty: { type: Number },
+      timeRequired: { type: String },
     }));
   }
 
@@ -51,17 +53,19 @@ class RecipeCollection extends BaseCollection {
    * if one or more interests are not defined, or if github, facebook, and insreciperam are not URLs.
    * @returns The newly created docID.
    */
-  define({ userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }) {
+  define({ userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost, difficulty,
+      timeRequired }) {
     // make sure required fields are OK.
 
     const checkPattern = { userID: String, recipeName: String, firstPublishDate: Number,
-      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number };
+      lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number, difficulty: Number,
+      timeRequired: String };
 
     check({userID, recipeName, firstPublishDate, lastEditDate, instructions,
-      noServings, totalCost }, checkPattern);
+      noServings, totalCost, difficulty, timeRequired }, checkPattern);
 
-    return this._collection.insert({userID, recipeName, firstPublishDate,
-      lastEditDate, instructions, noServings, totalCost });
+    return this._collection.insert({ userID, recipeName, firstPublishDate,
+      lastEditDate, instructions, noServings, totalCost, difficulty, timeRequired });
   }
 
 
@@ -146,7 +150,10 @@ class RecipeCollection extends BaseCollection {
     const instructions = doc.instructions;
     const noServings = doc.noServings;
     const totalCost = doc.totalCost;
-    return { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost };
+    const difficulty = doc.difficulty;
+    const timeRequired = doc.timeRequired;
+    return { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
+    difficulty, timeRequired };
   }
 }
 
