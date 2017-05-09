@@ -1,21 +1,21 @@
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
+import { Meteor } from 'meteor/meteor';
 import { Profiles } from '/imports/api/profile/ProfileCollection';
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
-Template.Profile_Page.onCreated(function onCreated() {
+Template.Edit_Profile_Page.onCreated(function onCreated() {
   this.subscribe(Profiles.getPublicationName());
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
-  this.context = Profiles.getSchema().namedContext('Profile_Page');
+  this.context = Profiles.getSchema().namedContext('Edit_Profile_Page');
 });
 
-Template.Profile_Page.helpers({
+Template.Edit_Profile_Page.helpers({
   successClass() {
     return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
   },
@@ -31,18 +31,17 @@ Template.Profile_Page.helpers({
     return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
   },
   profile() {
-    console.log(Profiles.find().fetch());
-    return Profiles.findDoc(FlowRouter.getParam('username'));
+    return Profiles.findDoc(Meteor.user().profile.name);
   },
 });
 
 
-Template.Profile_Page.events({
+Template.Edit_Profile_Page.events({
   'submit .profile-data-form'(event, instance) {
     event.preventDefault();
     const firstName = event.target.First.value;
     const lastName = event.target.Last.value;
-    const username = FlowRouter.getParam('username'); // schema requires username.
+    const username = Meteor.user().profile.name; // schema requires username.
     const picture = event.target.Picture.value;
     const bio = event.target.Bio.value;
 
@@ -56,7 +55,7 @@ Template.Profile_Page.events({
     instance.context.validate(updatedProfileData);
 
     if (instance.context.isValid()) {
-      const docID = Profiles.findDoc(FlowRouter.getParam('username'))._id;
+      const docID = Profiles.findDoc(Meteor.user().profile.name)._id;
       const id = Profiles.update(docID, { $set: updatedProfileData });
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
