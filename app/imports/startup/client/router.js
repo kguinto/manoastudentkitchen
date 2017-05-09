@@ -151,7 +151,7 @@ userRoutes.route('/filter', {
 
 
 export const searchPageRouteName = 'View_Search_Page';
-FlowRouter.route('/search/:searchParam/view', {
+FlowRouter.route('/search/:searchParam', {
   name: searchPageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: searchPageRouteName });

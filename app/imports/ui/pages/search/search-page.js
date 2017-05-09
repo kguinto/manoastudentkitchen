@@ -3,6 +3,7 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 Template.View_Search_Page.onCreated(function onCreated() {
@@ -69,4 +70,25 @@ Template.View_Search_Page.helpers({
     }
     return message;
   },
+});
+
+Template.View_Search_Page.events({
+  'submit .search-recipe'(event) {
+    // Prevent default browser form submit
+    event.preventDefault();
+
+    // Get value from form element
+    const target = event.target;
+    const text = target.text.value;
+
+    window.location = text;
+    // Clear form
+    target.text.value = '';
+  },
+  'click .create-new'(event) {
+    event.preventDefault();
+    const userName = Meteor.user().profile.name;
+    FlowRouter.go(`/${userName}/create`);
+  },
+
 });
