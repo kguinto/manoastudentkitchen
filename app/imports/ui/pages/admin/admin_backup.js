@@ -3,26 +3,33 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-Template.View_Search_Page.onCreated(function onCreated() {
+
+const userSearchTerm = 'user';
+const recipeSearchTerm = 'recipe';
+const tagSearchTerm = 'tag';
+
+Template.Admin_Page_Backup.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
-  this.numResults = new ReactiveVar(0);
+  this.searchTerms = new ReactiveDict();
+  this.searchTerms.set(userSearchTerm, '');
+  this.searchTerms.set(recipeSearchTerm, '');
+  this.searchTerms.set(tagSearchTerm, '');
+  this.activeOption = new ReactiveVar('');
 });
 
-Template.search.onRendered(function () {
-  this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
-});
-Template.View_Search_Page.helpers({
+Template.Admin_Page_Backup.helpers({
 
   /**
    * Produces matching recipes in search
    *
    */
-  search_results() {
-    const param = FlowRouter.getParam('searchParam');
+  recipe_search_results() {
+    const param = Template.instance().searchTerms.get(recipeSearchTerm);
 
     const results = Recipes.find({ recipeName: { $regex: `${param}` } }, { sort: { viewcount: -1 } }).fetch();
 
@@ -35,7 +42,6 @@ Template.View_Search_Page.helpers({
       const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { sort: { viewcount: -1 } }).fetch();
       results.push(tagSearch);
     }
-    Template.instance().numResults.set(results.length);
     return results;
   },
 
@@ -70,10 +76,37 @@ Template.View_Search_Page.helpers({
     }
     return message;
   },
+
+  /**
+   * Determines which pane of the admin options has activeclass
+   *
+   */
+  getActiveStatus(option) {
+    return Template.instance().activeOption.get() === option ? 'active' : '';
+  },
+  /**
+   * Determines if pane is active
+   *
+   */
+  isActiveOption(option) {
+    return Template.instance().activeOption.get() === option;
+  },
+  hasSearch() {
+    return Template.instance().activeOption.get() === 'userpane' ||
+        Template.instance().activeOption.get() === 'recipepane' ||
+        Template.instance().activeOption.get() === 'tagpane';
+  },
+  /**
+   * Gets name of active pane (lowercase)
+   *
+   */
+  getOptionName() {
+    return Template.instance().activeOption.get().slice(0, -4);
+  },
 });
 
-Template.View_Search_Page.events({
-  'submit .search-recipe'(event) {
+Template.Admin_Page_Backup.events({
+  'submit .admin-search'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
@@ -81,18 +114,33 @@ Template.View_Search_Page.events({
     const target = event.target;
     const text = target.text.value;
 
+    // Get type of search
+    const searchType = Template.instance().activeOption.get().slice(0, -4);
+
     if (text !== null && text !== '') {
-      FlowRouter.go('View_Search_Page', { searchParam: text });
-    } else {
-      FlowRouter.go('Home_Page');
+      Template.instance().searchTerms.set(searchType, text);
     }
-    // Clear form
-    target.text.value = '';
   },
-  'click .create-new'(event) {
+  'click .side-item-userpane'(event) {
     event.preventDefault();
-    const userName = Meteor.user().profile.name;
-    FlowRouter.go(`/${userName}/create`);
+    Template.instance().activeOption.set('userpane');
+  },
+  'click .side-item-recipepane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('recipepane');
+  },
+  'click .side-item-tagpane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('tagpane');
+  },
+  'click .side-item-reportpane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('reportpane');
+  },
+  'click .side-item-settingpane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('settingpane');
   },
 
 });
+

@@ -4,26 +4,23 @@
 
   <div class="ui text container segment">
     <div class="ui dividing header">
-      Update Profile
+      Profile
     </div>
     <form class="ui equal width form profile-data-form {{ successClass }} {{ errorClass }}">
 
       <div class="fields">
-        {{> Text_Form_Control label="First" value=profile.firstName errorMessage=(fieldError "firstName")}}
-        {{> Text_Form_Control label="Last" value=profile.lastName errorMessage=(fieldError "lastName")}}
+        {{> Text_Form_Control label="First" placeholder="Philip" value=profile.firstName errorMessage=(fieldError "firstName")}}
+        {{> Text_Form_Control label="Last" placeholder="Johnson" value=profile.lastName errorMessage=(fieldError "lastName")}}
+
       </div>
 
       <div class="field">
-        {{> Text_Form_Control label="Profile Picture" placeholder="http://foo.com/shot.jpg" value=profile.picture errorMessage=(fieldError "picture")}}
-      </div>
-
-      <div class="field">
-        {{> Select_Form_Control label="Favorite Foods" options=interests errorMessage=(fieldError "interests") multiple=true }}
+        {{> Text_Form_Control label="Picture" placeholder="http://foo.com/shot.jpg" value=profile.picture errorMessage=(fieldError "picture")}}
       </div>
 
       {{> TextArea_Form_Control label="Bio" value=profile.bio placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
 
-      <button class="ui primary button" type="submit">Update</button>
+      <button class="ui primary button" type="submit">Submit</button>
       {{#if displaySuccessMessage}}
         <div class="ui success message">
           <p>Profile data successfully updated.</p>
@@ -33,5 +30,4 @@
   </div>
 
   {{/if}}
-
 </template>

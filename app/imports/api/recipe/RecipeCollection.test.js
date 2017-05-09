@@ -9,14 +9,16 @@ import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 if (Meteor.isServer) {
   describe('RecipeCollection', function testSuite() {
     const userID = 22653866;
-    const recipeName = 'Mom\'s Spaghetti';
+    const recipeName = "Mom's Spaghetti";
     const firstPublishDate = 	1493152975;
     const lastEditDate = 	1493152975;
     const instructions = 'Put your junk in the box';
     const noServings = 12;
     const totalCost = 12;
+    const difficulty = 5;
+    const timeRequired = '30 mins';
     const defineObject = { userID, recipeName, firstPublishDate, lastEditDate, instructions,
-      noServings, totalCost };
+      noServings, totalCost, difficulty, timeRequired };
 
     before(function setup() {
       removeAllEntities();
@@ -40,6 +42,8 @@ if (Meteor.isServer) {
       expect(doc.instructions).to.equal(instructions);
       expect(doc.noServings).to.equal(noServings);
       expect(doc.totalCost).to.equal(totalCost);
+      expect(doc.difficulty).to.equal(difficulty);
+      expect(doc.timeRequired).to.equal(timeRequired);
       // Check that multiple definitions with the same name fail
       expect(function foo() { Recipes.define(defineObject); }).to.throw(Error);
 

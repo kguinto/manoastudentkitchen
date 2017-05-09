@@ -11,3 +11,4 @@ import './select-form-control';
 import './social-network-form-control';
 import './text-form-control.html';
 import './textarea-form-control.html';
+import './number-form-control.html';

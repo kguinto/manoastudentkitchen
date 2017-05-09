@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-// import { Profiles } from '/imports/api/profile/ProfileCollection';
-// import { Interests } from '/imports/api/interest/InterestCollection';
-import { Tags } from '/imports/api/tag/TagCollection';
+import { Profiles } from '/imports/api/profile/ProfileCollection';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
+import { Tags } from '/imports/api/tag/TagCollection';
+import { Locations } from '/imports/api/location/LocationCollection';
 import { _ } from 'meteor/underscore';
 
 /* global Assets */
@@ -31,7 +31,7 @@ function restoreCollection(collection, restoreJSON) {
 
 Meteor.startup(() => {
   /** Only initialize database if it's empty. */
-  const collectionList = [Tags, Recipes];
+  const collectionList = [Tags, Recipes, Locations];
   const totalDocuments = _.reduce(collectionList, function reducer(memo, collection) {
     return memo + collection.count();
   }, 0);

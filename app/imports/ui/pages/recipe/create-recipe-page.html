@@ -1,0 +1,83 @@
+<template name="Create_Recipe_Page">
+
+  {{#if Template.subscriptionsReady}}
+
+  <div class="ui container">
+
+    <div class="ui text segment">
+      <form class="ui form recipe-form {{ errorClass }}">
+        <div class="ui two column grid">
+          <div class="ui column">
+            <div class="field">
+              {{> Text_Form_Control label="Name of Recipe" required=true errorMessage=(fieldError "recipeName")}}
+            </div>
+
+            <div class="field">
+              <label><b>Image:</b></label>
+              <input class="prompt" type="file" name="image">
+            </div>
+
+            <div class="field">
+              <b>Difficulty:</b> <div class="ui rating" name="Difficulty" data-rating="1" data-max-rating="5"></div>
+            </div>
+
+            <div class="field">
+              {{> Text_Form_Control label="Estimated Time Required" min="0" errorMessage=(fieldError "timeRequired")}}
+            </div>
+
+            <div class="field">
+              {{> Number_Form_Control label="Number of Servings" min="0" errorMessage=(fieldError "servings")}}
+            </div>
+
+          </div>
+          <div class="ui column">
+            <img class="ui medium centered responsive image" src="{{ image_preview }}"/>
+          </div>
+        </div>
+
+        <h4>Enter ingredients for your recipe</h4>
+        {{#if has_ing_error }}
+        <div class="ui error message">
+          One or more of your ingredient fields was invalid or unspecified. Double check your input and try again.
+        </div>
+        {{/if}}
+        {{#each ing_field_list}}
+        <div class="four fields">
+          <div class="field">
+            {{> Text_Form_Control label="Ingredient" errorMessage=(fieldError "ingredientName")}}
+          </div>
+          <div class="field">
+            {{> Text_Form_Control label="Quantity" errorMessage=(fieldError "quantity")}}
+          </div>
+          <div class="field">
+            {{> Text_Form_Control label="Price" errorMessage=(fieldError "price")}}
+          </div>
+          <div class="field">
+            {{> Select_Form_Control label="Location" options=(location_select_options) errorMessage=(fieldError "location")}}
+          </div>
+          <button class="ui button minus-button"><i class="minus icon"></i></button>
+        </div>
+        {{/each}}
+        <div class="field">
+            <button class="ui button plus-button"><i class="plus icon"></i></button>
+
+        </div>
+        <div class="field">
+          {{> TextArea_Form_Control label="Instructions" required=true errorMessage=(fieldError "instructions")}}
+        </div>
+
+        <button class="ui green button" type="submit">Submit</button>
+      </form>
+
+    </div>
+
+  </div>
+  <script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.rating')
+        .rating()
+    ;
+  </script>
+  {{/if}}
+
+</template>
