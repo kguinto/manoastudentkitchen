@@ -11,8 +11,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
-  /* IMGUR UPLOAD REACTIVE VARIABLE */
-  this.dataUrl = new ReactiveVar();
+
 });
 
 Template.Home_Page.helpers({
@@ -92,34 +91,10 @@ Template.Home_Page.events({
     // Clear form
     target.text.value = '';
   },
-  /* IMGUR UPLOAD EVENTS */
-  "change input[type='file']": function upload(event, instance) {
-    const files = event.target.files;
-    if (files.length === 0) {
-      return;
-    }
-    const file = files[0];
-    //
-    const fileReader = new FileReader();
-    fileReader.onload = function onload(event) {
-      const dataUrl = event.target.result;
-      instance.dataUrl.set(dataUrl);
-    };
-    fileReader.readAsDataURL(file);
-  },
-  'submit .test-imgur'(event, instance) {
+  'click .create-new'(event) {
     event.preventDefault();
-    const image = instance.dataUrl.get();
-    Imgur.upload({
-      image: image,
-      apiKey: Meteor.settings.public.ClientID,
-    }, function error(error, data) {
-      if (error) {
-        throw error;
-      } else {
-        console.log(data.link); /* Do things with the link here (replace console.log) */
-      }
-    });
+    const userName = Meteor.user().profile.name;
+    FlowRouter.go(`/${userName}/create`);
   },
-  /* END IMGUR UPLOAD EVENTS */
+
 });

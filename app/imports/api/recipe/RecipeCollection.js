@@ -20,7 +20,7 @@ class RecipeCollection extends BaseCollection {
    */
   constructor() {
     super('Recipe', new SimpleSchema({
-      userID: { type: Number },
+      userID: { type: String },
       recipeName: { type: String, optional: true },
       firstPublishDate: { type: Number, optional: true },
       lastEditDate: { type: Number, optional: true },
@@ -54,7 +54,7 @@ class RecipeCollection extends BaseCollection {
   define({ userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost }) {
     // make sure required fields are OK.
 
-    const checkPattern = { userID: Number, recipeName: String, firstPublishDate: Number,
+    const checkPattern = { userID: String, recipeName: String, firstPublishDate: Number,
       lastEditDate: Number, instructions: String, noServings: Number, totalCost: Number };
 
     check({userID, recipeName, firstPublishDate, lastEditDate, instructions,
