@@ -2,11 +2,13 @@ import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { _ } from 'meteor/underscore';
 
 Template.View_Search_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+  this.numResults = new ReactiveVar(0);
 });
 
 Template.search.onRendered(function () {
@@ -32,6 +34,7 @@ Template.View_Search_Page.helpers({
       const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { sort: { viewcount: -1 } }).fetch();
       results.push(tagSearch);
     }
+    Template.instance().numResults.set(results.length);
     return results;
   },
 
@@ -53,38 +56,17 @@ Template.View_Search_Page.helpers({
     return `/recipe/${recipeID}/view`;
   },
 
-  search_param(){
-    return FlowRouter.getParam('searchParam');
+  search_title() {
+    const searchParam = FlowRouter.getParam('searchParam');
+    const numResults = Template.instance().numResults.get();
+    let message = '';
+    if (numResults === 1) {
+      message = `1 results for \'${searchParam}\'`;
+    } else if (numResults > 1) {
+      message = `${numResults} results for \'${searchParam}\'`;
+    } else {
+      message = `0 results for \'${searchParam}\'`;
+    }
+    return message;
   },
-
-  search_title(){
-    if (search_results().length == 1)
-      return search_results().length + ' result for \'' + search_param() + '\'';
-    else if (search_results().length > 1)
-      return search_results().length + ' results for \'' + search_param() + '\'';
-    else
-      return '0 results for \'' + search_param() + '\'';
-  }
 });
-
-function search_param(){
-  return FlowRouter.getParam('searchParam');
-}
-
-function search_results(){
-  const param = FlowRouter.getParam('searchParam');
-
-  const results = Recipes.find({ recipeName: { $regex: `${param}` } }, { sort: { viewcount: -1 } }).fetch();
-
-  let tagSearchArr = param.split(',');
-  tagSearchArr = _.map(tagSearchArr, function snip(term) { return term[0] === ' ' ? term.substr(1) : term; });
-  const tagSearchMap = _.map(tagSearchArr, function searchterm(term) { return { tagName: term }; });
-  const tagSearchResults = Tags.find({ $or: tagSearchMap }, { fields: { recipeID: 1 } }).fetch();
-  const tagSearchResultsRenamed = _.map(tagSearchResults, function rename(item) { return { _id: item.recipeID }; });
-  if (tagSearchResultsRenamed.length > 0) {
-    const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { sort: { viewcount: -1 } }).fetch();
-    results.push(tagSearch);
-  }
-  console.log(results[0]);
-  return results[0];
-}
