@@ -19,6 +19,7 @@ Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataDiffRating = new ReactiveVar(1);
   this.dataLocationList = new ReactiveVar();
   this.dataHasIngError = new ReactiveVar(false);
+  this.dataIsSubmittingRecipe = new ReactiveVar(false);
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
@@ -80,6 +81,9 @@ Template.Create_Recipe_Page.helpers({
   },
   has_ing_error() {
     return Template.instance().dataHasIngError.get();
+  },
+  is_not_submitting_recipe() {
+    return !Template.instance().dataIsSubmittingRecipe.get();
   },
 });
 
@@ -154,6 +158,7 @@ Template.Create_Recipe_Page.events({
       Template.instance().dataHasIngError.set(false);
     }
     if (instance.context.isValid() && instance.ingscontext.isValid()) {
+      Template.instance().dataIsSubmittingRecipe.set(true);
       /* Inserts new recipe */
       const id = Recipes.define(newRecipeData);
 
@@ -180,6 +185,7 @@ Template.Create_Recipe_Page.events({
           Images.define({ recipeID, imageURL, deleteHash });
           instance.messageFlags.set(displaySuccessMessage, id);
           instance.messageFlags.set(displayErrorMessages, false);
+          instance.dataIsSubmittingRecipe.set(false);
           instance.find('form').reset();
           instance.$('.dropdown').dropdown('restore defaults');
           FlowRouter.go('Home_Page');
