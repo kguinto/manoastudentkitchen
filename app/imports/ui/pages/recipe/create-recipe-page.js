@@ -80,7 +80,7 @@ Template.Create_Recipe_Page.helpers({
   },
   has_ing_error() {
     return Template.instance().dataHasIngError.get();
-  }
+  },
 });
 
 Template.Create_Recipe_Page.events({
@@ -155,36 +155,41 @@ Template.Create_Recipe_Page.events({
     }
     if (instance.context.isValid() && instance.ingscontext.isValid()) {
       /* Inserts new recipe */
-     // const id = Recipes.define(newRecipeData);
-      instance.messageFlags.set(displaySuccessMessage, id);
-      instance.messageFlags.set(displayErrorMessages, false);
-      instance.find('form').reset();
-      instance.$('.dropdown').dropdown('restore defaults');
-      FlowRouter.go('Home_Page');
+      const id = Recipes.define(newRecipeData);
+
+      ingIDs = _.map(Template.instance().dataIngs.get(), function ingval(obj) {
+        const recipeID = id;
+        const ingredientName = obj.ingredientName;
+        const quantity = obj.quantity;
+        const price = obj.price;
+        const locationID = obj.locationID;
+        Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
+        return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
+      });
+      Imgur.upload({
+        image: image,
+        apiKey: Meteor.settings.public.ClientID,
+      }, function error(error, data) {
+        if (error) {
+          throw error;
+        } else {
+          const recipeID = id;
+          const imageURL = data.link;
+          const deleteHash = data.deletehash;
+          Images.getSchema().clean({ recipeID, imageURL, deleteHash });
+          Images.define({ recipeID, imageURL, deleteHash });
+          instance.messageFlags.set(displaySuccessMessage, id);
+          instance.messageFlags.set(displayErrorMessages, false);
+          instance.find('form').reset();
+          instance.$('.dropdown').dropdown('restore defaults');
+          FlowRouter.go('Home_Page');
+        }
+      });
     } else {
       Template.instance().dataHasIngError.set(true);
       instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
     }
-
-
-    /*
-    Imgur.upload({
-      image: image,
-      apiKey: Meteor.settings.public.ClientID,
-    }, function error(error, data) {
-      if (error) {
-        throw error;
-      } else {
-        console.log(data.link);
-
-
-
-
-
-      }
-    });
-  */
   },
 
   /* END IMGUR UPLOAD EVENTS */
