@@ -9,7 +9,7 @@ import { removeAllEntities } from '/imports/api/base/BaseUtilities';
 if (Meteor.isServer) {
   describe('RecipeCollection', function testSuite() {
     const userID = 22653866;
-    const recipeName = 'Mom\'s Spaghetti';
+    const recipeName = "Mom's Spaghetti";
     const firstPublishDate = 	1493152975;
     const lastEditDate = 	1493152975;
     const instructions = 'Put your junk in the box';

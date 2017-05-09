@@ -37,7 +37,7 @@ Template.View_Recipe_Page.helpers({
     return Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
   },
 
-  recipeTags(){
+  recipeTags() {
     return _.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
   },
 
@@ -47,13 +47,13 @@ Template.View_Recipe_Page.helpers({
   },
   tagsNotInRecipe() {
     return _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
-          return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
+      return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
         }
     ), function (tagName) {
 
       return { title: tagName };
-    }
-  }
+    };
+  },
 });
 
 Template.tagInput.onRendered(function () {
@@ -81,10 +81,10 @@ Template.tagInput.onRendered(function () {
   ;
 
   this.$('.ui.search').search.settings.showNoResults = false;
-})
+});
 
 Template.View_Recipe_Page.events({
-  'submit .new-tag-form' (event, instance) {
+  'submit .new-tag-form'(event, instance) {
     event.preventDefault();
     // Get tag name (text field)
     const tagName = event.target.text.value;
@@ -99,7 +99,7 @@ Template.View_Recipe_Page.events({
     // Invoke clean so that newContactData reflects what will be inserted.
     Tags.getSchema().clean(newTagData);
     // Determine validity.
-    //instance.context.validate(newTagData);
+    // instance.context.validate(newTagData);
 
     if (instance.context.isValid()) {
       const id = Tags.define(newTagData);

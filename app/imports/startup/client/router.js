@@ -2,7 +2,6 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { $ } from 'meteor/jquery';
 
-
 /*                        LANDING ROUTE                       */
 
 export const landingPageRouteName = 'Landing_Page';
@@ -98,7 +97,7 @@ const userRoutes = FlowRouter.group({
   triggersExit: [removeUserBodyClass],
 });
 
-export const profilePageRouteName = 'Profile_Page';
+export const profilePageRouteName = 'View_Profile_Page';
 userRoutes.route('/profile', {
   name: profilePageRouteName,
   action() {
@@ -131,7 +130,7 @@ userRoutes.route('/edit-profile', {
 });
 
 export const editRecipePageRouteName = 'Edit_Recipe_Page';
-userRoutes.route('/editrecipe', {
+userRoutes.route('/edit-recipe', {
   name: editRecipePageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: editRecipePageRouteName });
