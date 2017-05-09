@@ -21,7 +21,7 @@ Template.View_Search_Page.helpers({
   search_results() {
     const param = FlowRouter.getParam('searchParam');
 
-    const results = Recipes.find({ recipeName: { $regex: '${param}' } }, { sort: { viewcount: -1 } }).fetch();
+    const results = Recipes.find({ recipeName: { $regex: `${param}` } }, { sort: { viewcount: -1 } }).fetch();
 
     let tagSearchArr = param.split(',');
     tagSearchArr = _.map(tagSearchArr, function snip(term) { return term[0] === ' ' ? term.substr(1) : term; });
@@ -32,8 +32,7 @@ Template.View_Search_Page.helpers({
       const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { sort: { viewcount: -1 } }).fetch();
       results.push(tagSearch);
     }
-    console.log(results[0]);
-    return results[0];
+    return results;
   },
 
   /**
