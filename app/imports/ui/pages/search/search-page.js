@@ -81,7 +81,11 @@ Template.View_Search_Page.events({
     const target = event.target;
     const text = target.text.value;
 
-    FlowRouter.go('View_Search_Page', { searchParam: text });
+    if (text !== null && text !== '') {
+      FlowRouter.go('View_Search_Page', { searchParam: text });
+    } else {
+      FlowRouter.go('Home_Page');
+    }
     // Clear form
     target.text.value = '';
   },
