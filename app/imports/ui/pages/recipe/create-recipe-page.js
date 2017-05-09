@@ -18,6 +18,7 @@ Template.Create_Recipe_Page.onCreated(function onCreated() {
     ingredientName: '', locationID: '', price: '', quantity: '' }]);
   this.dataDiffRating = new ReactiveVar(1);
   this.dataLocationList = new ReactiveVar();
+  this.dataHasIngError = new ReactiveVar(false);
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
@@ -77,6 +78,9 @@ Template.Create_Recipe_Page.helpers({
   location_select_options() {
     return Template.instance().dataLocationList.get();
   },
+  has_ing_error() {
+    return Template.instance().dataHasIngError.get();
+  }
 });
 
 Template.Create_Recipe_Page.events({
@@ -142,26 +146,26 @@ Template.Create_Recipe_Page.events({
       const quantity = obj.quantity;
       const price = obj.price;
       const locationID = obj.locationID;
-      console.log({ recipeID, ingredientName, locationID, price, quantity });
       Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
       instance.ingscontext.validate({ recipeID, ingredientName, locationID, price, quantity });
     });
-    console.log(instance.ingscontext.invalidKeys());
+
+    if (instance.ingscontext.isValid()) {
+      Template.instance().dataHasIngError.set(false);
+    }
     if (instance.context.isValid() && instance.ingscontext.isValid()) {
       /* Inserts new recipe */
      // const id = Recipes.define(newRecipeData);
-      console.log("VALID");
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();
       instance.$('.dropdown').dropdown('restore defaults');
       FlowRouter.go('Home_Page');
     } else {
+      Template.instance().dataHasIngError.set(true);
       instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
     }
-
-
 
 
     /*
@@ -182,6 +186,7 @@ Template.Create_Recipe_Page.events({
     });
   */
   },
+
   /* END IMGUR UPLOAD EVENTS */
   'click .minus-button'(event, instance) {
     event.preventDefault();

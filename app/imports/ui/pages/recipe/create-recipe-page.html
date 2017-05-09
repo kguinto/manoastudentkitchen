@@ -36,6 +36,11 @@
         </div>
 
         <h4>Enter ingredients for your recipe</h4>
+        {{#if has_ing_error }}
+        <div class="ui error message">
+          One or more of your ingredient fields was invalid or unspecified. Double check your input and try again.
+        </div>
+        {{/if}}
         {{#each ing_field_list}}
         <div class="four fields">
           <div class="field">
