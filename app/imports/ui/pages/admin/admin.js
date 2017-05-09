@@ -11,6 +11,8 @@ import { _ } from 'meteor/underscore';
 const userSearchTerm = 'user';
 const recipeSearchTerm = 'recipe';
 const tagSearchTerm = 'tag';
+const displaySuccessMessage = 'displaySuccessMessage';
+const displayErrorMessages = 'displayErrorMessages';
 
 Template.Admin_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
@@ -20,6 +22,9 @@ Template.Admin_Page.onCreated(function onCreated() {
   this.searchTerms.set(recipeSearchTerm, '');
   this.searchTerms.set(tagSearchTerm, '');
   this.activeOption = new ReactiveVar('');
+  this.messageFlags = new ReactiveDict();
+  this.messageFlags.set(displaySuccessMessage, false);
+  this.messageFlags.set(displayErrorMessages, false);
 });
 
 Template.Admin_Page.helpers({
@@ -103,6 +108,26 @@ Template.Admin_Page.helpers({
   getOptionName() {
     return Template.instance().activeOption.get().slice(0, -4);
   },
+  successClass() {
+    return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
+  },
+  displaySuccessMessage() {
+    return Template.instance().messageFlags.get(displaySuccessMessage);
+  },
+  errorClass() {
+    return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
+  },
+  fieldError(fieldName) {
+    const invalidKeys = Template.instance().context.invalidKeys();
+    const errorObject = _.find(invalidKeys, (keyObj) => keyObj.name === fieldName);
+    return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
+  },
+  recipes() {
+    return Recipes.find().fetch();
+  },
+  tags() {
+    return Tags.find().fetch();
+  },
 });
 
 Template.Admin_Page.events({
@@ -141,57 +166,10 @@ Template.Admin_Page.events({
     event.preventDefault();
     Template.instance().activeOption.set('settingpane');
   },
-
-});
-
-import { Template } from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import { _ } from 'meteor/underscore';
-import { Recipes } from '/imports/api/recipe/RecipeCollection';
-import { Tags } from '/imports/api/tag/TagCollection';
-//import { Images } from 'imports/api/image/ImageCollection';
-
-const displaySuccessMessage = 'displaySuccessMessage';
-const displayErrorMessages = 'displayErrorMessages';
-
-Template.Admin_Page.onCreated(function onCreated() {
-  this.subscribe(Recipes.getPublicationName());
-  this.subscribe(Tags.getPublicationName());
-  this.messageFlags = new ReactiveDict();
-  this.messageFlags.set(displaySuccessMessage, false);
-  this.messageFlags.set(displayErrorMessages, false);
-});
-
-Template.Admin_Page.helpers({
-  successClass() {
-    return Template.instance().messageFlags.get(displaySuccessMessage) ? 'success' : '';
+  'click .side-item-datapane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('datapane');
   },
-  displaySuccessMessage() {
-    return Template.instance().messageFlags.get(displaySuccessMessage);
-  },
-  errorClass() {
-    return Template.instance().messageFlags.get(displayErrorMessages) ? 'error' : '';
-  },
-  fieldError(fieldName) {
-    const invalidKeys = Template.instance().context.invalidKeys();
-    const errorObject = _.find(invalidKeys, (keyObj) => keyObj.name === fieldName);
-    return errorObject && Template.instance().context.keyErrorMessage(errorObject.name);
-  },
-  recipes() {
-    return Recipes.find().fetch();
-  },
-  tags() {
-    return Tags.find().fetch();
-  },
- // images() {
- //   return Images.find().fetch();
- // }
-
-});
-
-
-Template.Admin_Page.events({
   'submit .new-tag-form' (event, instance) {
     event.preventDefault();
     // Get tag name (text field)

@@ -12,7 +12,7 @@ const userSearchTerm = 'user';
 const recipeSearchTerm = 'recipe';
 const tagSearchTerm = 'tag';
 
-Template.Admin_Page.onCreated(function onCreated() {
+Template.Admin_Page_Backup.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   this.searchTerms = new ReactiveDict();
@@ -22,7 +22,7 @@ Template.Admin_Page.onCreated(function onCreated() {
   this.activeOption = new ReactiveVar('');
 });
 
-Template.Admin_Page.helpers({
+Template.Admin_Page_Backup.helpers({
 
   /**
    * Produces matching recipes in search
@@ -93,8 +93,8 @@ Template.Admin_Page.helpers({
   },
   hasSearch() {
     return Template.instance().activeOption.get() === 'userpane' ||
-    Template.instance().activeOption.get() === 'recipepane' ||
-    Template.instance().activeOption.get() === 'tagpane';
+        Template.instance().activeOption.get() === 'recipepane' ||
+        Template.instance().activeOption.get() === 'tagpane';
   },
   /**
    * Gets name of active pane (lowercase)
@@ -105,7 +105,7 @@ Template.Admin_Page.helpers({
   },
 });
 
-Template.Admin_Page.events({
+Template.Admin_Page_Backup.events({
   'submit .admin-search'(event) {
     // Prevent default browser form submit
     event.preventDefault();
