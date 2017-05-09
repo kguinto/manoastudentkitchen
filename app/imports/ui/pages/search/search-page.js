@@ -81,7 +81,7 @@ Template.View_Search_Page.events({
     const target = event.target;
     const text = target.text.value;
 
-    window.location = text;
+    FlowRouter.go('View_Search_Page', { searchParam: text });
     // Clear form
     target.text.value = '';
   },

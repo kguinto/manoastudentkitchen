@@ -87,7 +87,7 @@ Template.Home_Page.events({
     // Get value from form element
     const target = event.target;
     const text = target.text.value;
-    window.location.replace(`search/${text}`);
+    FlowRouter.go('View_Search_Page', { searchParam: text });
     // Clear form
     target.text.value = '';
   },
