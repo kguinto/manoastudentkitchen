@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
+import { Ingredients } from '/imports/api/ingredient/IngredientCollection';
 import { Locations } from '/imports/api/location/LocationCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
@@ -14,13 +15,14 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.Create_Recipe_Page.onCreated(function onCreated() {
   this.dataUrl = new ReactiveVar('/images/blank.png');
   this.dataIngs = new ReactiveVar([{ recipeID: '',
-    ingredientName: '', locationID: '', price: '', size: '', unit: '' }]);
+    ingredientName: '', locationID: '', price: '', quantity: '' }]);
   this.dataDiffRating = new ReactiveVar(1);
   this.dataLocationList = new ReactiveVar();
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('Create_Recipe_Page');
+  this.ingscontext = Ingredients.getSchema().namedContext('Create_Recipe_Page');
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Locations.getPublicationName());
@@ -101,22 +103,54 @@ Template.Create_Recipe_Page.events({
     const difficulty = instance.dataDiffRating.get();
     const timeRequired = event.target['Estimated Time Required'].value;
     const noServings = event.target['Number of Servings'].value;
-    const instructions = event.target.Directions.value;
+    const instructions = event.target.Instructions.value;
     const firstPublishDate = Math.floor(Date.now() / 1000);
     const lastEditDate = firstPublishDate;
     const userID = Meteor.user()._id;
     const totalCost = 0;
     const newRecipeData = { userID, recipeName, firstPublishDate, lastEditDate, instructions, noServings, totalCost,
       difficulty, timeRequired };
-
     // Clear out any old validation errors.
     instance.context.resetValidation();
     // Invoke clean so that newContact reflects what will be inserted.
     Recipes.getSchema().clean(newRecipeData);
     // Determine validity.
     instance.context.validate(newRecipeData);
-    if (instance.context.isValid()) {
-      const id = Recipes.define(newRecipeData);
+    /* Ingredient are assembled from form */
+    const ingredientArr = event.target.Ingredient;
+    const quantityArr = event.target.Quantity;
+    const priceArr = event.target.Price;
+    const locationArr = event.target.Location;
+    const arrLength = ingredientArr.length;
+    if (typeof(arrLength) === 'undefined') {
+      ingList[0].recipeID = 'PLACEHOLDER';
+      ingList[0].ingredientName = ingredientArr.value;
+      ingList[0].quantity = quantityArr.value;
+      ingList[0].price = parseFloat(priceArr.value);
+      ingList[0].locationID = locationArr.value;
+      Template.instance().dataIngs.set(ingList);
+    } else {
+      const mappedArr = _.map(ingredientArr, function ingmap(key, i) {
+        return { recipeID: 'PLACEHOLDER', ingredientName: key.value, quantity: quantityArr[i].value,
+          price: parseFloat(priceArr[i].value), locationID: locationArr[i].value };
+      });
+      Template.instance().dataIngs.set(mappedArr);
+    }
+    _.map(Template.instance().dataIngs.get(), function ingval(obj) {
+      const recipeID = obj.recipeID;
+      const ingredientName = obj.ingredientName;
+      const quantity = obj.quantity;
+      const price = obj.price;
+      const locationID = obj.locationID;
+      console.log({ recipeID, ingredientName, locationID, price, quantity });
+      Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
+      instance.ingscontext.validate({ recipeID, ingredientName, locationID, price, quantity });
+    });
+    console.log(instance.ingscontext.invalidKeys());
+    if (instance.context.isValid() && instance.ingscontext.isValid()) {
+      /* Inserts new recipe */
+     // const id = Recipes.define(newRecipeData);
+      console.log("VALID");
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();
@@ -126,6 +160,10 @@ Template.Create_Recipe_Page.events({
       instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
     }
+
+
+
+
     /*
     Imgur.upload({
       image: image,
@@ -135,9 +173,14 @@ Template.Create_Recipe_Page.events({
         throw error;
       } else {
         console.log(data.link);
+
+
+
+
+
       }
     });
-    */
+  */
   },
   /* END IMGUR UPLOAD EVENTS */
   'click .minus-button'(event, instance) {

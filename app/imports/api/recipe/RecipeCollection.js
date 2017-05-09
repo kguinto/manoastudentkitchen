@@ -26,7 +26,7 @@ class RecipeCollection extends BaseCollection {
       lastEditDate: { type: Number, optional: true },
       instructions: { type: String },
       noServings: { type: Number, optional: true },
-      totalCost: { type: Number, optional: true },
+      totalCost: { type: Number, decimal: true, optional: true },
       difficulty: { type: Number },
       timeRequired: { type: String },
     }));

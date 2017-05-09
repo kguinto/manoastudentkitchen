@@ -23,7 +23,7 @@ class IngredientCollection extends BaseCollection {
       recipeID: { type: String },
       ingredientName: { type: String },
       locationID: { type: String },
-      price: { type: Number },
+      price: { type: Number, decimal: true },
       quantity: { type: String },
     }));
   }
