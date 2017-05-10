@@ -53,6 +53,10 @@ Template.View_Recipe_Page.helpers({
     return _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
   },
 
+  get_edit_url(recipeID) {
+    return `/recipe/` + FlowRouter.getParam('_id') + `/edit`;
+  },
+
   location(ing) {
    // console.log(Locations.find().fetch());
     const locations = Locations.find().fetch();
@@ -75,6 +79,10 @@ Template.View_Recipe_Page.helpers({
       return { title: tagName };
     };
   },
+
+  userIsAdmin(){
+    return (Meteor.user().profile.name == 'kguinto' || Meteor.user().profile.name == 'alexcw' || Meteor.user().profile.name == 'cfrifel' || Meteor.user().profile.name == 'johnson' || Meteor.user().profile.name == 'amymalia');
+  }
 });
 
 Template.tagInput.onRendered(function () {
