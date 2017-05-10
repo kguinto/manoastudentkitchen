@@ -3,17 +3,21 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Images } from '/imports/api/image/ImageCollection';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 Template.View_Search_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+  this.subscribe(Images.getPublicationName());
   this.numResults = new ReactiveVar(0);
 });
 
 Template.search.onRendered(function () {
-  this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
+  if (FlowRouter.getParam('searchParam') !== '*') {
+    this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
+  }
 });
 Template.View_Search_Page.helpers({
 
@@ -23,8 +27,11 @@ Template.View_Search_Page.helpers({
    */
   search_results() {
     const param = FlowRouter.getParam('searchParam');
-
-    const results = Recipes.find({ recipeName: { $regex: `${param}` } }, { sort: { viewcount: -1 } }).fetch();
+    let findParams = { recipeName: { $regex: `${param}` } };
+    if (param === '*') {
+      findParams = {};
+    }
+    const results = Recipes.find(findParams, { sort: { viewcount: -1 } }).fetch();
 
     let tagSearchArr = param.split(',');
     tagSearchArr = _.map(tagSearchArr, function snip(term) { return term[0] === ' ' ? term.substr(1) : term; });
@@ -61,7 +68,9 @@ Template.View_Search_Page.helpers({
     const searchParam = FlowRouter.getParam('searchParam');
     const numResults = Template.instance().numResults.get();
     let message = '';
-    if (numResults === 1) {
+    if (searchParam === '*') {
+      message = 'Showing all recipes. Use searchbar to narrow search.';
+    } else if (numResults === 1) {
       message = `1 results for \'${searchParam}\'`;
     } else if (numResults > 1) {
       message = `${numResults} results for \'${searchParam}\'`;
@@ -70,6 +79,19 @@ Template.View_Search_Page.helpers({
     }
     return message;
   },
+  /**
+   * Produces image for a recipe
+   *
+   */
+  load_recipe_image(theRecipeID) {
+    const recipeImage = Images.find({ recipeID: theRecipeID }, { fields: { imageURL: 1 } }).fetch();
+    let res = '';
+    if (recipeImage.length === 1) {
+      res = recipeImage[0].imageURL;
+    }
+    return res;
+  },
+
 });
 
 Template.View_Search_Page.events({
@@ -84,7 +106,7 @@ Template.View_Search_Page.events({
     if (text !== null && text !== '') {
       FlowRouter.go('View_Search_Page', { searchParam: text });
     } else {
-      FlowRouter.go('Home_Page');
+      FlowRouter.go('View_Search_Page', { searchParam: '*' });
     }
     // Clear form
     target.text.value = '';

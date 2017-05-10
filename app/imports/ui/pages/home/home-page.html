@@ -17,7 +17,7 @@
             </div>
             <div style="margin-top:7vh">
               <div class="ui fluid buttons">
-              <button class="massive ui violet button">
+              <button class="browse-all massive ui violet button">
                 Browse
               </button>
 
@@ -79,7 +79,7 @@
           {{#each top_tag in top_tags }}
           <a class="card tag-card" href='{{ get_search_url top_tag }}'>
               <div class="image tag-image-container">
-               <img class="tag-image" src="{{ load_tag_image.imageURL top_tag.tagName }}">
+               <img class="tag-image" src="{{ load_tag_image top_tag }}">
              </div>
               <div class="tag-image-text">{{ top_tag }}</div>
             </a>

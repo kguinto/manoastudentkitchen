@@ -18,7 +18,7 @@ Template.User_Header.events({
     if (text !== null && text !== '') {
       FlowRouter.go('View_Search_Page', { searchParam: text });
     } else {
-      FlowRouter.go('Home_Page');
+      FlowRouter.go('View_Search_Page', { searchParam: '*' });
     }
     // Clear form
     target.text.value = '';
