@@ -21,7 +21,7 @@ Template.Home_Page.helpers({
    *
    */
   top_recipes() {
-    return _.sample(Recipes.find({}, { sort: { viewcount: -1, limit: 16 } }).fetch(), 16);
+    return _.sample(Recipes.find({}, { sort: { viewcount: -1, limit: 16 } }).fetch(), 6);
   },
 
   /**

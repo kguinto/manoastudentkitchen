@@ -3,6 +3,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { Profiles } from '/imports/api/profile/ProfileCollection';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
@@ -13,6 +14,7 @@ Template.Edit_Profile_Page.onCreated(function onCreated() {
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Profiles.getSchema().namedContext('Edit_Profile_Page');
+  this.dataUrl = new ReactiveVar('/images/blank.png');
 });
 
 Template.Edit_Profile_Page.helpers({
@@ -33,6 +35,23 @@ Template.Edit_Profile_Page.helpers({
   profile() {
     return Profiles.findDoc(Meteor.user().profile.name);
   },
+  /**
+   * Produces the preview of the image
+   *
+   */
+  image_preview() {
+    if (_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture)) {
+      Template.instance().dataUrl.set('/images/blank.png');
+    }
+    if (!_.isUndefined(Template.instance().dataUrl)) {
+      if (Template.instance().dataUrl.get() === '/images/blank.png') {
+        Template.instance().dataUrl.set(Profiles.findDoc(Meteor.user().profile.name).picture);
+        return Profiles.findDoc(Meteor.user().profile.name).picture;
+      }
+      return Template.instance().dataUrl.get();
+    }
+    return '';
+  },
 });
 
 
@@ -42,7 +61,7 @@ Template.Edit_Profile_Page.events({
     const firstName = event.target.First.value;
     const lastName = event.target.Last.value;
     const username = Meteor.user().profile.name; // schema requires username.
-    const picture = event.target.Picture.value;
+    const picture = instance.dataUrl.get();;
     const bio = event.target.Bio.value;
 
     const updatedProfileData = { firstName, lastName, picture, bio, username };
@@ -63,6 +82,20 @@ Template.Edit_Profile_Page.events({
       instance.messageFlags.set(displaySuccessMessage, false);
       instance.messageFlags.set(displayErrorMessages, true);
     }
+  },
+  "change input[type='file']": function upload(event, instance) {
+    const files = event.target.files;
+    if (files.length === 0) {
+      return;
+    }
+    const file = files[0];
+    //
+    const fileReader = new FileReader();
+    fileReader.onload = function onload(event) {
+      const dataUrl = event.target.result;
+      instance.dataUrl.set(dataUrl);
+    };
+    fileReader.readAsDataURL(file);
   },
 });
 
