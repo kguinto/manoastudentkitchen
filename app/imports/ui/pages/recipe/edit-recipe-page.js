@@ -34,6 +34,12 @@ Template.Edit_Recipe_Page.onCreated(function onCreated() {
   /* IMGUR UPLOAD REACTIVE VARIABLE */
 });
 
+
+Template.Edit_Recipe_Page.onRendered(function () {
+  console.log("222222222");
+  this.dataIngs = new ReactiveVar( _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
+});
+
 Template.Edit_Recipe_Page.helpers({
   /**
    * Error and success classes.
@@ -104,6 +110,8 @@ Template.Edit_Recipe_Page.helpers({
     return !Template.instance().dataIsSubmittingRecipe.get();
   },
   ingredients() {
+    console.log(_.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
+
     Template.instance().dataLocationList.set([{ label: '', value: '', selected: true }]
         .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
             function renameLocation(loc) {
@@ -202,14 +210,20 @@ Template.Edit_Recipe_Page.events({
       const id = FlowRouter.getParam('_id');
       Recipes.update(FlowRouter.getParam('_id'), { $set:  newRecipeData });
 
+      const oldIngredients =  _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
+
+      for(ing in oldIngredients){
+        Ingredients.removeIt(_.pluck(_.where(Ingredients.find().fetch(), { _id: ing._id }), '_id')[0]);
+      }
       ingIDs = _.map(Template.instance().dataIngs.get(), function ingval(obj) {
+
         const recipeID = id;
         const ingredientName = obj.ingredientName;
         const quantity = obj.quantity;
         const price = obj.price;
         const locationID = obj.locationID;
         Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
-        //return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
+        return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
       });
 
       if(Template.instance().imageLoaded.get() == 1){
