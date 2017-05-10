@@ -11,6 +11,7 @@
       "popupHeight": 610
     },
     "initialDatabaseFileName": "database/initial-collection-data.json",
-    "ClientID": "494cc31b85ca0d2"
+    "ClientID": "494cc31b85ca0d2",
+    "ClientSecret": "e9085c54cf30ad999613ece3f144791fa1937fd3"
   }
 }

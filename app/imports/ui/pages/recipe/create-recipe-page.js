@@ -171,26 +171,18 @@ Template.Create_Recipe_Page.events({
         Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
         return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
       });
-      Imgur.upload({
-        image: image,
-        apiKey: Meteor.settings.public.ClientID,
-      }, function error(error, data) {
-        if (error) {
-          throw error;
-        } else {
-          const recipeID = id;
-          const imageURL = data.link;
-          const deleteHash = data.deletehash;
-          Images.getSchema().clean({ recipeID, imageURL, deleteHash });
-          Images.define({ recipeID, imageURL, deleteHash });
-          instance.messageFlags.set(displaySuccessMessage, id);
-          instance.messageFlags.set(displayErrorMessages, false);
-          instance.dataIsSubmittingRecipe.set(false);
-          instance.find('form').reset();
-          instance.$('.dropdown').dropdown('restore defaults');
-          FlowRouter.go('Home_Page');
-        }
-      });
+      const recipeID = id;
+      const imageURL = image;
+      const deleteHash = 'PLACEHOLDER';
+      Images.getSchema().clean({ recipeID, imageURL, deleteHash });
+      Images.define({ recipeID, imageURL, deleteHash });
+      instance.messageFlags.set(displaySuccessMessage, id);
+      instance.messageFlags.set(displayErrorMessages, false);
+      instance.dataIsSubmittingRecipe.set(false);
+      instance.find('form').reset();
+      instance.$('.dropdown').dropdown('restore defaults');
+      FlowRouter.go('Home_Page');
+
     } else {
       Template.instance().dataHasIngError.set(true);
       instance.messageFlags.set(displaySuccessMessage, false);
