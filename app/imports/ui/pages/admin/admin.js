@@ -6,10 +6,9 @@ import { Profiles } from '/imports/api/profile/ProfileCollection';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Images } from '/imports/api/image/ImageCollection';
-import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-
+/* eslint-disable no-undef, object-shorthand, no-alert, no-unused-vars, no-shadow*/
 const userSearchTerm = 'user';
 const recipeSearchTerm = 'recipe';
 const tagSearchTerm = 'tag';
@@ -215,7 +214,7 @@ Template.Admin_Page.events({
     event.preventDefault();
     Template.instance().activeOption.set('datapane');
   },
-  'submit .new-tag-form' (event, instance) {
+  'submit .new-tag-form'(event, instance) {
     event.preventDefault();
     // Get tag name (text field)
     const tagName = event.target.text.value;
@@ -230,16 +229,32 @@ Template.Admin_Page.events({
     // Invoke clean so that newContactData reflects what will be inserted.
     Tags.getSchema().clean(newTagData);
     // Determine validity.
-    //instance.context.validate(newTagData);
+
 
     if (instance.context.isValid()) {
       const id = Tags.define(newTagData);
-
       instance.messageFlags.set(displayErrorMessages, false);
       instance.find('form').reset();
     } else {
       instance.messageFlags.set(displayErrorMessages, true);
     }
   },
-
+  'click .delete-recipe'(event) {
+    event.preventDefault();
+    if (confirm('Do you really want to delete this entry?')) {
+      Recipes.removeIt(event.target.value);
+    }
+  },
+  'click .delete-tag'(event) {
+    event.preventDefault();
+    if (confirm('Do you really want to delete this entry?')) {
+      Tags.removeIt(event.target.value);
+    }
+  },
+  'click .delete-user'(event) {
+    event.preventDefault();
+    if (confirm('Do you really want to delete this entry?')) {
+      Profiles.removeIt(event.target.value);
+    }
+  },
 });

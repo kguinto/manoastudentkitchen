@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-
+/* eslint-disable no-undef, object-shorthand, no-unused-vars, no-shadow*/
 /**
  * Define a callback to be run when after a user logs in to redirect them to their home page.
  * This is not straightforward because this callback is invoked even on a page refresh, and we don't want to do
@@ -17,7 +17,7 @@ Accounts.onLogin(function onLogin() {
 
   if (initialLogin) {
     const username = Meteor.user().profile.name;
-    FlowRouter.go(`/home`);
+    FlowRouter.go('/home');
   }
 });
 

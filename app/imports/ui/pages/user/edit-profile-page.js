@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Profiles } from '/imports/api/profile/ProfileCollection';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+/* eslint-disable no-undef, object-shorthand, no-shadow*/
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
@@ -15,6 +16,7 @@ Template.Edit_Profile_Page.onCreated(function onCreated() {
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Profiles.getSchema().namedContext('Edit_Profile_Page');
   this.dataUrl = new ReactiveVar('/images/blank.png');
+  this.loadOnce = new ReactiveVar(true);
 });
 
 Template.Edit_Profile_Page.helpers({
@@ -40,17 +42,13 @@ Template.Edit_Profile_Page.helpers({
    *
    */
   image_preview() {
-    if (_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture)) {
+    if (_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture) && Template.instance().loadOnce.get()) {
       Template.instance().dataUrl.set('/images/blank.png');
     }
-    if (!_.isUndefined(Template.instance().dataUrl)) {
-      if (Template.instance().dataUrl.get() === '/images/blank.png') {
-        Template.instance().dataUrl.set(Profiles.findDoc(Meteor.user().profile.name).picture);
-        return Profiles.findDoc(Meteor.user().profile.name).picture;
-      }
-      return Template.instance().dataUrl.get();
+    if (!_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture) && Template.instance().loadOnce.get()) {
+      Template.instance().dataUrl.set(Profiles.findDoc(Meteor.user().profile.name).picture);
     }
-    return '';
+    return Template.instance().dataUrl.get();
   },
 });
 
@@ -61,7 +59,7 @@ Template.Edit_Profile_Page.events({
     const firstName = event.target.First.value;
     const lastName = event.target.Last.value;
     const username = Meteor.user().profile.name; // schema requires username.
-    const picture = instance.dataUrl.get();;
+    const picture = instance.dataUrl.get();
     const bio = event.target.Bio.value;
 
     const updatedProfileData = { firstName, lastName, picture, bio, username };
@@ -94,6 +92,7 @@ Template.Edit_Profile_Page.events({
     fileReader.onload = function onload(event) {
       const dataUrl = event.target.result;
       instance.dataUrl.set(dataUrl);
+      instance.loadOnce.set(false);
     };
     fileReader.readAsDataURL(file);
   },

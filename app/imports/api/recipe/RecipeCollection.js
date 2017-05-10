@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 
 
 /* eslint object-shorthand: "off" */
-
+/* eslint-disable no-undef, object-shorthand, no-unused-vars, no-shadow*/
 /** @module Recipe */
 
 /**

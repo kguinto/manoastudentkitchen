@@ -11,7 +11,6 @@ Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Images.getPublicationName());
-
 });
 
 Template.Home_Page.helpers({
@@ -57,7 +56,7 @@ Template.Home_Page.helpers({
   load_tag_image(theTagName) {
     const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { recipeID: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    const recipeImage = Images.find({ recipeID: randomRecipe.recipeID  }, { fields: { imageURL: 1 } }).fetch();
+    const recipeImage = Images.find({ recipeID: randomRecipe.recipeID }, { fields: { imageURL: 1 } }).fetch();
     let res = '';
 
     if (recipeImage.length === 1) {

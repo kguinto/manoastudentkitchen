@@ -182,7 +182,6 @@ Template.Create_Recipe_Page.events({
       instance.find('form').reset();
       instance.$('.dropdown').dropdown('restore defaults');
       FlowRouter.go('Home_Page');
-
     } else {
       Template.instance().dataHasIngError.set(true);
       instance.messageFlags.set(displaySuccessMessage, false);
