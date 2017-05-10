@@ -80,6 +80,15 @@ recipeRoutes.route('/', {
 });
 
 
+export const editRecipePageRouteName = 'Edit_Recipe_Page';
+recipeRoutes.route('/edit', {
+  name: editRecipePageRouteName,
+  action() {
+    BlazeLayout.render('Recipe_Layout', { main: editRecipePageRouteName });
+  },
+});
+
+
 /*                        USER ROUTES                      */
 
 function addUserBodyClass() {
@@ -126,14 +135,6 @@ userRoutes.route('/edit-profile', {
   name: editProfilePageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: editProfilePageRouteName });
-  },
-});
-
-export const editRecipePageRouteName = 'Edit_Recipe_Page';
-userRoutes.route('/edit-recipe', {
-  name: editRecipePageRouteName,
-  action() {
-    BlazeLayout.render('User_Layout', { main: editRecipePageRouteName });
   },
 });
 

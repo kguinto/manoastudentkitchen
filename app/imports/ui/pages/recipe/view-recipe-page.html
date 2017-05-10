@@ -14,7 +14,7 @@
 
       <img class="ui image recipe-image" src="{{recipeImageURL}}">
     </div>
-    
+
     <br>
     <div class="ui text segment">
       <h2>About this recipe</h2>
@@ -37,10 +37,30 @@
 
       {{ /each }}
 
-     {{> tagInput}}
+      {{> tagInput}}
 
     </div>
+    <h2>Ingredients</h2>
+    <div class="ui center aligned cards">
 
+      {{#each ing in ingredients}}
+      <div class="card">
+        <div class="content">
+          <div class="right floated ui text">${{ing.price}}</div>
+          <div class="text"><b>
+            {{ing.ingredientName}}
+          </b></div>
+          <div class="meta">
+            {{location (ing) }}
+          </div>
+          <div class="description">
+            {{ing.quantity}}
+          </div>
+        </div>
+      </div>
+
+      {{/each}}
+    </div>
 
     <h2>Instructions</h2>
     <div class="ui text segment">
@@ -58,7 +78,8 @@
     <a class="ui basic right pointing label" style="color: black">
       <div class="ui borderless transparent search">
         <div class="ui input">
-          <input class="prompt" type="text" name="text" placeholder="Submit a tag" style="padding: 0; margin: 0; border: 0; border-radius: 0">
+          <input class="prompt" type="text" name="text" placeholder="Submit a tag"
+                 style="padding: 0; margin: 0; border: 0; border-radius: 0">
         </div>
         <div class="results"></div>
       </div>
