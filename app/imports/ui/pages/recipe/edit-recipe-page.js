@@ -9,6 +9,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+
 /* eslint-disable no-undef, object-shorthand, no-shadow*/
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
@@ -25,10 +26,12 @@ Template.Edit_Recipe_Page.onCreated(function onCreated() {
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('Edit_Recipe_Page');
   this.ingscontext = Ingredients.getSchema().namedContext('Edit_Recipe_Page');
+  this.imageLoaded = new ReactiveVar(0);
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Locations.getPublicationName());
   this.subscribe(Images.getPublicationName());
+
   /* IMGUR UPLOAD REACTIVE VARIABLE */
 });
 
@@ -56,14 +59,19 @@ Template.Edit_Recipe_Page.helpers({
    *
    */
   image_preview() {
-    if (_.isUndefined(Template.instance().dataUrl)){
+    /*if (_.isUndefined(Template.instance().dataUrl)){
       return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
     }
     else if (!_.isUndefined(Template.instance().dataUrl)) {
       return Template.instance().dataUrl.get();
-    }
+    } */
+    if (Template.instance().imageLoaded.get() == 0)
+      return  _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
+    else
+      return Template.instance().dataUrl.get();
   },
   recipe() {
+    instance.dataUrl.set(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0]);
     return Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
   },
   recipeField(fieldName) {
@@ -105,6 +113,7 @@ Template.Edit_Recipe_Page.events({
     if (files.length === 0) {
       return;
     }
+    instance.imageLoaded.set(1);
     const file = files[0];
     //
     const fileReader = new FileReader();
