@@ -91,7 +91,7 @@ function removeUserBodyClass() {
 }
 
 const userRoutes = FlowRouter.group({
-  // prefix: '/:username',
+  prefix: '/:username',
   name: 'userRoutes',
   triggersEnter: [addUserBodyClass],
   triggersExit: [removeUserBodyClass],
