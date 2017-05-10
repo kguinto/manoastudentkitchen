@@ -16,7 +16,7 @@ Template.View_Search_Page.onCreated(function onCreated() {
   this.numResults = new ReactiveVar(0);
 });
 
-Template.search.onRendered(function () {
+Template.search.onRendered(function onR() {
   if (FlowRouter.getParam('searchParam') !== '*') {
     this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
   }

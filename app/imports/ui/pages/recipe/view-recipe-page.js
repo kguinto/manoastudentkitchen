@@ -8,6 +8,8 @@ import { Images } from '/imports/api/image/ImageCollection';
 import { Ingredients } from '/imports/api/ingredient/IngredientCollection';
 import { Locations } from '/imports/api/location/LocationCollection';
 
+/* eslint-disable no-undef, object-shorthand, no-else-return, no-unused-vars, prefer-template, no-sequences*/
+
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 
@@ -21,7 +23,6 @@ Template.View_Recipe_Page.onCreated(function onCreated() {
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
   this.context = Recipes.getSchema().namedContext('View_Recipe_Page');
-
 });
 
 Template.View_Recipe_Page.helpers({
@@ -46,7 +47,7 @@ Template.View_Recipe_Page.helpers({
   recipeTags() {
     return _.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
   },
-  recipeImageURL(){
+  recipeImageURL() {
     return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
   },
   ingredients() {
@@ -54,16 +55,13 @@ Template.View_Recipe_Page.helpers({
   },
 
   get_edit_url(recipeID) {
-    return `/recipe/` + FlowRouter.getParam('_id') + `/edit`;
+    return '/recipe/' + FlowRouter.getParam('_id') + '/edit';
   },
 
   location(ing) {
    // console.log(Locations.find().fetch());
     const locations = Locations.find().fetch();
-    console.log(locations);
-    console.log(ing.locationID);
-    console.log(_.where(locations, {_id: ing.locationID}) );
-    return _.pluck(_.where(locations, {_id: ing.locationID}), 'locationName')[0];
+    return _.pluck(_.where(locations, { _id: ing.locationID }), 'locationName')[0];
   },
 
   costPerServing() {
@@ -71,32 +69,30 @@ Template.View_Recipe_Page.helpers({
     return (recipe.totalCost / recipe.noServings);
   },
   tagsNotInRecipe() {
-    return _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
-      return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
-        }
-    ), function (tagName) {
-
+    return _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function tagn(tagName) {
+      return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }),
+          'tagName'), tagName);
+    }), function tagn2(tagName) {
       return { title: tagName };
     };
   },
 
-  userIsAdmin(){
-    return (Meteor.user().profile.name == 'kguinto' || Meteor.user().profile.name == 'alexcw' || Meteor.user().profile.name == 'cfrifel' || Meteor.user().profile.name == 'johnson' || Meteor.user().profile.name == 'amymalia');
-  }
+  userIsAdmin() {
+    return (Meteor.user().profile.name === 'kguinto' || Meteor.user().profile.name === 'alexcw'
+    || Meteor.user().profile.name === 'cfrifel' || Meteor.user().profile.name === 'johnson'
+    || Meteor.user().profile.name === 'amymalia');
+  },
 });
 
-Template.tagInput.onRendered(function () {
+Template.tagInput.onRendered(function on() {
   this.$('.ui.search').search({
     source: _.map(
-        _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
-              return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
-            }
-        ), function (tagName) {
-
-          return { title: tagName };
-        }
+        _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function tagn(tagName) {
+          return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }),
+                  'tagName'), tagName);
+        }), function tagn2(tagName) { return { title: tagName }; }
     ),
-    error: false
+    error: false,
   })
   ;
 

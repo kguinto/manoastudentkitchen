@@ -10,7 +10,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 
-/* eslint-disable no-undef, object-shorthand, no-shadow*/
+/* eslint-disable no-undef, object-shorthand, no-else-return, no-unused-vars, no-shadow*/
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 Template.Edit_Recipe_Page.onCreated(function onCreated() {
@@ -59,19 +59,15 @@ Template.Edit_Recipe_Page.helpers({
    *
    */
   image_preview() {
-    /*if (_.isUndefined(Template.instance().dataUrl)){
+    if (Template.instance().imageLoaded.get() === 0) {
       return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
+    } else {
+      return Template.instance().dataUrl.get();
     }
-    else if (!_.isUndefined(Template.instance().dataUrl)) {
-      return Template.instance().dataUrl.get();
-    } */
-    if (Template.instance().imageLoaded.get() == 0)
-      return  _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
-    else
-      return Template.instance().dataUrl.get();
   },
   recipe() {
-    instance.dataUrl.set(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0]);
+    instance.dataUrl.set(_.pluck(_.where(Images.find().fetch(),
+        { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0]);
     return Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
   },
   recipeField(fieldName) {
@@ -105,8 +101,8 @@ Template.Edit_Recipe_Page.helpers({
     return !Template.instance().dataIsSubmittingRecipe.get();
   },
   ingredients() {
-    console.log(_.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
-    Template.instance().dataIngs = new ReactiveVar( _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
+    Template.instance().dataIngs = new ReactiveVar(_.where(Ingredients.find().fetch(),
+        { recipeID: FlowRouter.getParam('_id') }));
 
     Template.instance().dataLocationList.set([{ label: '', value: '', selected: true }]
         .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
@@ -118,7 +114,7 @@ Template.Edit_Recipe_Page.helpers({
   ingLocation(ing) {
     // console.log(Locations.find().fetch());
     const locations = Locations.find().fetch();
-    return _.pluck(_.where(locations, {_id: ing.locationID}), 'locationName')[0];
+    return _.pluck(_.where(locations, { _id: ing.locationID }), 'locationName')[0];
   },
 
   ingField(ing, fieldName) {
@@ -166,63 +162,18 @@ Template.Edit_Recipe_Page.events({
     Recipes.getSchema().clean(newRecipeData);
     // Determine validity.
     instance.context.validate(newRecipeData);
-    /* Ingredient are assembled from form */
-//    const ingredientArr = event.target.Ingredient;
+
     const quantityArr = event.target.Quantity;
     const priceArr = event.target.Price;
     const locationArr = event.target.Location;
-/*    const arrLength = ingredientArr.length;
-    if (typeof(arrLength) === 'undefined') {
-      ingList[0].recipeID = 'PLACEHOLDER';
-      ingList[0].ingredientName = ingredientArr.value;
-      ingList[0].quantity = quantityArr.value;
-      ingList[0].price = parseFloat(priceArr.value);
-      ingList[0].locationID = locationArr.value;
-      Template.instance().dataIngs.set(ingList);
-    } else {
-      const mappedArr = _.map(ingredientArr, function ingmap(key, i) {
-        return { recipeID: 'PLACEHOLDER', ingredientName: key.value, quantity: quantityArr[i].value,
-          price: parseFloat(priceArr[i].value), locationID: locationArr[i].value };
-      });
-      Template.instance().dataIngs.set(mappedArr);
-    }
-    _.map(Template.instance().dataIngs.get(), function ingval(obj) {
-      const recipeID = obj.recipeID;
-      const ingredientName = obj.ingredientName;
-      const quantity = obj.quantity;
-      const price = obj.price;
-      const locationID = obj.locationID;
-      Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
-      instance.ingscontext.validate({ recipeID, ingredientName, locationID, price, quantity });
-    });
-
-    if (instance.ingscontext.isValid()) {
-      Template.instance().dataHasIngError.set(false);
-    }*/
     if (instance.context.isValid()) {
       Template.instance().dataIsSubmittingRecipe.set(true);
       /* Inserts new recipe */
-      console.log("Definitely here.");
+
       const id = FlowRouter.getParam('_id');
-      Recipes.update(FlowRouter.getParam('_id'), { $set:  newRecipeData });
-/*
-      const oldIngredients =  _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
+      Recipes.update(FlowRouter.getParam('_id'), { $set: newRecipeData });
 
-      for(ing in oldIngredients){
-        Ingredients.removeIt(_.pluck(_.where(Ingredients.find().fetch(), { _id: ing._id }), '_id')[0]);
-      }
-      ingIDs = _.map(Template.instance().dataIngs.get(), function ingval(obj) {
-
-        const recipeID = id;
-        const ingredientName = obj.ingredientName;
-        const quantity = obj.quantity;
-        const price = obj.price;
-        const locationID = obj.locationID;
-        Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
-        return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
-      });
-*/
-      if(Template.instance().imageLoaded.get() == 1){
+      if (Template.instance().imageLoaded.get() === 1) {
         Images.removeIt(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), '_id')[0]);
 
         const recipeID = id;
@@ -231,14 +182,12 @@ Template.Edit_Recipe_Page.events({
         Images.getSchema().clean({ recipeID, imageURL, deleteHash });
         Images.define({ recipeID, imageURL, deleteHash });
       }
-
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
       instance.dataIsSubmittingRecipe.set(false);
       instance.find('form').reset();
       instance.$('.dropdown').dropdown('restore defaults');
       FlowRouter.go('Home_Page');
-
     } else {
       Template.instance().dataHasIngError.set(true);
       instance.messageFlags.set(displaySuccessMessage, false);

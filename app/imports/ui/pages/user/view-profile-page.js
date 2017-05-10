@@ -3,7 +3,6 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
 import { Profiles } from '/imports/api/profile/ProfileCollection';
-import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 
 /* eslint-disable no-undef, object-shorthand, no-unused-vars, no-shadow*/
@@ -68,10 +67,10 @@ Template.View_Profile_Page.helpers({
     return !(Profiles.findDoc(Meteor.user().profile.name)._id ===
     Profiles.findDoc(FlowRouter.getParam('username'))._id);
   },
-  userIsAdmin(){
-    return (Meteor.user().profile.name == 'kguinto' || Meteor.user().profile.name == 'alexcw'
-    || Meteor.user().profile.name == 'cfrifel' || Meteor.user().profile.name == 'johnson'
-    || Meteor.user().profile.name == 'amymalia');
+  userIsAdmin() {
+    return (Meteor.user().profile.name === 'kguinto' || Meteor.user().profile.name === 'alexcw'
+    || Meteor.user().profile.name === 'cfrifel' || Meteor.user().profile.name === 'johnson'
+    || Meteor.user().profile.name === 'amymalia');
   },
 });
 
@@ -103,6 +102,6 @@ Template.View_Profile_Page.events({
   },
   'click .admin-go'(event) {
     const admin = Meteor.user().profile.name;
-    window.location.replace(`admin`);
+    window.location.replace('admin');
   },
 });

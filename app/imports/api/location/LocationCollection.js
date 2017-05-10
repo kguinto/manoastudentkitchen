@@ -93,7 +93,8 @@ class LocationCollection extends BaseCollection {
   }
 
   /**
-   * Returns the docIDs associated with the array of Location locationNames, or throws an error if any locationName cannot be found.
+   * Returns the docIDs associated with the array of Location locationNames, or throws an error if any
+   * locationName cannot be found.
    * If nothing is passed, then an empty array is returned.
    * @param { String[] } locationNames An array of Location locationNames.
    * @returns { String[] } The docIDs associated with the locationNames.
