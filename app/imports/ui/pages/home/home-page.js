@@ -5,6 +5,7 @@ import { Images } from '/imports/api/image/ImageCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { HTTP } from 'meteor/http';
 
 /* eslint-disable no-undef, object-shorthand, no-shadow*/
 
@@ -30,7 +31,7 @@ Template.Home_Page.helpers({
    *
    */
   top_tags() {
-    const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
+    const allTags = Tags.find({ }, { fields: { tagName: 1 } }).fetch();
     const namesOnly = _.pluck(_.values(allTags), 'tagName');
     const frequency = _.countBy(namesOnly, function each(each) { return each; });
     const result = _.first(_.sortBy(_.uniq(namesOnly),
@@ -43,10 +44,12 @@ Template.Home_Page.helpers({
    *
    */
   load_recipe_image(theRecipeID) {
-  //recipeID: theRecipeID
-    const recipeImage = Images.find({}, {}).fetch();
-    console.log(recipeImage);
-    return recipeImage.imageURL;
+    const recipeImage = Images.find({ recipeID: theRecipeID }, { fields: { imageURL: 1 } }).fetch();
+    let res = '';
+    if (recipeImage.length === 1) {
+      res = recipeImage[0].imageURL;
+    }
+    return res;
   },
 
   /**
@@ -56,7 +59,12 @@ Template.Home_Page.helpers({
   load_tag_image(theTagName) {
     const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { _id: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    return Images.find({ recipeID: randomRecipe._id }, {}).fetch();
+    const recipeImage = Images.find({ recipeID: randomRecipe._id  }, { fields: { imageURL: 1 } }).fetch();
+    let res = '';
+    if (recipeImage.length === 1) {
+      res = recipeImage[0].imageURL;
+    }
+    return res;
   },
 
   /**
