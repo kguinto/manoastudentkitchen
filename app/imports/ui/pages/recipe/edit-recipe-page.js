@@ -28,6 +28,7 @@ Template.Edit_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Locations.getPublicationName());
+  this.subscribe(Images.getPublicationName());
   /* IMGUR UPLOAD REACTIVE VARIABLE */
 });
 
@@ -55,10 +56,12 @@ Template.Edit_Recipe_Page.helpers({
    *
    */
   image_preview() {
-    if (!_.isUndefined(Template.instance().dataUrl)) {
+    if (_.isUndefined(Template.instance().dataUrl)){
+      return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
+    }
+    else if (!_.isUndefined(Template.instance().dataUrl)) {
       return Template.instance().dataUrl.get();
     }
-    return '';
   },
   recipe() {
     return Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
