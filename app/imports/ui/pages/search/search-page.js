@@ -44,7 +44,11 @@ Template.View_Search_Page.helpers({
       const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { }).fetch();
       results.push(tagSearch);
     }
-    return $.isArray(results[0]) ? results[0] : results;
+    const flatresults = _.uniq(_.flatten(results, true), function isUniq(key) {
+      return key._id;
+    });
+    Template.instance().numResults.set(flatresults.length);
+    return flatresults;
   },
 
   /**
