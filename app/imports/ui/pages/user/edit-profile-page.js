@@ -42,7 +42,7 @@ Template.Edit_Profile_Page.helpers({
    *
    */
   image_preview() {
-    if (_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture) && !Template.instance().loadOnce.get()) {
+    if (_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture) && Template.instance().loadOnce.get()) {
       Template.instance().dataUrl.set('/images/blank.png');
     }
     if (!_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture) && Template.instance().loadOnce.get()) {
