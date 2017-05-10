@@ -22,17 +22,9 @@
               <i class="tags icon"></i>
               Tag Options
             </a>
-            <a class="item side-item-reportpane {{getActiveStatus 'reportpane'}}">
-              <i class="warning sign icon"></i>
-              View Reports
-            </a>
             <a class="item side-item-datapane {{getActiveStatus 'datapane'}}">
               <i class="database sign icon"></i>
               Data View
-            </a>
-            <a class="item side-item-settingpane {{getActiveStatus 'settingpane'}}">
-              <i class="settings icon"></i>
-              Site Settings
             </a>
           </div>
         </div>
@@ -49,7 +41,30 @@
         <div class="ui container home-section" style="min-height:700px;">
 
           {{#if isActiveOption "userpane" }}
-
+          <div class="ui segment">
+            <div class="ui top attached label">Users</div>
+            <div class="ui three doubling link cards">
+              {{#each profile in profile_search_results }}
+              <div class="card">
+                <div class="content">
+                  <div class="ui grid">
+                    <div class="five wide column">
+                      <div class="ui circular image">
+                        <img style="width: 100%" src="{{profile.picture}}">
+                      </div>
+                    </div>
+                    <div class="eleven wide column">
+                      <a><h4>{{ profile.firstName }} {{ profile.lastName }}</h4></a>
+                      <div class="description">
+                        <span>{{ profile.bio }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
 
           {{else if isActiveOption "recipepane" }}
 
@@ -58,7 +73,7 @@
             {{#each search_result in recipe_search_results }}
             <div class="card">
               <div class="ui centered card-image">
-                <img class="ui centered image" src="/images/samplefood.jpg">
+                <img class="ui centered image" src="{{ load_recipe_image search_result._id }}">
               </div>
               <div class="content">
                 <div class="header">{{ search_result.recipeName }}</div>
@@ -88,14 +103,63 @@
 
           </div>
           {{else if isActiveOption "tagpane"}}
-
-
-          {{else if isActiveOption "reportpane"}}
-
+          <div class="ui segment">
+            <div class="ui top attached label">Tags</div>
+            <div class="ui three doubling link cards">
+              {{#each tag in tag_search_results }}
+              <div class="card">
+                <div class="content">
+                  <div class="ui grid">
+                    <div class="five wide column">
+                      <div class="ui circular image">
+                        <img style="width: 100%" src="/images/blank.png">
+                      </div>
+                    </div>
+                    <div class="eleven wide column">
+                      <a><h4>{{ tag.tagName }}</h4></a>
+                      <div class="description">
+                        <span>{{ tag_search_recipe tag.recipeID }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
           {{else if isActiveOption "datapane"}}
-
-
           <div class="ui styled fluid accordion">
+            <div class="title">
+              <i class="dropdown icon"></i>
+              Users
+            </div>
+            <div class="content">
+              <table class="ui celled table">
+                <thead>
+                <tr>
+                  <th>_id</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Bio</th>
+                  <th>Picture</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {{#each user in profiles }}
+                <tr>
+                  <td>{{user._id}}</td>
+                  <td>{{user.firstName}}</td>
+                  <td>{{user.lastName}}</td>
+                  <td>{{user.bio}}</td>
+                  <img class="ui tiny centered image" src="{{ user.picture }}">
+                </tr>
+                {{/each}}
+
+                </tbody>
+              </table>
+
+            </div>
             <div class="title">
               <i class="dropdown icon"></i>
               Recipes
@@ -165,6 +229,7 @@
               </table>
 
             </div>
+
             <!--
             <div class="title">
               <i class="dropdown icon"></i>
