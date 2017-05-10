@@ -16,15 +16,9 @@
               <div class="results"></div>
             </div>
             <div style="margin-top:7vh">
-              <div class="ui fluid buttons">
-              <button class="browse-all massive ui violet button">
-                Browse
-              </button>
-
               <button class="create-new massive ui green button">
-                Contribute!
+                Contribute a recipe!
               </button>
-              </div>
             </div>
           </div>
         </div>
@@ -34,6 +28,7 @@
     <div class="subsection-recipes">
 
       <div class="ui container home-section">
+        <h2>Popular Recipes</h2>
         <div class="ui three link centered cards">
 
           {{#each top_recipe in top_recipes }}
@@ -69,12 +64,15 @@
 
           {{/each}}
         </div>
+
+        <div class="browse-all ui right floated button">View All Recipes</div>
       </div>
     </div>
 
 
     <div class="subsection-tags">
       <div class="ui container home-section">
+        <h2>Popular Tags</h2>
         <div class="ui four link doubling cards" >
           {{#each top_tag in top_tags }}
           <a class="card tag-card" href='{{ get_search_url top_tag }}'>
