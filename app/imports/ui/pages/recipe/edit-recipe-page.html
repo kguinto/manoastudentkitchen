@@ -41,7 +41,9 @@
           One or more of your ingredient fields was invalid or unspecified. Double check your input and try again.
         </div>
         {{/if}}
-        {{#each ing in ingredients}}
+
+        <!--
+        {{#each ing in ing_field_list}}}
         <div class="four fields">
           <div class="field">
             {{> Text_Form_Control label="Ingredient" value=(ingField ing "ingredientName") errorMessage=(fieldError "ingredientName")}}
@@ -61,7 +63,7 @@
         <div class="field">
           <button class="ui button plus-button"><i class="plus icon"></i></button>
 
-        </div>
+        </div>-->
         <div class="field">
           {{> TextArea_Form_Control label="Instructions" value=(recipeField 'instructions')  required=true errorMessage=(fieldError "instructions")}}
         </div>

@@ -25,6 +25,7 @@ Template.Edit_Recipe_Page.onCreated(function onCreated() {
   this.context = Recipes.getSchema().namedContext('Edit_Recipe_Page');
   this.ingscontext = Ingredients.getSchema().namedContext('Edit_Recipe_Page');
   this.imageLoaded = new ReactiveVar(0);
+ // this.dataIngs = "";
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Locations.getPublicationName());
@@ -32,12 +33,6 @@ Template.Edit_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Ingredients.getPublicationName());
 
   /* IMGUR UPLOAD REACTIVE VARIABLE */
-});
-
-
-Template.Edit_Recipe_Page.onRendered(function () {
-  console.log("222222222");
-  this.dataIngs = new ReactiveVar( _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
 });
 
 Template.Edit_Recipe_Page.helpers({
@@ -111,6 +106,7 @@ Template.Edit_Recipe_Page.helpers({
   },
   ingredients() {
     console.log(_.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
+    Template.instance().dataIngs = new ReactiveVar( _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') }));
 
     Template.instance().dataLocationList.set([{ label: '', value: '', selected: true }]
         .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
@@ -152,7 +148,7 @@ Template.Edit_Recipe_Page.events({
   'submit .recipe-form'(event, instance) {
     event.preventDefault();
     const image = instance.dataUrl.get();
-    const ingList = instance.dataIngs.get();
+//    const ingList = instance.dataIngs.get();
     const recipeName = event.target['Name of Recipe'].value;
     const difficulty = instance.dataDiffRating.get();
     const timeRequired = event.target['Estimated Time Required'].value;
@@ -171,11 +167,11 @@ Template.Edit_Recipe_Page.events({
     // Determine validity.
     instance.context.validate(newRecipeData);
     /* Ingredient are assembled from form */
-    const ingredientArr = event.target.Ingredient;
+//    const ingredientArr = event.target.Ingredient;
     const quantityArr = event.target.Quantity;
     const priceArr = event.target.Price;
     const locationArr = event.target.Location;
-    const arrLength = ingredientArr.length;
+/*    const arrLength = ingredientArr.length;
     if (typeof(arrLength) === 'undefined') {
       ingList[0].recipeID = 'PLACEHOLDER';
       ingList[0].ingredientName = ingredientArr.value;
@@ -202,14 +198,14 @@ Template.Edit_Recipe_Page.events({
 
     if (instance.ingscontext.isValid()) {
       Template.instance().dataHasIngError.set(false);
-    }
-    if (instance.context.isValid() && instance.ingscontext.isValid()) {
+    }*/
+    if (instance.context.isValid()) {
       Template.instance().dataIsSubmittingRecipe.set(true);
       /* Inserts new recipe */
       console.log("Definitely here.");
       const id = FlowRouter.getParam('_id');
       Recipes.update(FlowRouter.getParam('_id'), { $set:  newRecipeData });
-
+/*
       const oldIngredients =  _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
 
       for(ing in oldIngredients){
@@ -225,7 +221,7 @@ Template.Edit_Recipe_Page.events({
         Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
         return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
       });
-
+*/
       if(Template.instance().imageLoaded.get() == 1){
         Images.removeIt(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), '_id')[0]);
 
