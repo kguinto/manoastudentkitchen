@@ -7,6 +7,8 @@ import { Images } from '/imports/api/image/ImageCollection';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
+/* eslint-disable no-undef, object-shorthand, no-shadow*/
+
 Template.View_Search_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
@@ -39,11 +41,10 @@ Template.View_Search_Page.helpers({
     const tagSearchResults = Tags.find({ $or: tagSearchMap }, { fields: { recipeID: 1 } }).fetch();
     const tagSearchResultsRenamed = _.map(tagSearchResults, function rename(item) { return { _id: item.recipeID }; });
     if (tagSearchResultsRenamed.length > 0) {
-      const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { sort: { viewcount: -1 } }).fetch();
+      const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { }).fetch();
       results.push(tagSearch);
     }
-    Template.instance().numResults.set(results.length);
-    return results;
+    return $.isArray(results[0]) ? results[0] : results;
   },
 
   /**

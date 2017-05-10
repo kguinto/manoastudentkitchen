@@ -2,8 +2,10 @@ import { Template } from 'meteor/templating';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Profiles } from '/imports/api/profile/ProfileCollection';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Images } from '/imports/api/image/ImageCollection';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
@@ -17,6 +19,8 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.Admin_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
+  this.subscribe(Profiles.getPublicationName());
+  this.subscribe(Images.getPublicationName());
   this.searchTerms = new ReactiveDict();
   this.searchTerms.set(userSearchTerm, '');
   this.searchTerms.set(recipeSearchTerm, '');
@@ -49,7 +53,45 @@ Template.Admin_Page.helpers({
     }
     return results;
   },
+  /**
+   * Produces image for a recipe
+   *
+   */
+  load_recipe_image(theRecipeID) {
+    const recipeImage = Images.find({ recipeID: theRecipeID }, { fields: { imageURL: 1 } }).fetch();
+    let res = '';
+    if (recipeImage.length === 1) {
+      res = recipeImage[0].imageURL;
+    }
+    return res;
+  },
+  /**
+   * Produces matching profiles in search
+   *
+   */
+  profile_search_results() {
+    const param = Template.instance().searchTerms.get(userSearchTerm);
 
+    const results = Profiles.find({ $or: [{ firstName: { $regex: `${param}` } },
+      { lastName: { $regex: `${param}` } }] }, { }).fetch();
+    return results;
+  },
+  /**
+   * Produces matching tags in search
+   *
+   */
+  tag_search_results() {
+    const param = Template.instance().searchTerms.get(tagSearchTerm);
+
+    const results = Tags.find({ tagName: { $regex: `${param}` } }, {}).fetch();
+
+    return results;
+  },
+
+  tag_search_recipe(recipeID) {
+    const res = Recipes.find({ _id: recipeID }, { }).fetch();
+    return res[0].recipeName;
+  },
   /**
    * Produces tags for a recipe
    *
@@ -65,7 +107,7 @@ Template.Admin_Page.helpers({
   },
 
   get_recipe_url(recipeID) {
-    return `/recipe/${recipeID}/view`;
+    return `/recipe/${recipeID}`;
   },
 
   search_title() {
@@ -127,6 +169,9 @@ Template.Admin_Page.helpers({
   },
   tags() {
     return Tags.find().fetch();
+  },
+  profiles() {
+    return Profiles.find().fetch();
   },
 });
 
