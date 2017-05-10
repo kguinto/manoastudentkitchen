@@ -57,10 +57,11 @@ Template.Home_Page.helpers({
    *
    */
   load_tag_image(theTagName) {
-    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { _id: 1 } }).fetch();
+    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { recipeID: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    const recipeImage = Images.find({ recipeID: randomRecipe._id  }, { fields: { imageURL: 1 } }).fetch();
+    const recipeImage = Images.find({ recipeID: randomRecipe.recipeID  }, { fields: { imageURL: 1 } }).fetch();
     let res = '';
+
     if (recipeImage.length === 1) {
       res = recipeImage[0].imageURL;
     }
