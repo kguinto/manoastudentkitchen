@@ -72,7 +72,7 @@ const recipeRoutes = FlowRouter.group({
 });
 
 export const recipePageRouteName = 'View_Recipe_Page';
-recipeRoutes.route('/view', {
+recipeRoutes.route('/', {
   name: recipePageRouteName,
   action() {
     BlazeLayout.render('Recipe_Layout', { main: recipePageRouteName });
@@ -105,11 +105,11 @@ userRoutes.route('/profile', {
   },
 });
 
-export const editProfilePageRouteName = 'Edit_Profile_Page';
-userRoutes.route('/edit-profile', {
-  name: editProfilePageRouteName,
+export const createRecipeRouteName = 'Create_Recipe_Page';
+userRoutes.route('/create', {
+  name: createRecipeRouteName,
   action() {
-    BlazeLayout.render('User_Layout', { main: editProfilePageRouteName });
+    BlazeLayout.render('User_Layout', { main: createRecipeRouteName });
   },
 });
 
@@ -118,6 +118,14 @@ userRoutes.route('/admin', {
   name: adminPageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: adminPageRouteName });
+  },
+});
+
+export const editProfilePageRouteName = 'Edit_Profile_Page';
+userRoutes.route('/edit-profile', {
+  name: editProfilePageRouteName,
+  action() {
+    BlazeLayout.render('User_Layout', { main: editProfilePageRouteName });
   },
 });
 
@@ -142,7 +150,7 @@ userRoutes.route('/filter', {
 
 
 export const searchPageRouteName = 'View_Search_Page';
-FlowRouter.route('/search/:searchParam/view', {
+FlowRouter.route('/search/:searchParam', {
   name: searchPageRouteName,
   action() {
     BlazeLayout.render('User_Layout', { main: searchPageRouteName });

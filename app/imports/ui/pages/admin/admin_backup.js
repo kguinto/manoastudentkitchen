@@ -3,35 +3,35 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Images } from '/imports/api/image/ImageCollection';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-Template.View_Search_Page.onCreated(function onCreated() {
+
+const userSearchTerm = 'user';
+const recipeSearchTerm = 'recipe';
+const tagSearchTerm = 'tag';
+
+Template.Admin_Page_Backup.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
-  this.subscribe(Images.getPublicationName());
-  this.numResults = new ReactiveVar(0);
+  this.searchTerms = new ReactiveDict();
+  this.searchTerms.set(userSearchTerm, '');
+  this.searchTerms.set(recipeSearchTerm, '');
+  this.searchTerms.set(tagSearchTerm, '');
+  this.activeOption = new ReactiveVar('');
 });
 
-Template.search.onRendered(function () {
-  if (FlowRouter.getParam('searchParam') !== '*') {
-    this.$('input[name="text"]').val(FlowRouter.getParam('searchParam'));
-  }
-});
-Template.View_Search_Page.helpers({
+Template.Admin_Page_Backup.helpers({
 
   /**
    * Produces matching recipes in search
    *
    */
-  search_results() {
-    const param = FlowRouter.getParam('searchParam');
-    let findParams = { recipeName: { $regex: `${param}` } };
-    if (param === '*') {
-      findParams = {};
-    }
-    const results = Recipes.find(findParams, { sort: { viewcount: -1 } }).fetch();
+  recipe_search_results() {
+    const param = Template.instance().searchTerms.get(recipeSearchTerm);
+
+    const results = Recipes.find({ recipeName: { $regex: `${param}` } }, { sort: { viewcount: -1 } }).fetch();
 
     let tagSearchArr = param.split(',');
     tagSearchArr = _.map(tagSearchArr, function snip(term) { return term[0] === ' ' ? term.substr(1) : term; });
@@ -42,7 +42,6 @@ Template.View_Search_Page.helpers({
       const tagSearch = Recipes.find({ $or: tagSearchResultsRenamed }, { sort: { viewcount: -1 } }).fetch();
       results.push(tagSearch);
     }
-    Template.instance().numResults.set(results.length);
     return results;
   },
 
@@ -68,9 +67,7 @@ Template.View_Search_Page.helpers({
     const searchParam = FlowRouter.getParam('searchParam');
     const numResults = Template.instance().numResults.get();
     let message = '';
-    if (searchParam === '*') {
-      message = 'Showing all recipes. Use searchbar to narrow search.';
-    } else if (numResults === 1) {
+    if (numResults === 1) {
       message = `1 results for \'${searchParam}\'`;
     } else if (numResults > 1) {
       message = `${numResults} results for \'${searchParam}\'`;
@@ -79,23 +76,37 @@ Template.View_Search_Page.helpers({
     }
     return message;
   },
+
   /**
-   * Produces image for a recipe
+   * Determines which pane of the admin options has activeclass
    *
    */
-  load_recipe_image(theRecipeID) {
-    const recipeImage = Images.find({ recipeID: theRecipeID }, { fields: { imageURL: 1 } }).fetch();
-    let res = '';
-    if (recipeImage.length === 1) {
-      res = recipeImage[0].imageURL;
-    }
-    return res;
+  getActiveStatus(option) {
+    return Template.instance().activeOption.get() === option ? 'active' : '';
   },
-
+  /**
+   * Determines if pane is active
+   *
+   */
+  isActiveOption(option) {
+    return Template.instance().activeOption.get() === option;
+  },
+  hasSearch() {
+    return Template.instance().activeOption.get() === 'userpane' ||
+        Template.instance().activeOption.get() === 'recipepane' ||
+        Template.instance().activeOption.get() === 'tagpane';
+  },
+  /**
+   * Gets name of active pane (lowercase)
+   *
+   */
+  getOptionName() {
+    return Template.instance().activeOption.get().slice(0, -4);
+  },
 });
 
-Template.View_Search_Page.events({
-  'submit .search-recipe'(event) {
+Template.Admin_Page_Backup.events({
+  'submit .admin-search'(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
@@ -103,18 +114,33 @@ Template.View_Search_Page.events({
     const target = event.target;
     const text = target.text.value;
 
+    // Get type of search
+    const searchType = Template.instance().activeOption.get().slice(0, -4);
+
     if (text !== null && text !== '') {
-      FlowRouter.go('View_Search_Page', { searchParam: text });
-    } else {
-      FlowRouter.go('View_Search_Page', { searchParam: '*' });
+      Template.instance().searchTerms.set(searchType, text);
     }
-    // Clear form
-    target.text.value = '';
   },
-  'click .create-new'(event) {
+  'click .side-item-userpane'(event) {
     event.preventDefault();
-    const userName = Meteor.user().profile.name;
-    FlowRouter.go(`/${userName}/create`);
+    Template.instance().activeOption.set('userpane');
+  },
+  'click .side-item-recipepane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('recipepane');
+  },
+  'click .side-item-tagpane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('tagpane');
+  },
+  'click .side-item-reportpane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('reportpane');
+  },
+  'click .side-item-settingpane'(event) {
+    event.preventDefault();
+    Template.instance().activeOption.set('settingpane');
   },
 
 });
+

@@ -4,15 +4,14 @@ import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
 
 /* eslint-disable no-undef, object-shorthand, no-shadow*/
 
 Template.Home_Page.onCreated(function onCreated() {
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Recipes.getPublicationName());
-  /* IMGUR UPLOAD REACTIVE VARIABLE */
-  this.dataUrl = new ReactiveVar();
+  this.subscribe(Images.getPublicationName());
+
 });
 
 Template.Home_Page.helpers({
@@ -22,7 +21,7 @@ Template.Home_Page.helpers({
    *
    */
   top_recipes() {
-    return _.sample(Recipes.find({}, { sort: { viewcount: -1, limit: 16 } }).fetch(), 6);
+    return _.sample(Recipes.find({}, { sort: { viewcount: -1, limit: 16 } }).fetch(), 16);
   },
 
   /**
@@ -30,7 +29,7 @@ Template.Home_Page.helpers({
    *
    */
   top_tags() {
-    const allTags = Tags.find({}, { fields: { tagName: 1 } }).fetch();
+    const allTags = Tags.find({ }, { fields: { tagName: 1 } }).fetch();
     const namesOnly = _.pluck(_.values(allTags), 'tagName');
     const frequency = _.countBy(namesOnly, function each(each) { return each; });
     const result = _.first(_.sortBy(_.uniq(namesOnly),
@@ -43,7 +42,12 @@ Template.Home_Page.helpers({
    *
    */
   load_recipe_image(theRecipeID) {
-    return Images.find({ recipeID: theRecipeID }, {}).fetch();
+    const recipeImage = Images.find({ recipeID: theRecipeID }, { fields: { imageURL: 1 } }).fetch();
+    let res = '';
+    if (recipeImage.length === 1) {
+      res = recipeImage[0].imageURL;
+    }
+    return res;
   },
 
   /**
@@ -51,9 +55,15 @@ Template.Home_Page.helpers({
    *
    */
   load_tag_image(theTagName) {
-    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { _id: 1 } }).fetch();
+    const recipesWithTag = Tags.find({ tagName: theTagName }, { fields: { recipeID: 1 } }).fetch();
     const randomRecipe = _.sample(recipesWithTag);
-    return Images.find({ recipeID: randomRecipe._id }, {}).fetch();
+    const recipeImage = Images.find({ recipeID: randomRecipe.recipeID  }, { fields: { imageURL: 1 } }).fetch();
+    let res = '';
+
+    if (recipeImage.length === 1) {
+      res = recipeImage[0].imageURL;
+    }
+    return res;
   },
 
   /**
@@ -71,12 +81,12 @@ Template.Home_Page.helpers({
   },
 
   get_recipe_url(recipeID) {
-    return `/recipe/${recipeID}/view`;
+    return `/recipe/${recipeID}`;
   },
 
-  get_search_url(text){
-      return `/search/${text}/view`;
-  }
+  get_search_url(text) {
+    return `/search/${text}`;
+  },
 });
 
 
@@ -88,38 +98,22 @@ Template.Home_Page.events({
     // Get value from form element
     const target = event.target;
     const text = target.text.value;
-    window.location.replace(`search/${text}/view`);
+    if (text !== null && text !== '') {
+      FlowRouter.go('View_Search_Page', { searchParam: text });
+    } else {
+      FlowRouter.go('View_Search_Page', { searchParam: '*' });
+    }
     // Clear form
     target.text.value = '';
   },
-  /* IMGUR UPLOAD EVENTS */
-  "change input[type='file']": function upload(event, instance) {
-    const files = event.target.files;
-    if (files.length === 0) {
-      return;
-    }
-    const file = files[0];
-    //
-    const fileReader = new FileReader();
-    fileReader.onload = function onload(event) {
-      const dataUrl = event.target.result;
-      instance.dataUrl.set(dataUrl);
-    };
-    fileReader.readAsDataURL(file);
-  },
-  'submit .test-imgur'(event, instance) {
+  'click .create-new'(event) {
     event.preventDefault();
-    const image = instance.dataUrl.get();
-    Imgur.upload({
-      image: image,
-      apiKey: Meteor.settings.public.ClientID,
-    }, function error(error, data) {
-      if (error) {
-        throw error;
-      } else {
-        console.log(data.link); /* Do things with the link here (replace console.log) */
-      }
-    });
+    const userName = Meteor.user().profile.name;
+    FlowRouter.go(`/${userName}/create`);
   },
-  /* END IMGUR UPLOAD EVENTS */
+  'click .browse-all'(event) {
+    event.preventDefault();
+    FlowRouter.go('View_Search_Page', { searchParam: '*' });
+  },
+
 });

@@ -4,7 +4,7 @@
     <div class="ui fluid grad-background">
       <div class="ui one column center aligned page grid" style="height:500px;">
         <div class="one column row">
-          <div class="middle aligned column twelve wide two high">
+          <div class="middle aligned column twelve wide two high" style="margin-top:4vh">
             <h1>Recipes by Manoa students, for Manoa students.</h1>
             <br>
             <div class="ui search">
@@ -12,12 +12,19 @@
                 <input class="prompt" type="text" name="text" placeholder="Search recipes, tags, locations, authors...">
                 <i class="search icon"></i>
               </form>
-              <!--
-              <form class="test-imgur ui fluid icon input" >
-                <input class="prompt" type="file" name="image" placeholder="A test upload for images">
-                <input type="submit" value="submit">
-              </form> -->
+
               <div class="results"></div>
+            </div>
+            <div style="margin-top:7vh">
+              <div class="ui fluid buttons">
+              <button class="browse-all massive ui violet button">
+                Browse
+              </button>
+
+              <button class="create-new massive ui green button">
+                Contribute!
+              </button>
+              </div>
             </div>
           </div>
         </div>
@@ -72,7 +79,7 @@
           {{#each top_tag in top_tags }}
           <a class="card tag-card" href='{{ get_search_url top_tag }}'>
               <div class="image tag-image-container">
-               <img class="tag-image" src="{{ load_tag_image.imageURL top_tag.tagName }}">
+               <img class="tag-image" src="{{ load_tag_image top_tag }}">
              </div>
               <div class="tag-image-text">{{ top_tag }}</div>
             </a>

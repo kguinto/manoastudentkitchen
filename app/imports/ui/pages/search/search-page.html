@@ -4,20 +4,20 @@
     {{> search}}
 
     <h1>{{ search_title }}</h1>
-    <div class="ui three link centered cards">
+    <div class="ui three link centered cards resultCards">
 
 
       {{#each search_result in search_results }}
 
       <div class="card">
         <div class="ui centered card-image">
-          <img class="ui centered image" src="/images/samplefood.jpg">
+          <img class="ui centered image" src="{{load_recipe_image search_result._id}}">
         </div>
         <div class="content">
           <div class="header">{{ search_result.recipeName }}</div>
           <div class="meta">
 
-            {{#each tag in recipe_tag search_result.recipeID }}
+            {{#each tag in recipe_tag search_result._id }}
             <div class="ui label">{{ tag.tagName }}</div>
             {{/each}}
 
