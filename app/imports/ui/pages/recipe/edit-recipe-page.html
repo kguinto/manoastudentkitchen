@@ -41,16 +41,16 @@
           One or more of your ingredient fields was invalid or unspecified. Double check your input and try again.
         </div>
         {{/if}}
-        {{#each ing_field_list}}
+        {{#each ing in ingredients}}
         <div class="four fields">
           <div class="field">
-            {{> Text_Form_Control label="Ingredient" errorMessage=(fieldError "ingredientName")}}
+            {{> Text_Form_Control label="Ingredient" value=(ingField ing "ingredientName") errorMessage=(fieldError "ingredientName")}}
           </div>
           <div class="field">
-            {{> Text_Form_Control label="Quantity" errorMessage=(fieldError "quantity")}}
+            {{> Text_Form_Control label="Quantity" value=(ingField ing "quantity") errorMessage=(fieldError "quantity")}}
           </div>
           <div class="field">
-            {{> Text_Form_Control label="Price" errorMessage=(fieldError "price")}}
+            {{> Text_Form_Control label="Price" value=(ingField ing "price") errorMessage=(fieldError "price")}}
           </div>
           <div class="field">
             {{> Select_Form_Control label="Location" options=(location_select_options) errorMessage=(fieldError "location")}}

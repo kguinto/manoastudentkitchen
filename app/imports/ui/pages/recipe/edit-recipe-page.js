@@ -15,8 +15,6 @@ const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
 Template.Edit_Recipe_Page.onCreated(function onCreated() {
   this.dataUrl = new ReactiveVar('/images/blank.png');
-  this.dataIngs = new ReactiveVar([{ recipeID: '',
-    ingredientName: '', locationID: '', price: '', quantity: '' }]);
   this.dataDiffRating = new ReactiveVar(1);
   this.dataLocationList = new ReactiveVar();
   this.dataHasIngError = new ReactiveVar(false);
@@ -31,6 +29,7 @@ Template.Edit_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Locations.getPublicationName());
   this.subscribe(Images.getPublicationName());
+  this.subscribe(Ingredients.getPublicationName());
 
   /* IMGUR UPLOAD REACTIVE VARIABLE */
 });
@@ -104,6 +103,25 @@ Template.Edit_Recipe_Page.helpers({
   is_not_submitting_recipe() {
     return !Template.instance().dataIsSubmittingRecipe.get();
   },
+  ingredients() {
+    Template.instance().dataLocationList.set([{ label: '', value: '', selected: true }]
+        .concat(_.map(Locations.find({}, { fields: { _id: 1, locationName: 1 } }).fetch(),
+            function renameLocation(loc) {
+              return { label: loc.locationName, value: loc._id, selected: false };
+            })));
+    return _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
+  },
+  ingLocation(ing) {
+    // console.log(Locations.find().fetch());
+    const locations = Locations.find().fetch();
+    return _.pluck(_.where(locations, {_id: ing.locationID}), 'locationName')[0];
+  },
+
+  ingField(ing, fieldName) {
+    // See https://dweldon.silvrback.com/guards to understand '&&' in next line.
+    return ing && ing[fieldName];
+  },
+
 });
 
 Template.Edit_Recipe_Page.events({
