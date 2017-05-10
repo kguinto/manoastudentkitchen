@@ -4,8 +4,6 @@ import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { HTTP } from 'meteor/http';
 
 /* eslint-disable no-undef, object-shorthand, no-shadow*/
 
@@ -87,8 +85,8 @@ Template.Home_Page.helpers({
   },
 
   get_search_url(text) {
-      return `/search/${text}`;
-  }
+    return `/search/${text}`;
+  },
 });
 
 
@@ -103,7 +101,7 @@ Template.Home_Page.events({
     if (text !== null && text !== '') {
       FlowRouter.go('View_Search_Page', { searchParam: text });
     } else {
-      FlowRouter.go('Home_Page');
+      FlowRouter.go('View_Search_Page', { searchParam: '*' });
     }
     // Clear form
     target.text.value = '';
@@ -112,6 +110,10 @@ Template.Home_Page.events({
     event.preventDefault();
     const userName = Meteor.user().profile.name;
     FlowRouter.go(`/${userName}/create`);
+  },
+  'click .browse-all'(event) {
+    event.preventDefault();
+    FlowRouter.go('View_Search_Page', { searchParam: '*' });
   },
 
 });
