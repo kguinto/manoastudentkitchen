@@ -169,7 +169,7 @@ Template.Edit_Recipe_Page.events({
       Template.instance().dataIsSubmittingRecipe.set(true);
       /* Inserts new recipe */
       console.log("Definitely here.");
-      const id = Recipes.update(FlowRouter.getParam('_id'), newRecipeData);
+      const id = Recipes.update(FlowRouter.getParam('_id'), { $set:  newRecipeData });
       console.log("Definitely there.")
 
       ingIDs = _.map(Template.instance().dataIngs.get(), function ingval(obj) {
