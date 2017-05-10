@@ -4,6 +4,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
+import { Images } from '/imports/api/image/ImageCollection';
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
@@ -11,6 +12,7 @@ const displayErrorMessages = 'displayErrorMessages';
 Template.View_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Tags.getPublicationName());
+  this.subscribe(Images.getPublicationName());
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
@@ -40,6 +42,11 @@ Template.View_Recipe_Page.helpers({
   recipeTags() {
     return _.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
   },
+  recipeImageURL(){
+    console.log(Images.find().fetch())
+    console.log(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0] );
+    return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
+  },
 
   costPerServing() {
     const recipe = Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
@@ -57,15 +64,6 @@ Template.View_Recipe_Page.helpers({
 });
 
 Template.tagInput.onRendered(function () {
-  console.log(_.map(
-      _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
-            return !_.contains(_.pluck(_.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'tagName'), tagName)
-          }
-      ), function (tagName) {
-
-        return { title: tagName };
-      }
-  ));
   this.$('.ui.search').search({
     source: _.map(
         _.filter(_.uniq(_.pluck(Tags.find().fetch(), 'tagName')), function (tagName) {
