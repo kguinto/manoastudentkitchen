@@ -5,6 +5,8 @@ import { _ } from 'meteor/underscore';
 import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
+import { Ingredients } from '/imports/api/ingredient/IngredientCollection';
+import { Locations } from '/imports/api/location/LocationCollection';
 
 const displaySuccessMessage = 'displaySuccessMessage';
 const displayErrorMessages = 'displayErrorMessages';
@@ -13,6 +15,8 @@ Template.View_Recipe_Page.onCreated(function onCreated() {
   this.subscribe(Recipes.getPublicationName());
   this.subscribe(Tags.getPublicationName());
   this.subscribe(Images.getPublicationName());
+  this.subscribe(Ingredients.getPublicationName());
+  this.subscribe(Locations.getPublicationName());
   this.messageFlags = new ReactiveDict();
   this.messageFlags.set(displaySuccessMessage, false);
   this.messageFlags.set(displayErrorMessages, false);
@@ -45,6 +49,22 @@ Template.View_Recipe_Page.helpers({
   recipeImageURL(){
     return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
   },
+  ingredients() {
+    return _.where(Ingredients.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
+  },
+
+  get_edit_url(recipeID) {
+    return `/recipe/` + FlowRouter.getParam('_id') + `/edit`;
+  },
+
+  location(ing) {
+   // console.log(Locations.find().fetch());
+    const locations = Locations.find().fetch();
+    console.log(locations);
+    console.log(ing.locationID);
+    console.log(_.where(locations, {_id: ing.locationID}) );
+    return _.pluck(_.where(locations, {_id: ing.locationID}), 'locationName')[0];
+  },
 
   costPerServing() {
     const recipe = Recipes.findDocWithRecipeID(FlowRouter.getParam('_id'));
@@ -59,6 +79,10 @@ Template.View_Recipe_Page.helpers({
       return { title: tagName };
     };
   },
+
+  userIsAdmin(){
+    return (Meteor.user().profile.name == 'kguinto' || Meteor.user().profile.name == 'alexcw' || Meteor.user().profile.name == 'cfrifel' || Meteor.user().profile.name == 'johnson' || Meteor.user().profile.name == 'amymalia');
+  }
 });
 
 Template.tagInput.onRendered(function () {
