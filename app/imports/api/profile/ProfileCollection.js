@@ -21,7 +21,7 @@ class ProfileCollection extends BaseCollection {
       firstName: { type: String, optional: true },
       lastName: { type: String, optional: true },
       bio: { type: String, optional: true },
-      picture: { type: SimpleSchema.RegEx.Url, optional: true },
+      picture: { type: String, optional: true },
     }));
   }
 

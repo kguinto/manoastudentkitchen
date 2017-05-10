@@ -7,17 +7,22 @@
       Profile
     </div>
     <form class="ui equal width form profile-data-form {{ successClass }} {{ errorClass }}">
-
+      <div class="ui two column grid">
+        <div class="ui column">
       <div class="fields">
-        {{> Text_Form_Control label="First" placeholder="Philip" value=profile.firstName errorMessage=(fieldError "firstName")}}
-        {{> Text_Form_Control label="Last" placeholder="Johnson" value=profile.lastName errorMessage=(fieldError "lastName")}}
+        {{> Text_Form_Control label="First" placeholder="First" value=profile.firstName errorMessage=(fieldError "firstName")}}
+        {{> Text_Form_Control label="Last" placeholder="Last" value=profile.lastName errorMessage=(fieldError "lastName")}}
 
       </div>
 
       <div class="field">
-        {{> Text_Form_Control label="Picture" placeholder="http://foo.com/shot.jpg" value=profile.picture errorMessage=(fieldError "picture")}}
+        <input class="prompt" type="file" name="image">
       </div>
-
+        </div>
+        <div class="ui column">
+          <img class="ui medium centered responsive image" src="{{ image_preview }}"/>
+        </div>
+      </div>
       {{> TextArea_Form_Control label="Bio" value=profile.bio placeholder="Short bio statement here" errorMessage=(fieldError "bio")}}
 
       <button class="ui primary button" type="submit">Submit</button>
@@ -26,6 +31,7 @@
           <p>Profile data successfully updated.</p>
         </div>
       {{/if}}
+
     </form>
   </div>
 

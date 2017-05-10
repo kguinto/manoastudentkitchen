@@ -43,8 +43,6 @@ Template.View_Recipe_Page.helpers({
     return _.where(Tags.find().fetch(), { recipeID: FlowRouter.getParam('_id') });
   },
   recipeImageURL(){
-    console.log(Images.find().fetch())
-    console.log(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0] );
     return _.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), 'imageURL')[0];
   },
 
