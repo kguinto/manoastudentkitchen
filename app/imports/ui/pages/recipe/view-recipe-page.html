@@ -3,9 +3,18 @@
   {{#if Template.subscriptionsReady}}
 
   <div class="ui container">
+
     <div class="ui header">
-      <h1> {{recipe.recipeName}}</h1>
+      <h1> {{recipe.recipeName}}
+        {{ #if userIsAdmin}}
+        <a href="{{ get_edit_url}}">
+          Edit
+        </a>
+
+        {{/if}}
+      </h1>
     </div>
+
 
     <div class="ui one column center aligned page grid" style="height:400px; z-index: 2;">
       <div class="ui container image-background-container">
