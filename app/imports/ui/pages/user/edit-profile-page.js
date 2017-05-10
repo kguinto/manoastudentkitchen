@@ -40,8 +40,12 @@ Template.Edit_Profile_Page.helpers({
    *
    */
   image_preview() {
+    if (_.isUndefined(Profiles.findDoc(Meteor.user().profile.name).picture)) {
+      Template.instance().dataUrl.set('/images/blank.png');
+    }
     if (!_.isUndefined(Template.instance().dataUrl)) {
       if (Template.instance().dataUrl.get() === '/images/blank.png') {
+        Template.instance().dataUrl.set(Profiles.findDoc(Meteor.user().profile.name).picture);
         return Profiles.findDoc(Meteor.user().profile.name).picture;
       }
       return Template.instance().dataUrl.get();
