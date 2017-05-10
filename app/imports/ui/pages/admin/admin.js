@@ -241,5 +241,24 @@ Template.Admin_Page.events({
       instance.messageFlags.set(displayErrorMessages, true);
     }
   },
+  'click .delete-recipe'(event) {
+    event.preventDefault();
+    if (confirm('Do you really want to delete this entry?')) {
+      Recipes.removeIt(event.target.value);
 
+    }
+  },
+  'click .delete-tag'(event) {
+    event.preventDefault();
+    if (confirm('Do you really want to delete this entry?')) {
+      Tags.removeIt(event.target.value);
+    }
+  },
+  'click .delete-user'(event) {
+    event.preventDefault();
+    if (confirm('Do you really want to delete this entry?')) {
+      Profiles.removeIt(event.target.value);
+
+    }
+  },
 });
