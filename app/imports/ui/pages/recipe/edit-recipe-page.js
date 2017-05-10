@@ -181,8 +181,8 @@ Template.Edit_Recipe_Page.events({
       Template.instance().dataIsSubmittingRecipe.set(true);
       /* Inserts new recipe */
       console.log("Definitely here.");
-      const id = Recipes.update(FlowRouter.getParam('_id'), { $set:  newRecipeData });
-      console.log("Definitely there.")
+      const id = FlowRouter.getParam('_id');
+      Recipes.update(FlowRouter.getParam('_id'), { $set:  newRecipeData });
 
       ingIDs = _.map(Template.instance().dataIngs.get(), function ingval(obj) {
         const recipeID = id;
@@ -191,13 +191,19 @@ Template.Edit_Recipe_Page.events({
         const price = obj.price;
         const locationID = obj.locationID;
         Ingredients.getSchema().clean({ recipeID, ingredientName, locationID, price, quantity });
-        return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
+        //return Ingredients.define({ recipeID, ingredientName, locationID, price, quantity });
       });
-      const recipeID = id;
-      const imageURL = image;
-      const deleteHash = 'PLACEHOLDER';
-      Images.getSchema().clean({ recipeID, imageURL, deleteHash });
-      Images.define({ recipeID, imageURL, deleteHash });
+
+      if(Template.instance().imageLoaded.get() == 1){
+        Images.removeIt(_.pluck(_.where(Images.find().fetch(), { recipeID: FlowRouter.getParam('_id') }), '_id')[0]);
+
+        const recipeID = id;
+        const imageURL = image;
+        const deleteHash = 'PLACEHOLDER';
+        Images.getSchema().clean({ recipeID, imageURL, deleteHash });
+        Images.define({ recipeID, imageURL, deleteHash });
+      }
+
       instance.messageFlags.set(displaySuccessMessage, id);
       instance.messageFlags.set(displayErrorMessages, false);
       instance.dataIsSubmittingRecipe.set(false);
