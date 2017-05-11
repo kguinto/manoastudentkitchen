@@ -3,6 +3,7 @@ import { Recipes } from '/imports/api/recipe/RecipeCollection';
 import { Tags } from '/imports/api/tag/TagCollection';
 import { Images } from '/imports/api/image/ImageCollection';
 import { Profiles } from '/imports/api/profile/ProfileCollection';
+import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 
 /* eslint-disable no-undef, object-shorthand, no-unused-vars, no-shadow*/
@@ -15,6 +16,17 @@ Template.View_Profile_Page.onCreated(function onCreated() {
 });
 
 Template.View_Profile_Page.helpers({
+  /**
+   * Check to see if this is the user's first login so that they don't see an empty profile.
+   * If it is there first login a message will be displayed with a button to go to edit-profile
+   *
+   */
+  first_time_here() {
+    return _.isUndefined((Profiles.findDoc(Meteor.user().profile.name).firstName))
+        && _.isUndefined((Profiles.findDoc(Meteor.user().profile.name).lastName))
+        && ((Profiles.findDoc(Meteor.user().profile.name)._id ===
+        Profiles.findDoc(FlowRouter.getParam('username'))._id));
+  },
 
   /**
    * Produces recipes by user
@@ -64,13 +76,18 @@ Template.View_Profile_Page.helpers({
     return `/search/${text}`;
   },
   is_not_current_user() {
-    return !(Profiles.findDoc(Meteor.user().profile.name)._id ===
-    Profiles.findDoc(FlowRouter.getParam('username'))._id);
+    return Profiles.findDoc(Meteor.user().profile.name)._id !==
+    Profiles.findDoc(FlowRouter.getParam('username'))._id;
   },
   userIsAdmin() {
-    return (Meteor.user().profile.name === 'kguinto' || Meteor.user().profile.name === 'alexcw'
+    return !(Profiles.findDoc(Meteor.user().profile.name)._id !==
+        Profiles.findDoc(FlowRouter.getParam('username'))._id) &&
+        (Meteor.user().profile.name === 'kguinto' || Meteor.user().profile.name === 'alexcw'
     || Meteor.user().profile.name === 'cfrifel' || Meteor.user().profile.name === 'johnson'
     || Meteor.user().profile.name === 'amymalia');
+  },
+  get_username() {
+    return Meteor.user().profile.name;
   },
 });
 
@@ -103,5 +120,9 @@ Template.View_Profile_Page.events({
   'click .admin-go'(event) {
     const admin = Meteor.user().profile.name;
     window.location.replace('admin');
+  },
+  'click .new-edit'(event) {
+    event.preventDefault();
+    window.location.replace('edit-profile');
   },
 });
