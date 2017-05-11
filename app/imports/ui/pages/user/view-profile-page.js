@@ -76,11 +76,13 @@ Template.View_Profile_Page.helpers({
     return `/search/${text}`;
   },
   is_not_current_user() {
-    return !(Profiles.findDoc(Meteor.user().profile.name)._id ===
-    Profiles.findDoc(FlowRouter.getParam('username'))._id);
+    return Profiles.findDoc(Meteor.user().profile.name)._id !==
+    Profiles.findDoc(FlowRouter.getParam('username'))._id;
   },
   userIsAdmin() {
-    return (Meteor.user().profile.name === 'kguinto' || Meteor.user().profile.name === 'alexcw'
+    return !(Profiles.findDoc(Meteor.user().profile.name)._id !==
+        Profiles.findDoc(FlowRouter.getParam('username'))._id) &&
+        (Meteor.user().profile.name === 'kguinto' || Meteor.user().profile.name === 'alexcw'
     || Meteor.user().profile.name === 'cfrifel' || Meteor.user().profile.name === 'johnson'
     || Meteor.user().profile.name === 'amymalia');
   },

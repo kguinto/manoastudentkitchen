@@ -44,9 +44,10 @@
           <p>{{ profile.bio }}</p>
           {{#if is_not_current_user }}
           <div class="ui button">Follow</div>
-          {{/if}}
-          {{ #if  userIsAdmin}}
-          <button class="ui button admin-go">Admin CP</button>
+          {{else}}
+            {{#if userIsAdmin}}
+            <button class="ui button admin-go">Admin CP</button>
+            {{/if}}
           {{/if}}
         </div>
       </div>
