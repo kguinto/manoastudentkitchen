@@ -1,5 +1,34 @@
 <template name="View_Profile_Page">
+  {{#if first_time_here}}
+  <div style="margin-top: 10px" class="ui container">
+    <div class="ui segment">
+      <h1 class="ui header">Welcome to you profile <span style="color:green">{{get_username}}</span>! It seems this is your first time here.</h1>
+      <h3 class="ui header">On your profile you will be able to view the recipes that you have submitted.</h3>
+      <h3 class="ui header">But first, we have to know who you are!</h3>
+      <div class="ui grid">
+        <div class="five wide column"></div>
+        <div class="eight wide column"><h2 class="ui massive green button new-edit">Click here to edit your profile.</h2></div>
+        <div class="three wide column"></div>
+      </div>
+    </div>
+      <div class="ui three column grid" style="padding-top: 1%; padding-bottom: 5%">
+        <div class="column"></div>
+        <div class="column">
+
+          <p>
+            <img class="ui centered large image" src="/images/toasteroven.png">
+          </p>
+        </div>
+        <div class="column">
+        </div>
+      </div>
+    </div>
+
+  {{else}}
     <div style="margin-top: 10px" class="ui container">
+
+
+
       <div class="ui grid">
         <div class="two wide column"></div>
         <div class="five wide column">
@@ -185,6 +214,8 @@
               </div>
             </div>
              -->
+
+
           </div>
 
           <script>
@@ -192,5 +223,5 @@
                 .tab()
             ;
           </script>
-
+    {{/if}}
       </template>
